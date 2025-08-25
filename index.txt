@@ -192,8 +192,24 @@
             <!-- SECCIÓN DE ANÁLISIS TÉCNICO -->
             <div id="analisis-section" class="page-section hidden">
                 <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-8">Análisis Técnico</h1>
+                <h1 class="text-3xl font-bold mb-2">Análisis Técnico</h1>
+                <p class="text-gray-400 mb-8">Busca cualquier activo y utiliza las herramientas de dibujo para realizar tu propio análisis.</p>
+                
+                <div class="relative max-w-xl mx-auto mb-8">
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <div class="relative w-full sm:w-auto flex-grow">
+                            <input type="text" id="ticker-input-analysis" placeholder="Buscar símbolo (ej: AAPL, FALABELLA)" class="w-full bg-card border border-card rounded-md px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-accent">
+                            <div id="suggestions-box-analysis" class="suggestions-box hidden rounded-b-md"></div>
+                        </div>
+                        <button id="search-button-analysis" class="bg-blue-accent text-white px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition duration-300 flex items-center justify-center gap-2">
+                            <i data-feather="search" class="w-5 h-5"></i>
+                            Buscar
+                        </button>
+                    </div>
+                </div>
+
                 <div id="advanced-chart-container" class="w-full" style="height: 80vh;"></div>
+
             </div>
 
             <!-- SECCIÓN DE NOTICIAS -->
@@ -236,21 +252,15 @@
             
             feather.replace();
             initMobileMenu();
+            initAnalysisSearch();
             initNavigation();
 
-            function createAdvancedChartWidget(ticker) {
-                const container = document.getElementById('advanced-chart-container');
-                if (!container) return;
-                container.innerHTML = '';
-                new TradingView.widget({
-                  "autosize": true, "symbol": ticker, "interval": "D", "timezone": "America/Santiago",
-                  "theme": "dark", "style": "1", "locale": "es", "details": true, "allow_symbol_change": true,
-                  "calendar": false, "hide_side_toolbar": false, "withdateranges": true,
-                  "studies": ["STD;SMA", "STD;RSI"],
-                  "backgroundColor": "#161B22", "gridColor": "rgba(242, 242, 242, 0.05)",
-                  "container_id": "advanced-chart-container"
-                });
-            }
+            // --- LISTA DE ACCIONES COMPARTIDA ---
+            const stockList = [
+                { symbol: 'BCS:FALABELLA', name: 'Falabella SA' }, { symbol: 'BCS:SQM-B', name: 'SQM' }, { symbol: 'BCS:COPEC', name: 'Empresas Copec SA' },
+                { symbol: 'AAPL', name: 'Apple Inc.' }, { symbol: 'GOOGL', name: 'Alphabet Inc.' }, { symbol: 'MSFT', name: 'Microsoft' },
+                { symbol: 'SP_IPSA', name: 'S&P IPSA Chile' }, { symbol: 'FOREXCOM:SPXUSD', name: 'S&P 500' }, { symbol: 'BITSTAMP:BTCUSD', name: 'Bitcoin / USD' }
+            ];
 
             function initMobileMenu() {
                 const desktopNav = document.getElementById('desktop-nav');
@@ -265,6 +275,85 @@
                 document.getElementById('mobile-menu-button').addEventListener('click', () => {
                     mobileMenu.classList.toggle('hidden');
                 });
+            }
+
+            // --- WIDGET DE GRÁFICO AVANZADO ---
+            function createAdvancedChartWidget(ticker) {
+                const container = document.getElementById('advanced-chart-container');
+                if (!container) return;
+                container.innerHTML = '';
+                new TradingView.widget({
+                  "autosize": true,
+                  "symbol": ticker,
+                  "interval": "D",
+                  "timezone": "America/Santiago",
+                  "theme": "dark",
+                  "style": "1",
+                  "locale": "es",
+                  "details": true,
+                  "allow_symbol_change": true,
+                  "calendar": false,
+                  "hide_side_toolbar": false,
+                  "withdateranges": true,
+                  "studies": [
+                    "STD;SMA",
+                    "STD;RSI"
+                  ],
+                  "backgroundColor": "#161B22",
+                  "gridColor": "rgba(242, 242, 242, 0.05)",
+                  "container_id": "advanced-chart-container"
+                });
+            }
+
+            // --- LÓGICA DE BÚSQUEDA ---
+            function setupSearch(inputId, suggestionsId, buttonId, onSearchCallback) {
+                const tickerInput = document.getElementById(inputId);
+                const suggestionsBox = document.getElementById(suggestionsId);
+                const searchButton = document.getElementById(buttonId);
+
+                const performSearch = () => {
+                    const ticker = tickerInput.value.trim().toUpperCase();
+                    if (ticker) {
+                        onSearchCallback(ticker);
+                        suggestionsBox.classList.add('hidden');
+                        tickerInput.blur();
+                    }
+                };
+
+                tickerInput.addEventListener('input', () => {
+                    const inputText = tickerInput.value.trim().toUpperCase();
+                    suggestionsBox.innerHTML = '';
+                    if (!inputText) { suggestionsBox.classList.add('hidden'); return; }
+
+                    const filtered = stockList.filter(s => s.symbol.toUpperCase().includes(inputText) || s.name.toUpperCase().includes(inputText)).slice(0, 5);
+                    
+                    if (filtered.length > 0) {
+                        suggestionsBox.classList.remove('hidden');
+                        filtered.forEach(stock => {
+                            const item = document.createElement('div');
+                            item.classList.add('suggestion-item');
+                            item.innerHTML = `<strong>${stock.symbol}</strong><div class="suggestion-name">${stock.name}</div>`;
+                            item.addEventListener('click', () => {
+                                tickerInput.value = stock.symbol;
+                                performSearch();
+                            });
+                            suggestionsBox.appendChild(item);
+                        });
+                    } else {
+                        suggestionsBox.classList.add('hidden');
+                    }
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.relative')) suggestionsBox.classList.add('hidden');
+                });
+
+                searchButton.addEventListener('click', performSearch);
+                tickerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
+            }
+
+            function initAnalysisSearch() {
+                setupSearch('ticker-input-analysis', 'suggestions-box-analysis', 'search-button-analysis', createAdvancedChartWidget);
             }
 
             function initNavigation() {
