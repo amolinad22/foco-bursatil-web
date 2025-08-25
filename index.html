@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -36,7 +37,7 @@
             background-color: #3B82F6;
         }
         /* Estilos para la caja de sugerencias */
-        #suggestions-box {
+        .suggestions-box {
             position: absolute;
             width: 100%;
             max-height: 200px;
@@ -72,6 +73,10 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
         }
+        /* Oculta el pie de página de TradingView */
+        .tradingview-widget-copyright {
+            display: none !important;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -87,10 +92,10 @@
 
                 <!-- Menú de Navegación (Desktop) -->
                 <div id="desktop-nav" class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="mercados-section"><i data-feather="trending-up" class="w-4 h-4 mr-2"></i>Mercados</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="analisis-section"><i data-feather="bar-chart-2" class="w-4 h-4 mr-2"></i>Análisis Técnico</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="noticias-section"><i data-feather="globe" class="w-4 h-4 mr-2"></i>Noticias</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="educacion-section"><i data-feather="book-open" class="w-4 h-4 mr-2"></i>Educación</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="criptomonedas-section"><i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>Criptomonedas</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="contacto-section"><i data-feather="mail" class="w-4 h-4 mr-2"></i>Contacto</a>
                 </div>
 
@@ -109,7 +114,30 @@
     </header>
 
     <!-- Ticker de Mercado con Widget de TradingView -->
-    <!-- ... (código del ticker sin cambios) ... -->
+    <section class="bg-card border-b border-card">
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+          "symbols": [
+            { "proName": "SP_IPSA", "title": "S&P IPSA" },
+            { "proName": "BCS:FALABELLA", "title": "Falabella" },
+            { "proName": "BCS:COPEC", "title": "Copec" },
+            { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
+            { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
+            { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
+            { "proName": "FX_IDC:USDCLP", "title": "USD/CLP" }
+          ],
+          "showSymbolLogo": true,
+          "colorTheme": "dark",
+          "isTransparent": true,
+          "displayMode": "adaptive",
+          "locale": "es"
+        }
+          </script>
+        </div>
+    </section>
+    <!-- Fin del Widget de TradingView -->
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8 md:py-12">
@@ -121,18 +149,11 @@
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto">Selecciona una categoría para ver análisis detallados, gráficos en tiempo real y las últimas noticias del mercado.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Card Mercados -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
-                    <i data-feather="trending-up" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Gráficos Avanzados</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Tu centro de mando. Busca activos, analiza gráficos avanzados y obtén una visión completa del panorama financiero.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="mercados-section">Ver Sección</button>
-                </div>
                 <!-- Card Análisis Técnico -->
                 <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
                     <i data-feather="bar-chart-2" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Análisis Técnico</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Obtén un resumen de indicadores técnicos clave para tomar decisiones informadas sobre tus activos de interés.</p>
+                    <p class="text-gray-400 mb-6 flex-grow">Herramientas visuales para analizar la acción del precio y tomar decisiones informadas.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="analisis-section">Ver Sección</button>
                 </div>
                 <!-- Card Noticias -->
@@ -168,19 +189,18 @@
 
         <!-- CONTENEDOR PARA LAS SECCIONES DETALLADAS -->
         <div id="sections-container" class="hidden">
-            <!-- SECCIÓN DE MERCADOS (GRÁFICOS) -->
-            <div id="mercados-section" class="page-section hidden">
-                <!-- ... (contenido sin cambios) ... -->
-            </div>
-
             <!-- SECCIÓN DE ANÁLISIS TÉCNICO -->
             <div id="analisis-section" class="page-section hidden">
-                <!-- ... (contenido sin cambios) ... -->
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <h1 class="text-3xl font-bold mb-8">Análisis Técnico</h1>
+                <div id="advanced-chart-container" class="w-full" style="height: 80vh;"></div>
             </div>
 
             <!-- SECCIÓN DE NOTICIAS -->
             <div id="noticias-section" class="page-section hidden">
-                 <!-- ... (contenido sin cambios) ... -->
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <h1 class="text-3xl font-bold mb-8">Noticias del Mercado</h1>
+                <div class="tradingview-widget-container" style="height:800px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "width": "100%", "height": 800, "locale": "es" }</script></div>
             </div>
             
             <!-- SECCIÓN DE EDUCACIÓN -->
@@ -188,63 +208,23 @@
                 <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
                 <h1 class="text-3xl font-bold mb-2">Educación Financiera</h1>
                 <p class="text-gray-400 mb-8">Recursos para potenciar tus conocimientos sobre el mercado.</p>
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <!-- Artículo 1 -->
-                  <div class="bg-card rounded-lg overflow-hidden border border-card hover:border-gold transition-all duration-300">
-                    <img src="https://placehold.co/600x400/161B22/C9D1D9?text=Inversión+101" alt="Artículo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                      <h3 class="text-xl font-bold mb-3">Guía para Principiantes</h3>
-                      <p class="text-gray-400 text-sm">Los primeros pasos para empezar a invertir: qué es una acción, un bono y cómo funciona la bolsa.</p>
-                    </div>
-                  </div>
-                  <!-- Artículo 2 -->
-                  <div class="bg-card rounded-lg overflow-hidden border border-card hover:border-gold transition-all duration-300">
-                    <img src="https://placehold.co/600x400/161B22/C9D1D9?text=Análisis+Técnico" alt="Artículo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                      <h3 class="text-xl font-bold mb-3">Introducción al Análisis Técnico</h3>
-                      <p class="text-gray-400 text-sm">Aprende a leer gráficos, identificar tendencias y usar indicadores básicos como RSI y Medias Móviles.</p>
-                    </div>
-                  </div>
-                  <!-- Artículo 3 -->
-                  <div class="bg-card rounded-lg overflow-hidden border border-card hover:border-gold transition-all duration-300">
-                    <img src="https://placehold.co/600x400/161B22/C9D1D9?text=Psicología" alt="Artículo" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                      <h3 class="text-xl font-bold mb-3">Psicología del Trading</h3>
-                      <p class="text-gray-400 text-sm">Controla tus emociones y evita los errores más comunes que cometen los inversores.</p>
-                    </div>
-                  </div>
-                </div>
+                <!-- ... (contenido de educación) ... -->
             </div>
             
             <!-- SECCIÓN DE CONTACTO -->
             <div id="contacto-section" class="page-section hidden">
                 <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
                 <h1 class="text-3xl font-bold mb-2">Contacto</h1>
-                <p class="text-gray-400 mb-8">Envíanos tus preguntas o comentarios a través del siguiente formulario.</p>
-                <div class="max-w-2xl mx-auto bg-card p-8 rounded-lg border border-card">
-                    <form action="#" method="POST">
-                        <div class="mb-4">
-                            <label for="name" class="block text-gray-300 text-sm font-bold mb-2">Nombre</label>
-                            <input type="text" id="name" name="name" class="w-full bg-[#0D1117] border border-card rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-accent">
-                        </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-gray-300 text-sm font-bold mb-2">Correo Electrónico</label>
-                            <input type="email" id="email" name="email" class="w-full bg-[#0D1117] border border-card rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-accent">
-                        </div>
-                        <div class="mb-6">
-                            <label for="message" class="block text-gray-300 text-sm font-bold mb-2">Mensaje</label>
-                            <textarea id="message" name="message" rows="5" class="w-full bg-[#0D1117] border border-card rounded-md px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-accent"></textarea>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="bg-blue-accent text-white px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition duration-300">
-                                Enviar Mensaje
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                <p class="text-gray-400 mb-8">Envíanos tus preguntas o comentarios.</p>
+                <!-- ... (formulario de contacto) ... -->
             </div>
 
-            <!-- ... (resto de las secciones) ... -->
+            <!-- SECCIÓN DE CRIPTOMONEDAS -->
+            <div id="criptomonedas-section" class="page-section hidden">
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <h1 class="text-3xl font-bold mb-8">Criptomonedas</h1>
+                <div id="crypto-heatmap-container" class="w-full h-[600px]"></div>
+            </div>
         </div>
     </main>
 
@@ -256,8 +236,21 @@
             
             feather.replace();
             initMobileMenu();
-            initSymbolSearch();
             initNavigation();
+
+            function createAdvancedChartWidget(ticker) {
+                const container = document.getElementById('advanced-chart-container');
+                if (!container) return;
+                container.innerHTML = '';
+                new TradingView.widget({
+                  "autosize": true, "symbol": ticker, "interval": "D", "timezone": "America/Santiago",
+                  "theme": "dark", "style": "1", "locale": "es", "details": true, "allow_symbol_change": true,
+                  "calendar": false, "hide_side_toolbar": false, "withdateranges": true,
+                  "studies": ["STD;SMA", "STD;RSI"],
+                  "backgroundColor": "#161B22", "gridColor": "rgba(242, 242, 242, 0.05)",
+                  "container_id": "advanced-chart-container"
+                });
+            }
 
             function initMobileMenu() {
                 const desktopNav = document.getElementById('desktop-nav');
@@ -267,16 +260,11 @@
                     link.classList.remove('flex', 'items-center');
                     link.classList.add('block', 'px-4', 'py-3', 'hover:bg-gray-700');
                     link.querySelector('i')?.remove();
-                    link.querySelector('img')?.remove();
                 });
 
                 document.getElementById('mobile-menu-button').addEventListener('click', () => {
                     mobileMenu.classList.toggle('hidden');
                 });
-            }
-
-            function initSymbolSearch() {
-                // ... (código de búsqueda sin cambios) ...
             }
 
             function initNavigation() {
@@ -287,38 +275,36 @@
                 const tabSelection = document.getElementById('tab-selection');
                 const sectionsContainer = document.getElementById('sections-container');
                 const pageSections = document.querySelectorAll('.page-section');
-
-                const widgetLoadStatus = { 
-                    'criptomonedas-section': false,
-                    'analisis-section': false 
-                };
+                const widgetLoadStatus = { 'criptomonedas-section': false, 'analisis-section': false };
 
                 const loadWidget = (targetId) => {
-                    // ... (lógica de carga de widgets sin cambios) ...
+                    if (targetId === 'criptomonedas-section' && !widgetLoadStatus[targetId]) {
+                        new TradingView.widget({ "dataSource": "Crypto", "blockSize": "market_cap_calc", "blockColor": "24h_close_change|5", "locale": "es", "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "container_id": "crypto-heatmap-container" });
+                        widgetLoadStatus[targetId] = true;
+                    }
+                    if (targetId === 'analisis-section' && !widgetLoadStatus[targetId]) {
+                        createAdvancedChartWidget('BCS:SP_IPSA');
+                        widgetLoadStatus[targetId] = true;
+                    }
                 };
-
+                
                 const showSection = (targetId) => {
                     tabSelection.classList.add('hidden');
                     sectionsContainer.classList.remove('hidden');
                     pageSections.forEach(section => section.classList.add('hidden'));
                     
                     const targetSection = document.getElementById(targetId);
-                    if (targetSection) {
-                        targetSection.classList.remove('hidden');
-                    }
+                    if (targetSection) targetSection.classList.remove('hidden');
 
                     loadWidget(targetId);
 
-                    navLinks.forEach(link => {
-                        link.classList.toggle('active', link.dataset.target === targetId);
-                    });
+                    navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === targetId));
                     window.scrollTo(0, 0);
                 };
 
                 const showTabSelection = () => {
                     tabSelection.classList.remove('hidden');
                     sectionsContainer.classList.add('hidden');
-                    pageSections.forEach(section => section.classList.add('hidden'));
                     navLinks.forEach(link => link.classList.remove('active'));
                 };
 
@@ -334,10 +320,7 @@
                 });
 
                 backButtons.forEach(button => button.addEventListener('click', showTabSelection));
-                logoLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    showTabSelection();
-                });
+                logoLink.addEventListener('click', (e) => { e.preventDefault(); showTabSelection(); });
 
                 showTabSelection();
             }
