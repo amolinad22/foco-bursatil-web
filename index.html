@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -60,19 +59,42 @@
             font-size: 0.8rem;
             color: #8B949E;
         }
-        /* Estilo para la pestaña activa */
+        
+        /* --- NUEVOS EFECTOS INTERACTIVOS --- */
+
+        /* Efecto para las tarjetas de navegación */
+        .nav-card {
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .nav-card:hover {
+            transform: scale(1.03);
+            border-color: #3B82F6; /* Azul de acento */
+        }
+
+        /* Efecto para los enlaces del menú superior */
+        .nav-link {
+            position: relative;
+            padding-bottom: 6px; /* Espacio para la línea animada */
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #D4AF37; /* Color dorado */
+            transition: width 0.3s ease-in-out;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
         .nav-link.active {
             color: #D4AF37;
             font-weight: 600;
         }
-        /* Estilos para las nuevas tarjetas de navegación */
-        .nav-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .nav-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
-        }
+
         /* Oculta el pie de página de TradingView */
         .tradingview-widget-copyright {
             display: none !important;
@@ -80,38 +102,6 @@
     </style>
 </head>
 <body class="antialiased">
-
-    <!-- Header -->
-    <header class="bg-card border-b border-card sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <nav class="flex justify-between items-center py-3">
-                <!-- Logo -->
-                <a href="#" id="logo-link" class="flex items-center space-x-2">
-                    <img src="https://storage.googleapis.com/gemini-generative-ai-public-data/Gemini_Generated_Image_jndg04jndg04jndg.jpg" alt="Logo Foco Bursátil" class="h-12 w-auto">
-                </a>
-
-                <!-- Menú de Navegación (Desktop) -->
-                <div id="desktop-nav" class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="analisis-section"><i data-feather="bar-chart-2" class="w-4 h-4 mr-2"></i>Análisis Técnico</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="noticias-section"><i data-feather="globe" class="w-4 h-4 mr-2"></i>Noticias</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="educacion-section"><i data-feather="book-open" class="w-4 h-4 mr-2"></i>Educación</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="criptomonedas-section"><i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>Criptomonedas</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="contacto-section"><i data-feather="mail" class="w-4 h-4 mr-2"></i>Contacto</a>
-                </div>
-
-                <!-- Acciones y Menú Móvil -->
-                <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-gold transition duration-300">
-                        <i data-feather="menu" class="w-6 h-6"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-        <!-- Menú de Navegación (Móvil) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-card border-t border-card">
-             <!-- Los enlaces se generan dinámicamente con JS -->
-        </div>
-    </header>
 
     <!-- Ticker de Mercado con Widget de TradingView -->
     <section class="bg-card border-b border-card">
@@ -139,6 +129,41 @@
     </section>
     <!-- Fin del Widget de TradingView -->
 
+    <!-- Header -->
+    <header class="bg-card border-b border-card sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-3">
+                <!-- Logo -->
+                <a href="#" id="logo-link" class="flex items-center space-x-2">
+                    <img src="https://storage.googleapis.com/gemini-generative-ai-public-data/Gemini_Generated_Image_jndg04jndg04jndg.jpg" alt="Logo Foco Bursátil" class="h-12 w-auto">
+                </a>
+
+                <!-- Menú de Navegación (Desktop) -->
+                <div id="desktop-nav" class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="analisis-section"><i data-feather="bar-chart-2" class="w-4 h-4 mr-2"></i>Análisis Técnico</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="chile-section"><img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" class="w-5 h-auto mr-2">Chile</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="usa-section"><img src="https://flagcdn.com/w20/us.png" alt="Bandera de USA" class="w-5 h-auto mr-2">USA</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="noticias-section"><i data-feather="globe" class="w-4 h-4 mr-2"></i>Noticias</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="calendario-section"><i data-feather="calendar" class="w-4 h-4 mr-2"></i>Calendario</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="educacion-section"><i data-feather="book-open" class="w-4 h-4 mr-2"></i>Educación</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="criptomonedas-section"><i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>Criptomonedas</a>
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="contacto-section"><i data-feather="mail" class="w-4 h-4 mr-2"></i>Contacto</a>
+                </div>
+
+                <!-- Acciones y Menú Móvil -->
+                <div class="flex items-center space-x-4">
+                    <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-gold transition duration-300">
+                        <i data-feather="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+        <!-- Menú de Navegación (Móvil) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-card border-t border-card">
+             <!-- Los enlaces se generan dinámicamente con JS -->
+        </div>
+    </header>
+
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-8 md:py-12">
 
@@ -156,32 +181,46 @@
                     <p class="text-gray-400 mb-6 flex-grow">Herramientas visuales para analizar la acción del precio y tomar decisiones informadas.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="analisis-section">Ver Sección</button>
                 </div>
+                <!-- Card Chile -->
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                    <img src="https://flagcdn.com/w40/cl.png" alt="Bandera de Chile" class="w-12 h-auto mb-4 rounded-full">
+                    <h2 class="text-2xl font-bold mb-2">Mercado Chileno</h2>
+                    <p class="text-gray-400 mb-6 flex-grow">Sigue de cerca el S&P IPSA y las principales acciones de la bolsa de Santiago.</p>
+                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="chile-section">Ver Sección</button>
+                </div>
+                <!-- Card USA -->
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                    <img src="https://flagcdn.com/w40/us.png" alt="Bandera de USA" class="w-12 h-auto mb-4 rounded-full">
+                    <h2 class="text-2xl font-bold mb-2">Mercado de EE.UU.</h2>
+                    <p class="text-gray-400 mb-6 flex-grow">Analiza los gigantes de Wall Street, desde tecnológicas hasta financieras.</p>
+                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="usa-section">Ver Sección</button>
+                </div>
                 <!-- Card Noticias -->
                 <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
                     <i data-feather="globe" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Noticias</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Las últimas noticias económicas y financieras que mueven los mercados, actualizadas al minuto.</p>
+                    <p class="text-gray-400 mb-6 flex-grow">Las últimas noticias económicas y financieras que mueven los mercados.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="noticias-section">Ver Sección</button>
+                </div>
+                <!-- Card Calendario -->
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                    <i data-feather="calendar" class="w-12 h-12 text-blue-accent mb-4"></i>
+                    <h2 class="text-2xl font-bold mb-2">Calendario Económico</h2>
+                    <p class="text-gray-400 mb-6 flex-grow">Anticípate a los eventos clave que pueden impactar tus inversiones.</p>
+                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="calendario-section">Ver Sección</button>
                 </div>
                 <!-- Card Educación -->
                 <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
                     <i data-feather="book-open" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Educación Financiera</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Aprende los conceptos clave del mundo de las inversiones, desde lo básico hasta estrategias avanzadas.</p>
+                    <p class="text-gray-400 mb-6 flex-grow">Aprende los conceptos clave del mundo de las inversiones.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="educacion-section">Ver Sección</button>
-                </div>
-                <!-- Card Criptomonedas -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
-                    <i data-feather="dollar-sign" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Criptomonedas</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Visualiza el rendimiento del mercado cripto con nuestro mapa de calor interactivo y sigue las principales monedas.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="criptomonedas-section">Ver Sección</button>
                 </div>
                  <!-- Card Contacto -->
                 <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
                     <i data-feather="mail" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Contacto</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">¿Tienes dudas o sugerencias? Ponte en contacto con nuestro equipo. ¡Nos encantaría saber de ti!</p>
+                    <p class="text-gray-400 mb-6 flex-grow">¿Tienes dudas o sugerencias? Ponte en contacto con nuestro equipo.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="contacto-section">Ver Sección</button>
                 </div>
             </div>
@@ -209,7 +248,26 @@
                 </div>
 
                 <div id="advanced-chart-container" class="w-full" style="height: 80vh;"></div>
+            </div>
+            
+            <!-- SECCIÓN DE CHILE -->
+            <div id="chile-section" class="page-section hidden">
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <div class="flex items-center mb-8">
+                    <img src="https://flagcdn.com/w40/cl.png" alt="Bandera de Chile" class="w-10 h-auto mr-4">
+                    <h1 class="text-3xl font-bold">Mercado Chileno</h1>
+                </div>
+                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Acciones Principales", "symbols": [ { "name": "BCS:SP_IPSA" }, { "name": "BCS:FALABELLA" }, { "name": "BCS:SQM-B" }, { "name": "BCS:COPEC" }, { "name": "BCS:CENCOSUD" }, { "name": "BCS:BCI" }, { "name": "BCS:CHILE" }, { "name": "BCS:BSANTANDER" }, { "name": "BCS:VAPORES" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "es" }</script></div>
+            </div>
 
+            <!-- SECCIÓN DE USA -->
+            <div id="usa-section" class="page-section hidden">
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <div class="flex items-center mb-8">
+                    <img src="https://flagcdn.com/w40/us.png" alt="Bandera de USA" class="w-10 h-auto mr-4">
+                    <h1 class="text-3xl font-bold">Mercado de EE.UU.</h1>
+                </div>
+                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Tecnología", "symbols": [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:MSFT" }, { "name": "NASDAQ:GOOGL" }, { "name": "NASDAQ:NVDA" }, { "name": "NASDAQ:AMZN" }, { "name": "NASDAQ:TSLA" } ] }, { "name": "Finanzas", "symbols": [ { "name": "NYSE:JPM" }, { "name": "NYSE:V" }, { "name": "NYSE:MA" }, { "name": "NYSE:BAC" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "es" }</script></div>
             </div>
 
             <!-- SECCIÓN DE NOTICIAS -->
@@ -217,6 +275,13 @@
                 <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
                 <h1 class="text-3xl font-bold mb-8">Noticias del Mercado</h1>
                 <div class="tradingview-widget-container" style="height:800px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "width": "100%", "height": 800, "locale": "es" }</script></div>
+            </div>
+            
+            <!-- SECCIÓN DE CALENDARIO -->
+            <div id="calendario-section" class="page-section hidden">
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <h1 class="text-3xl font-bold mb-8">Calendario Económico</h1>
+                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "es", "importanceFilter": "0,1" }</script></div>
             </div>
             
             <!-- SECCIÓN DE EDUCACIÓN -->
@@ -251,31 +316,11 @@
         document.addEventListener('DOMContentLoaded', () => {
             
             feather.replace();
-            initMobileMenu();
-            initAnalysisSearch();
-            initNavigation();
 
             // --- LISTA DE ACCIONES COMPARTIDA ---
             const stockList = [
-                { symbol: 'BCS:FALABELLA', name: 'Falabella SA' }, { symbol: 'BCS:SQM-B', name: 'SQM' }, { symbol: 'BCS:COPEC', name: 'Empresas Copec SA' },
-                { symbol: 'AAPL', name: 'Apple Inc.' }, { symbol: 'GOOGL', name: 'Alphabet Inc.' }, { symbol: 'MSFT', name: 'Microsoft' },
-                { symbol: 'SP_IPSA', name: 'S&P IPSA Chile' }, { symbol: 'FOREXCOM:SPXUSD', name: 'S&P 500' }, { symbol: 'BITSTAMP:BTCUSD', name: 'Bitcoin / USD' }
+                // ... (lista de acciones sin cambios) ...
             ];
-
-            function initMobileMenu() {
-                const desktopNav = document.getElementById('desktop-nav');
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.innerHTML = desktopNav.innerHTML;
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.classList.remove('flex', 'items-center');
-                    link.classList.add('block', 'px-4', 'py-3', 'hover:bg-gray-700');
-                    link.querySelector('i')?.remove();
-                });
-
-                document.getElementById('mobile-menu-button').addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
 
             // --- WIDGET DE GRÁFICO AVANZADO ---
             function createAdvancedChartWidget(ticker) {
@@ -352,6 +397,22 @@
                 tickerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
             }
 
+            function initMobileMenu() {
+                const desktopNav = document.getElementById('desktop-nav');
+                const mobileMenu = document.getElementById('mobile-menu');
+                mobileMenu.innerHTML = desktopNav.innerHTML;
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.classList.remove('flex', 'items-center');
+                    link.classList.add('block', 'px-4', 'py-3', 'hover:bg-gray-700');
+                    link.querySelector('i')?.remove();
+                    link.querySelector('img')?.remove();
+                });
+
+                document.getElementById('mobile-menu-button').addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
             function initAnalysisSearch() {
                 setupSearch('ticker-input-analysis', 'suggestions-box-analysis', 'search-button-analysis', createAdvancedChartWidget);
             }
@@ -413,6 +474,11 @@
 
                 showTabSelection();
             }
+
+            // Inicializar todo
+            initMobileMenu();
+            initAnalysisSearch();
+            initNavigation();
         });
     </script>
 </body>
