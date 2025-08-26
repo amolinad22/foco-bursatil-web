@@ -1,607 +1,306 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foco Bursátil - Noticias y Análisis de Mercado</title>
+    <title>Foco Bursátil - Herramientas Financieras</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        /* Estilos personalizados */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0D1117; /* Un fondo oscuro principal */
-            color: #C9D1D9; /* Color de texto principal */
+            background-color: #0D1117;
         }
-        .bg-card {
-            background-color: #161B22; /* Color de fondo para tarjetas y secciones */
-        }
-        .border-card {
-            border-color: #30363D; /* Color de borde */
-        }
-        .text-gold {
-            color: #D4AF37; /* Un toque dorado inspirado en el logo */
-        }
-        .bg-gold {
-            background-color: #D4AF37;
-        }
-        .text-blue-accent {
-            color: #3B82F6; /* Un azul inspirado en el logo */
-        }
-        .bg-blue-accent {
-            background-color: #3B82F6;
-        }
-        /* Estilos para la caja de sugerencias */
-        .suggestions-box {
-            position: absolute;
-            width: 100%;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 1px solid #30363D;
-            border-top: none;
-            z-index: 10;
-            text-align: left;
-        }
-        .suggestion-item {
-            padding: 10px;
-            cursor: pointer;
-            background-color: #161B22;
-            color: #C9D1D9;
-        }
-        .suggestion-item:hover {
-            background-color: #30363D;
-        }
-        .suggestion-name {
-            font-size: 0.8rem;
-            color: #8B949E;
-        }
-        
-        /* Estilos para enlaces de navegación superior */
-        .nav-link {
-            cursor: pointer;
-            position: relative;
-            padding-bottom: 4px; /* Espacio para la línea inferior */
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #D4AF37; /* Color dorado */
-            transition: width 0.3s ease-in-out;
-        }
-        .nav-link:hover::after,
-        .nav-link.active::after {
+        .tradingview-widget-container__widget {
+            height: 100%;
             width: 100%;
         }
-        .nav-link.active {
-            color: #D4AF37;
-            font-weight: 600;
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
         }
-
-        /* Estilos para las tarjetas de navegación */
-        .nav-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
+        .tool-tab {
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
         }
-        .nav-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
-        }
-        /* Oculta el pie de página de TradingView */
-        .tradingview-widget-copyright {
-            display: none !important;
+        .tool-tab.active {
+            border-color: #3B82F6; /* blue-500 */
+            color: #F9FAFB; /* gray-50 */
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="text-gray-200">
 
-    <!-- Ticker de Mercado con Widget de TradingView -->
-    <section class="bg-card border-b border-card">
-        <div class="tradingview-widget-container">
-          <div class="tradingview-widget-container__widget"></div>
-          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-          {
-          "symbols": [
-            { "proName": "SP_IPSA", "title": "S&P IPSA" },
-            { "proName": "BCS:FALABELLA", "title": "Falabella" },
-            { "proName": "BCS:COPEC", "title": "Copec" },
-            { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" },
-            { "proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100" },
-            { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" },
-            { "proName": "FX_IDC:USDCLP", "title": "USD/CLP" }
-          ],
-          "showSymbolLogo": true,
-          "colorTheme": "dark",
-          "isTransparent": true,
-          "displayMode": "adaptive",
-          "locale": "es"
-        }
-          </script>
-        </div>
-    </section>
-    <!-- Fin del Widget de TradingView -->
+    <!-- Ticker de Acciones -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" }, { "proName": "BCS:SP_IPSA", "title": "IPSA" }, { "proName": "BCS:SQM_B", "title": "SQM-B" }, { "proName": "BCS:COPEC", "title": "COPEC" }, { "proName": "FX_IDC:USDCLP", "title": "USD/CLP" } ], "colorTheme": "dark", "locale": "es", "isTransparent": false, "showSymbolLogo": true, "displayMode": "adaptive" }
+      </script>
+    </div>
 
-    <!-- Header -->
-    <header class="bg-card border-b border-card sticky top-0 z-50">
-        <div class="container mx-auto px-4">
-            <nav class="flex justify-between items-center py-3">
-                <!-- Logo -->
-                <a href="#" id="logo-link" class="flex items-center space-x-2">
-                    <img src="https://storage.googleapis.com/gemini-generative-ai-public-data/Gemini_Generated_Image_jndg04jndg04jndg.jpg" alt="Logo Foco Bursátil" class="h-12 w-auto">
-                </a>
-
-                <!-- Menú de Navegación (Desktop) -->
-                <div id="desktop-nav" class="hidden md:flex items-center space-x-6 lg:space-x-8">
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="panorama-section"><i data-feather="trending-up" class="w-4 h-4 mr-2"></i>Panorama</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="analisis-section"><i data-feather="bar-chart-2" class="w-4 h-4 mr-2"></i>Análisis Técnico</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="chile-section"><img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" class="w-5 h-auto mr-2">Chile</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="usa-section"><img src="https://flagcdn.com/w20/us.png" alt="Bandera de USA" class="w-5 h-auto mr-2">USA</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="noticias-section"><i data-feather="globe" class="w-4 h-4 mr-2"></i>Noticias</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="calendario-section"><i data-feather="calendar" class="w-4 h-4 mr-2"></i>Calendario</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="educacion-section"><i data-feather="book-open" class="w-4 h-4 mr-2"></i>Educación</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="criptomonedas-section"><i data-feather="dollar-sign" class="w-4 h-4 mr-2"></i>Criptomonedas</a>
-                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="contacto-section"><i data-feather="mail" class="w-4 h-4 mr-2"></i>Contacto</a>
-                </div>
-
-                <!-- Acciones y Menú Móvil -->
-                <div class="flex items-center space-x-4">
-                    <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-gold transition duration-300">
-                        <i data-feather="menu" class="w-6 h-6"></i>
+    <!-- Barra de Navegación Principal -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40 border-b border-gray-700">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" id="logo-link" class="text-xl font-bold">Foco Bursátil</a>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                     </button>
                 </div>
-            </nav>
-        </div>
-        <!-- Menú de Navegación (Móvil) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-card border-t border-card">
-             <!-- Los enlaces se generan dinámicamente con JS -->
-        </div>
+            </div>
+        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 md:py-12">
-
-        <!-- SELECCIÓN DE PESTAÑAS INTERACTIVAS -->
-        <div id="tab-selection">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Explora Nuestras Herramientas</h1>
-                <p class="text-lg text-gray-400 max-w-2xl mx-auto">Selecciona una categoría para ver análisis detallados, gráficos en tiempo real y las últimas noticias del mercado.</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                <!-- Card Panorama del Mercado -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="panorama-section">
-                    <i data-feather="trending-up" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Panorama del Mercado</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Un vistazo general a los principales mercados y activos financieros.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="panorama-section">Ver Sección</button>
-                </div>
-                <!-- Card Análisis Técnico -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="analisis-section">
-                    <i data-feather="bar-chart-2" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Análisis Técnico</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Herramientas visuales para analizar la acción del precio y tomar decisiones informadas.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="analisis-section">Ver Sección</button>
-                </div>
-                <!-- Card Chile -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="chile-section">
-                    <img src="https://flagcdn.com/w40/cl.png" alt="Bandera de Chile" class="w-12 h-auto mb-4 rounded-full">
-                    <h2 class="text-2xl font-bold mb-2">Mercado Chileno</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Sigue de cerca el S&P IPSA y las principales acciones de la bolsa de Santiago.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="chile-section">Ver Sección</button>
-                </div>
-                <!-- Card USA -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="usa-section">
-                    <img src="https://flagcdn.com/w40/us.png" alt="Bandera de USA" class="w-12 h-auto mb-4 rounded-full">
-                    <h2 class="text-2xl font-bold mb-2">Mercado de EE.UU.</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Analiza los gigantes de Wall Street, desde tecnológicas hasta financieras.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="usa-section">Ver Sección</button>
-                </div>
-                <!-- Card Noticias -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="noticias-section">
-                    <i data-feather="globe" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Noticias</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Las últimas noticias económicas y financieras que mueven los mercados.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="noticias-section">Ver Sección</button>
-                </div>
-                <!-- Card Calendario -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="calendario-section">
-                    <i data-feather="calendar" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Calendario Económico</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Anticípate a los eventos clave que pueden impactar tus inversiones.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="calendario-section">Ver Sección</button>
-                </div>
-                <!-- Card Educación -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="educacion-section">
-                    <i data-feather="book-open" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Educación Financiera</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">Aprende los conceptos clave del mundo de las inversiones.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="educacion-section">Ver Sección</button>
-                </div>
-                 <!-- Card Contacto -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="contacto-section">
-                    <i data-feather="mail" class="w-12 h-12 text-blue-accent mb-4"></i>
-                    <h2 class="text-2xl font-bold mb-2">Contacto</h2>
-                    <p class="text-gray-400 mb-6 flex-grow">¿Tienes dudas o sugerencias? Ponte en contacto con nuestro equipo.</p>
-                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="contacto-section">Ver Sección</button>
-                </div>
-            </div>
+    <!-- Menú Móvil (Sidebar) -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 transform translate-x-full md:hidden p-6 border-l border-gray-700">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-lg font-semibold text-white">Menú</h2>
+            <button id="close-mobile-menu" class="text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
         </div>
+        <nav id="mobile-nav-links" class="flex flex-col space-y-4"></nav>
+    </div>
 
-        <!-- CONTENEDOR PARA LAS SECCIONES DETALLADAS -->
-        <div id="sections-container" class="hidden">
-            <!-- SECCIÓN DE PANORAMA DEL MERCADO -->
-            <div id="panorama-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-8">Panorama del Mercado</h1>
-                <div class="tradingview-widget-container" style="height:800px;width:100%">
-                    <div class="tradingview-widget-container__widget"></div>
-                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
-                    {
-                    "colorTheme": "dark",
-                    "dateRange": "12M",
-                    "showChart": true,
-                    "locale": "es",
-                    "largeChartUrl": "",
-                    "isTransparent": true,
-                    "showSymbolLogo": true,
-                    "showFloatingTooltip": false,
-                    "width": "100%",
-                    "height": "100%",
-                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
-                    "plotLineColorFalling": "rgba(41, 98, 255, 1)",
-                    "gridLineColor": "rgba(240, 243, 250, 0)",
-                    "scaleFontColor": "rgba(120, 123, 134, 1)",
-                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
-                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
-                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
-                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
-                    "tabs": [
-                      {
-                        "title": "Índices",
-                        "symbols": [
-                          { "s": "BCS:SP_IPSA", "d": "S&P IPSA" },
-                          { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" },
-                          { "s": "FOREXCOM:NSXUSD", "d": "Nasdaq 100" },
-                          { "s": "FOREXCOM:DJI", "d": "Dow 30" }
-                        ],
-                        "originalTitle": "Indices"
-                      },
-                      {
-                        "title": "Materias Primas",
-                        "symbols": [
-                          { "s": "CME_MINI:GC1!", "d": "Oro" },
-                          { "s": "NYMEX:CL1!", "d": "Petróleo Crudo" },
-                          { "s": "COMEX:SI1!", "d": "Plata" },
-                          { "s": "NYMEX:NG1!", "d": "Gas Natural" }
-                        ],
-                        "originalTitle": "Commodities"
-                      },
-                      {
-                        "title": "Divisas",
-                        "symbols": [
-                          { "s": "FX_IDC:USDCLP", "d": "USD/CLP" },
-                          { "s": "FX:EURUSD", "d": "EUR/USD" },
-                          { "s": "FX:GBPUSD", "d": "GBP/USD" },
-                          { "s": "FX:USDJPY", "d": "USD/JPY" }
-                        ],
-                        "originalTitle": "Forex"
-                      }
-                    ]
-                  }
-                    </script>
-                </div>
-            </div>
-
-            <!-- SECCIÓN DE ANÁLISIS TÉCNICO -->
-            <div id="analisis-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-2">Análisis Técnico</h1>
-                <p class="text-gray-400 mb-8">Busca cualquier activo y utiliza las herramientas de dibujo para realizar tu propio análisis.</p>
-                
-                <div class="relative max-w-xl mx-auto mb-8">
-                    <div class="flex flex-col sm:flex-row gap-2">
-                        <div class="relative w-full sm:w-auto flex-grow">
-                            <input type="text" id="ticker-input-analysis" placeholder="Buscar símbolo (ej: AAPL, FALABELLA)" class="w-full bg-card border border-card rounded-md px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-accent">
-                            <div id="suggestions-box-analysis" class="suggestions-box hidden rounded-b-md"></div>
-                        </div>
-                        <button id="search-button-analysis" class="bg-blue-accent text-white px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition duration-300 flex items-center justify-center gap-2">
-                            <i data-feather="search" class="w-5 h-5"></i>
-                            Buscar
-                        </button>
-                    </div>
-                </div>
-
-                <div id="advanced-chart-container" class="w-full" style="height: 80vh;"></div>
-            </div>
-            
-            <!-- SECCIÓN DE CHILE -->
-            <div id="chile-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <div class="flex items-center mb-8">
-                    <img src="https://flagcdn.com/w40/cl.png" alt="Bandera de Chile" class="w-10 h-auto mr-4">
-                    <h1 class="text-3xl font-bold">Mercado Chileno</h1>
-                </div>
-                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Acciones Principales", "symbols": [ { "name": "BCS:SP_IPSA" }, { "name": "BCS:FALABELLA" }, { "name": "BCS:SQM-B" }, { "name": "BCS:COPEC" }, { "name": "BCS:CENCOSUD" }, { "name": "BCS:BCI" }, { "name": "BCS:CHILE" }, { "name": "BCS:BSANTANDER" }, { "name": "BCS:VAPORES" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "es" }</script></div>
-            </div>
-
-            <!-- SECCIÓN DE USA -->
-            <div id="usa-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <div class="flex items-center mb-8">
-                    <img src="https://flagcdn.com/w40/us.png" alt="Bandera de USA" class="w-10 h-auto mr-4">
-                    <h1 class="text-3xl font-bold">Mercado de EE.UU.</h1>
-                </div>
-                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-quotes.js" async>{ "width": "100%", "height": "100%", "symbolsGroups": [ { "name": "Tecnología", "symbols": [ { "name": "NASDAQ:AAPL" }, { "name": "NASDAQ:MSFT" }, { "name": "NASDAQ:GOOGL" }, { "name": "NASDAQ:NVDA" }, { "name": "NASDAQ:AMZN" }, { "name": "NASDAQ:TSLA" } ] }, { "name": "Finanzas", "symbols": [ { "name": "NYSE:JPM" }, { "name": "NYSE:V" }, { "name": "NYSE:MA" }, { "name": "NYSE:BAC" } ] } ], "showSymbolLogo": true, "colorTheme": "dark", "isTransparent": true, "locale": "es" }</script></div>
-            </div>
-
-            <!-- SECCIÓN DE NOTICIAS -->
-            <div id="noticias-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-8">Noticias del Mercado</h1>
-                <div class="tradingview-widget-container" style="height:800px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>{ "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "adaptive", "width": "100%", "height": 800, "locale": "es" }</script></div>
-            </div>
-            
-            <!-- SECCIÓN DE CALENDARIO -->
-            <div id="calendario-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-8">Calendario Económico</h1>
-                <div class="tradingview-widget-container" style="height:600px;width:100%"><div class="tradingview-widget-container__widget"></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{ "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "es", "importanceFilter": "0,1" }</script></div>
-            </div>
-            
-            <!-- SECCIÓN DE EDUCACIÓN -->
-            <div id="educacion-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-2">Educación Financiera</h1>
-                <p class="text-gray-400 mb-8">Recursos para potenciar tus conocimientos sobre el mercado.</p>
-                <!-- ... (contenido de educación) ... -->
-            </div>
-            
-            <!-- SECCIÓN DE CONTACTO -->
-            <div id="contacto-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-2">Contacto</h1>
-                <p class="text-gray-400 mb-8">Envíanos tus preguntas o comentarios.</p>
-                <!-- ... (formulario de contacto) ... -->
-            </div>
-
-            <!-- SECCIÓN DE CRIPTOMONEDAS -->
-            <div id="criptomonedas-section" class="page-section hidden">
-                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
-                <h1 class="text-3xl font-bold mb-8">Criptomonedas</h1>
-                <div id="crypto-heatmap-container" class="w-full h-[600px]"></div>
-            </div>
+    <!-- Página de Inicio con Tarjetas -->
+    <main id="home-page" class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">Explora Nuestras Herramientas</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">Selecciona una categoría para ver análisis detallados y datos en tiempo real.</p>
+        </div>
+        <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Las tarjetas se generan dinámicamente -->
         </div>
     </main>
 
+    <!-- Contenedor de Herramientas con Pestañas (oculto por defecto) -->
+    <main id="tools-page-container" class="container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+        <div id="tools-tabs" class="flex justify-center flex-wrap border-b border-gray-700 mb-8">
+            <!-- Las pestañas se generan dinámicamente -->
+        </div>
+        <div id="tools-content-container">
+            <!-- El contenido de la pestaña activa se mostrará aquí -->
+        </div>
+    </main>
+
+    <!-- Plantillas de Contenido para las Herramientas -->
+    <template id="template-panorama-market-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Panorama del Mercado</h1><p class="mt-2 text-lg text-gray-400">Un vistazo general a los principales mercados.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="w-full h-[650px]"><div class="tradingview-widget-container__widget" data-widget-type="market-overview"></div></div></div>
+    </template>
+    <template id="template-analisis-tecnico-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Análisis Técnico</h1><p class="mt-2 text-lg text-gray-400">Gráfico avanzado para analizar tus activos favoritos.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-4"><div class="h-[75vh]"><div class="tradingview-widget-container__widget" data-widget-type="advanced-chart"></div></div></div>
+    </template>
+    <template id="template-chile-market-page">
+        <div class="text-center mb-12"><div class="inline-flex items-center justify-center"><img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile" class="mr-4"><h1 class="text-4xl font-bold text-white">Mercado de Chile</h1></div><p class="mt-2 text-lg text-gray-400">Análisis visual de las acciones chilenas.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="heatmap-cl"></div></div></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-cl"></div></div></div>
+    </template>
+    <template id="template-usa-market-page">
+        <div class="text-center mb-12"><div class="inline-flex items-center justify-center"><img src="https://flagcdn.com/us.svg" width="40" alt="Bandera de EE.UU." class="mr-4"><h1 class="text-4xl font-bold text-white">Mercado de EE.UU.</h1></div><p class="mt-2 text-lg text-gray-400">Análisis visual del S&P 500.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="heatmap-us"></div></div></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-us"></div></div></div>
+    </template>
+    <template id="template-noticias-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Noticias del Mercado</h1><p class="mt-2 text-lg text-gray-400">Las últimas noticias que mueven los mercados.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="timeline"></div></div></div>
+    </template>
+    <template id="template-calendario-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Calendario Económico</h1><p class="mt-2 text-lg text-gray-400">Anticípate a los eventos clave.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="economic-calendar"></div></div></div>
+    </template>
+
     <!-- Footer -->
-    <!-- ... (código del footer sin cambios) ... -->
+    <footer class="bg-gray-900 border-t border-gray-700 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
+            <p>&copy; 2024 Foco Bursátil. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- DATOS COMPARTIDOS ---
-            const stockList = [
-                // Acciones Chilenas
-                { symbol: 'BCS:SP_IPSA', name: 'S&P IPSA' },
-                { symbol: 'BCS:FALABELLA', name: 'Falabella' },
-                { symbol: 'BCS:SQM-B', name: 'SQM Serie B' },
-                { symbol: 'BCS:COPEC', name: 'Copec' },
-                { symbol: 'BCS:CENCOSUD', name: 'Cencosud' },
-                { symbol: 'BCS:BCI', name: 'Banco de Crédito e Inversiones' },
-                { symbol: 'BCS:CHILE', name: 'Banco de Chile' },
-                { symbol: 'BCS:BSANTANDER', name: 'Banco Santander-Chile' },
-                { symbol: 'BCS:VAPORES', name: 'CSAV' },
-                { symbol: 'BCS:ENELAM', name: 'Enel Américas' },
-                { symbol: 'BCS:CMPC', name: 'CMPC' },
-                { symbol: 'BCS:LTM', name: 'LATAM Airlines Group' },
-                // Acciones de USA
-                { symbol: 'NASDAQ:AAPL', name: 'Apple Inc.' },
-                { symbol: 'NASDAQ:MSFT', name: 'Microsoft Corporation' },
-                { symbol: 'NASDAQ:GOOGL', name: 'Alphabet Inc. (Google)' },
-                { symbol: 'NASDAQ:NVDA', name: 'NVIDIA Corporation' },
-                { symbol: 'NASDAQ:AMZN', name: 'Amazon.com, Inc.' },
-                { symbol: 'NASDAQ:TSLA', name: 'Tesla, Inc.' },
-                { symbol: 'NYSE:JPM', name: 'JPMorgan Chase & Co.' },
-                { symbol: 'NYSE:V', name: 'Visa Inc.' },
-                { symbol: 'NYSE:MA', name: 'Mastercard Incorporated' },
-                { symbol: 'NYSE:BAC', name: 'Bank of America Corp' },
-                { symbol: 'NYSE:WMT', name: 'Walmart Inc.' },
-                { symbol: 'NYSE:XOM', name: 'Exxon Mobil Corporation' },
-                // Criptomonedas
-                { symbol: 'BITSTAMP:BTCUSD', name: 'Bitcoin / USD' },
-                { symbol: 'BITSTAMP:ETHUSD', name: 'Ethereum / USD' },
-                // Divisas
-                { symbol: 'FX_IDC:USDCLP', name: 'Dólar Americano / Peso Chileno' }
+            const homePage = document.getElementById('home-page');
+            const toolsPageContainer = document.getElementById('tools-page-container');
+            const toolsContentContainer = document.getElementById('tools-content-container');
+            const homeCardsGrid = document.getElementById('home-cards-grid');
+            const toolsTabsContainer = document.getElementById('tools-tabs');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+
+            const tools = [
+                { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>` },
+                { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>` },
+                { id: 'chile-market-page', title: 'Mercado Chileno', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile">` },
+                { id: 'usa-market-page', title: 'Mercado EE.UU.', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" width="40" alt="Bandera de EE.UU.">` },
+                { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3h2m-4 3H9m-4 0H5m14 0v2m-4-2v2m-4-2v2m-4-2v2" /></svg>` },
+                { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>` }
             ];
 
-            // --- CREACIÓN DE WIDGETS ---
-            function createAdvancedChartWidget(ticker) {
-                const container = document.getElementById('advanced-chart-container');
-                if (!container) return;
-                container.innerHTML = '';
-                new TradingView.widget({
-                    "autosize": true,
-                    "symbol": ticker,
-                    "interval": "D",
-                    "timezone": "America/Santiago",
-                    "theme": "dark",
-                    "style": "1",
-                    "locale": "es",
-                    "details": true,
-                    "allow_symbol_change": true,
-                    "calendar": false,
-                    "hide_side_toolbar": false,
-                    "withdateranges": true,
-                    "studies": [
-                        "STD;SMA",
-                        "STD;RSI"
-                    ],
-                    "backgroundColor": "#161B22",
-                    "gridColor": "rgba(242, 242, 242, 0.05)",
-                    "container_id": "advanced-chart-container"
+            const loadedWidgets = new Set();
+
+            function createInitialUI() {
+                tools.forEach(tool => {
+                    // Crear tarjetas para la página de inicio
+                    const card = document.createElement('div');
+                    card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300';
+                    card.innerHTML = `
+                        <div class="bg-blue-600/10 p-4 rounded-lg mb-6 flex items-center justify-center h-16 w-16 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110">
+                            <div class="transition-transform duration-300 group-hover:rotate-6">${tool.icon}</div>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3>
+                        <p class="text-gray-400 mb-6 flex-grow">${tool.description}</p>
+                        <button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>
+                    `;
+                    homeCardsGrid.appendChild(card);
+
+                    // Crear pestañas para la página de herramientas
+                    const tab = document.createElement('a');
+                    tab.href = '#';
+                    tab.className = 'tool-tab text-gray-400 hover:text-gray-100 py-4 px-3 sm:px-6 block font-medium border-b-2 border-transparent text-sm sm:text-base';
+                    tab.textContent = tool.title;
+                    tab.dataset.page = tool.id;
+                    toolsTabsContainer.appendChild(tab);
+
+                    // Crear enlaces para el menú móvil
+                    const mobileLink = document.createElement('a');
+                    mobileLink.href = '#';
+                    mobileLink.className = 'mobile-nav-link text-gray-300 hover:text-white transition-colors py-2';
+                    mobileLink.textContent = tool.title;
+                    mobileLink.dataset.page = tool.id;
+                    mobileNavLinksContainer.appendChild(mobileLink);
                 });
             }
 
-            // --- FUNCIONES AUXILIARES ---
-            function setupSearch(inputId, suggestionsId, buttonId, onSearchCallback) {
-                const tickerInput = document.getElementById(inputId);
-                const suggestionsBox = document.getElementById(suggestionsId);
-                const searchButton = document.getElementById(buttonId);
-
-                const performSearch = () => {
-                    const ticker = tickerInput.value.trim().toUpperCase();
-                    const stock = stockList.find(s => s.symbol.toUpperCase() === ticker || s.name.toUpperCase() === ticker);
-                    const finalTicker = stock ? stock.symbol : ticker;
-
-                    if (finalTicker) {
-                        onSearchCallback(finalTicker);
-                        suggestionsBox.classList.add('hidden');
-                        tickerInput.blur();
-                    }
-                };
-
-                tickerInput.addEventListener('input', () => {
-                    const inputText = tickerInput.value.trim().toUpperCase();
-                    suggestionsBox.innerHTML = '';
-                    if (!inputText) { suggestionsBox.classList.add('hidden'); return; }
-
-                    const filtered = stockList.filter(s => s.symbol.toUpperCase().includes(inputText) || s.name.toUpperCase().includes(inputText)).slice(0, 5);
-                    
-                    if (filtered.length > 0) {
-                        suggestionsBox.classList.remove('hidden');
-                        filtered.forEach(stock => {
-                            const item = document.createElement('div');
-                            item.classList.add('suggestion-item');
-                            item.innerHTML = `<strong>${stock.symbol}</strong><div class="suggestion-name">${stock.name}</div>`;
-                            item.addEventListener('click', () => {
-                                tickerInput.value = stock.symbol;
-                                performSearch();
-                            });
-                            suggestionsBox.appendChild(item);
-                        });
-                    } else {
-                        suggestionsBox.classList.add('hidden');
-                    }
-                });
-
-                document.addEventListener('click', (e) => {
-                    if (!e.target.closest('.relative')) suggestionsBox.classList.add('hidden');
-                });
-
-                searchButton.addEventListener('click', performSearch);
-                tickerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
+            function showToolsPage(pageId) {
+                homePage.style.display = 'none';
+                toolsPageContainer.style.display = 'block';
+                showToolContent(pageId);
             }
 
-            // --- MÓDULOS DE INICIALIZACIÓN ---
-            function initMobileMenu() {
-                const desktopNav = document.getElementById('desktop-nav');
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.innerHTML = desktopNav.innerHTML;
-                mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.classList.remove('flex', 'items-center', 'space-x-6', 'lg:space-x-8', 'relative');
-                    link.classList.add('block', 'px-4', 'py-3', 'hover:bg-gray-700');
-                    link.querySelector('i')?.remove();
-                    link.querySelector('img')?.remove();
+            function showToolContent(pageId) {
+                const template = document.getElementById(`template-${pageId}`);
+                if (!template) return;
+
+                toolsContentContainer.innerHTML = template.innerHTML;
+                loadWidgetsForContent(pageId);
+
+                document.querySelectorAll('.tool-tab').forEach(t => {
+                    t.classList.toggle('active', t.dataset.page === pageId);
                 });
-
-                document.getElementById('mobile-menu-button').addEventListener('click', () => {
-                    mobileMenu.classList.toggle('hidden');
-                });
-            }
-            
-            function initAnalysisSearch() {
-                setupSearch('ticker-input-analysis', 'suggestions-box-analysis', 'search-button-analysis', createAdvancedChartWidget);
-            }
-
-            function initNavigation() {
-                const navLinks = document.querySelectorAll('.nav-link');
-                const navCards = document.querySelectorAll('.nav-card');
-                const backButtons = document.querySelectorAll('.back-button');
-                const logoLink = document.getElementById('logo-link');
-                const tabSelection = document.getElementById('tab-selection');
-                const sectionsContainer = document.getElementById('sections-container');
-                const pageSections = document.querySelectorAll('.page-section');
-                const widgetLoadStatus = { 
-                    'criptomonedas-section': false, 
-                    'analisis-section': false 
-                };
-
-                const loadWidget = (targetId) => {
-                    if (targetId === 'criptomonedas-section' && !widgetLoadStatus[targetId]) {
-                        new TradingView.widget({ "dataSource": "Crypto", "blockSize": "market_cap_calc", "blockColor": "24h_close_change|5", "locale": "es", "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "container_id": "crypto-heatmap-container" });
-                        widgetLoadStatus[targetId] = true;
-                    }
-                    if (targetId === 'analisis-section' && !widgetLoadStatus[targetId]) {
-                        createAdvancedChartWidget('BCS:SP_IPSA');
-                        widgetLoadStatus[targetId] = true;
-                    }
-                };
                 
-                const showSection = (targetId) => {
-                    tabSelection.classList.add('hidden');
-                    sectionsContainer.classList.remove('hidden');
-                    pageSections.forEach(section => section.classList.add('hidden'));
+                window.scrollTo(0, 0);
+            }
+
+            function openMobileMenu() { mobileMenu.classList.remove('translate-x-full'); }
+            function closeMobileMenu() { mobileMenu.classList.add('translate-x-full'); }
+
+            function loadWidgetsForContent(pageId) {
+                const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
+                widgetContainers.forEach(container => {
+                    const widgetType = container.dataset.widgetType;
+                    const widgetKey = `${pageId}-${widgetType}`;
+
+                    if (loadedWidgets.has(widgetKey)) return;
+
+                    let config = {};
+                    let scriptSrc = '';
                     
-                    const targetSection = document.getElementById(targetId);
-                    if (targetSection) targetSection.classList.remove('hidden');
-
-                    loadWidget(targetId);
-
-                    navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === targetId));
-                    window.scrollTo(0, 0);
-                };
-
-                const showTabSelection = () => {
-                    tabSelection.classList.remove('hidden');
-                    sectionsContainer.classList.add('hidden');
-                    navLinks.forEach(link => link.classList.remove('active'));
-                };
-
-                document.querySelectorAll('.nav-link').forEach(el => {
-                    el.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = e.currentTarget.dataset.target;
-                        if (targetId) {
-                            showSection(targetId);
-                            document.getElementById('mobile-menu').classList.add('hidden');
-                        }
-                    });
+                    switch(widgetType) {
+                        case 'market-overview':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+                            config = {
+                                "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false,
+                                "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                                "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                                "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                                "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                                "tabs": [
+                                    { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" },
+                                    { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" },
+                                    { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" },
+                                    { "title": "CRYPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "COINBASE:SOLUSD", "d": "SOLUSD"}, {"s": "COINBASE:ATOMUSD", "d": "ATOMUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] }
+                                ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true
+                            };
+                            break;
+                        case 'advanced-chart':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                            config = { "autosize": true, "symbol": "BCS:SP_IPSA", "interval": "D", "timezone": "America/Santiago", "theme": "dark", "style": "1", "locale": "es", "allow_symbol_change": true, "calendar": true, "details": true, "hotlist": true, "studies": ["Volume@tv-basicstudies", "RSI@tv-basicstudies"] };
+                            break;
+                        case 'heatmap-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "AllCL", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "colorTheme": "dark", "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "BCS", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'heatmap-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "SPX500", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "colorTheme": "dark", "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "US", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'timeline':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
+                             config = { "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "locale": "es" };
+                             break;
+                        case 'economic-calendar':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
+                             config = { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "es", "importanceFilter": "-1,0,1" };
+                             break;
+                    }
+                    
+                    const script = document.createElement('script');
+                    script.src = scriptSrc;
+                    script.async = true;
+                    script.innerHTML = JSON.stringify(config);
+                    container.appendChild(script);
+                    loadedWidgets.add(widgetKey);
                 });
-
-                navCards.forEach(card => {
-                    card.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetId = card.dataset.target;
-                         if (targetId) {
-                            showSection(targetId);
-                        }
-                    });
-                });
-
-                backButtons.forEach(button => button.addEventListener('click', showTabSelection));
-                logoLink.addEventListener('click', (e) => { e.preventDefault(); showTabSelection(); });
-
-                showTabSelection();
             }
 
-            // --- INICIALIZACIÓN PRINCIPAL DE LA APP ---
-            function initializeApp() {
-                feather.replace();
-                initMobileMenu();
-                initAnalysisSearch();
-                initNavigation();
-            }
+            // --- Inicialización y Event Listeners ---
+            createInitialUI();
 
-            initializeApp();
+            document.querySelectorAll('.home-card-btn, .mobile-nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const pageId = e.currentTarget.dataset.page;
+                    showToolsPage(pageId);
+                    closeMobileMenu();
+                });
+            });
+
+            document.querySelectorAll('.tool-tab').forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = e.currentTarget.dataset.page;
+                    showToolContent(pageId);
+                });
+            });
+            
+            document.getElementById('logo-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                toolsPageContainer.style.display = 'none';
+                homePage.style.display = 'block';
+            });
+
+            mobileMenuButton.addEventListener('click', openMobileMenu);
+            closeMobileMenuButton.addEventListener('click', closeMobileMenu);
         });
     </script>
 </body>
 </html>
+
