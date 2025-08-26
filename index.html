@@ -102,8 +102,8 @@
     <!-- Página de Inicio con Tarjetas -->
     <main id="home-page" class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div class="text-center mb-16">
-            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">Explora Nuestras Herramientas</h1>
-            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">Selecciona una categoría para ver análisis detallados y datos en tiempo real.</p>
+            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">El Pulso del Mercado</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">Todas las herramientas que necesitas, en un solo lugar.</p>
         </div>
 
         <!-- Barra de Iconos Interactivos -->
@@ -157,16 +157,32 @@
     </template>
     <template id="template-calendario-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Calendario Económico</h1><p class="mt-2 text-lg text-gray-400">Anticípate a los eventos clave.</p></div>
-        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="economic-calendar"></div></div></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-2 md:p-4"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="economic-calendar"></div></div></div>
     </template>
     <template id="template-educacion-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Educación Financiera</h1><p class="mt-2 text-lg text-gray-400">Aprende los conceptos clave para invertir con confianza.</p></div>
-        <div class="max-w-4xl mx-auto space-y-8"><div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"> <h2 class="text-2xl font-semibold text-white mb-4">Conceptos Básicos de Inversión</h2><p class="text-gray-400">Aquí encontrarás artículos y guías sobre los fundamentos del mercado de valores, análisis técnico y gestión de riesgos.</p></div><div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Tutoriales en Video</h2><p class="text-gray-400">Próximamente: una sección con tutoriales en video para aprender a usar nuestras herramientas y analizar el mercado paso a paso.</p></div></div>
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Trading vs. Inversión</h2><p class="text-gray-400">El **trading** busca ganancias a corto plazo aprovechando la volatilidad del mercado, mientras que la **inversión** se enfoca en el crecimiento a largo plazo mediante la compra y retención de activos sólidos.</p></div>
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Conceptos Básicos</h2><p class="text-gray-400">Aquí encontrarás guías sobre los fundamentos del mercado, análisis técnico y gestión de riesgos para empezar con buen pie.</p></div>
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Comparte tu Análisis</h2><p class="text-gray-400 mb-6">Sube imágenes de tus gráficos y análisis para tenerlos organizados en un solo lugar.</p><label for="analysis-upload" class="cursor-pointer w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-block text-center">Subir Análisis</label><input type="file" id="analysis-upload" class="hidden" accept="image/*"><div id="analysis-gallery" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        </div>
     </template>
     <template id="template-contacto-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Contacto</h1><p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Contáctanos!</p></div>
         <div class="max-w-xl mx-auto bg-[#161B22] border border-gray-700 rounded-xl p-8"><form action="#" method="POST"><div class="space-y-6"><div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div><div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div><div><label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label><div class="mt-1"><textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></textarea></div></div><div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div></div></form></div>
     </template>
+
+    <!-- Modal de Confirmación de Imagen -->
+    <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8 max-w-lg w-full">
+            <h3 class="text-2xl font-semibold text-white mb-4">Confirmar Análisis</h3>
+            <div class="mb-6"><img id="modal-image-preview" src="" alt="Vista previa del análisis" class="max-h-96 w-auto mx-auto rounded-lg"></div>
+            <div class="flex justify-end gap-4">
+                <button id="cancel-upload-btn" class="bg-gray-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-700 transition-colors">Cancelar</button>
+                <button id="confirm-upload-btn" class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors">Confirmar y Subir</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-16">
@@ -201,48 +217,30 @@
             ];
 
             const loadedWidgets = new Set();
+            let currentFileToUpload = null;
 
             function createInitialUI() {
                 tools.forEach((tool, index) => {
-                    // Crear iconos para la barra superior
                     const iconLink = document.createElement('a');
                     iconLink.href = '#';
                     iconLink.className = 'home-icon-link flex flex-col items-center gap-2 group';
                     iconLink.dataset.page = tool.id;
                     iconLink.style.animationDelay = `${index * 100}ms`;
-                    iconLink.innerHTML = `
-                        <div class="w-16 h-16 bg-[#161B22] border border-gray-700 rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:bg-blue-600/20 group-hover:border-blue-500 transition-all duration-300 p-2">
-                            ${tool.icon}
-                        </div>
-                        <span class="icon-label text-sm font-medium text-gray-400 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">${tool.title}</span>
-                    `;
+                    iconLink.innerHTML = `<div class="w-16 h-16 bg-[#161B22] border border-gray-700 rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:bg-blue-600/20 group-hover:border-blue-500 transition-all duration-300 p-2">${tool.icon}</div><span class="icon-label text-sm font-medium text-gray-400 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">${tool.title}</span>`;
                     homeIconBar.appendChild(iconLink);
 
-                    // Crear tarjetas para la página de inicio
                     const card = document.createElement('div');
                     card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300';
-                    card.innerHTML = `
-                        <div class="bg-blue-600/10 p-4 rounded-lg mb-6 flex items-center justify-center h-16 w-16 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110">
-                            <div class="transition-transform duration-300 group-hover:rotate-6">${tool.icon}</div>
-                        </div>
-                        <h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3>
-                        <p class="text-gray-400 mb-6 flex-grow">${tool.description}</p>
-                        <button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>
-                    `;
+                    card.innerHTML = `<div class="bg-blue-600/10 p-4 rounded-lg mb-6 flex items-center justify-center h-16 w-16 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110"><div class="transition-transform duration-300 group-hover:rotate-6">${tool.icon}</div></div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
                     homeCardsGrid.appendChild(card);
 
-                    // Crear pestañas para la página de herramientas
                     const tab = document.createElement('a');
                     tab.href = '#';
                     tab.className = 'tool-tab text-gray-400 hover:text-gray-100 py-3 px-4 flex flex-col items-center gap-2 font-medium border-b-2 border-transparent text-sm sm:text-base';
                     tab.dataset.page = tool.id;
-                    tab.innerHTML = `
-                        <span class="h-6 w-6">${tool.icon.replace('h-8 w-8', 'h-6 w-6')}</span>
-                        <span>${tool.title}</span>
-                    `;
+                    tab.innerHTML = `<span class="h-6 w-6">${tool.icon.replace('h-8 w-8', 'h-6 w-6')}</span><span>${tool.title}</span>`;
                     toolsTabsContainer.appendChild(tab);
 
-                    // Crear enlaces para el menú móvil
                     const mobileLink = document.createElement('a');
                     mobileLink.href = '#';
                     mobileLink.className = 'mobile-nav-link text-gray-300 hover:text-white transition-colors py-2';
@@ -276,6 +274,10 @@
             function closeMobileMenu() { mobileMenu.classList.add('translate-x-full'); }
 
             function loadWidgetsForContent(pageId) {
+                if (pageId === 'educacion-page') {
+                    setupImageUpload();
+                }
+
                 const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
                 widgetContainers.forEach(container => {
                     const widgetType = container.dataset.widgetType;
@@ -317,7 +319,7 @@
                              break;
                         case 'economic-calendar':
                              scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
-                             config = { "colorTheme": "dark", "isTransparent": true, "width": "100%", "height": "100%", "locale": "es", "importanceFilter": "-1,0,1" };
+                             config = { "colorTheme": "dark", "isTransparent": false, "locale": "es", "countryFilter": "", "importanceFilter": "0,1", "width": "100%", "height": "100%" };
                              break;
                         case 'crypto-coins-heatmap':
                              scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js';
@@ -338,12 +340,66 @@
                 });
             }
 
+            function setupImageUpload() {
+                const uploadInput = document.getElementById('analysis-upload');
+                const gallery = document.getElementById('analysis-gallery');
+                const modal = document.getElementById('image-preview-modal');
+                const modalImage = document.getElementById('modal-image-preview');
+                const confirmBtn = document.getElementById('confirm-upload-btn');
+                const cancelBtn = document.getElementById('cancel-upload-btn');
+
+                if (!uploadInput || !gallery || !modal) return;
+
+                uploadInput.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file && file.type.startsWith('image/')){
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            currentFileToUpload = e.target.result;
+                            modalImage.src = currentFileToUpload;
+                            modal.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                function closeModal() {
+                    modal.classList.add('hidden');
+                    modalImage.src = "";
+                    currentFileToUpload = null;
+                    uploadInput.value = ""; // Permite volver a seleccionar el mismo archivo
+                }
+
+                confirmBtn.addEventListener('click', () => {
+                    if (currentFileToUpload) {
+                        const card = document.createElement('div');
+                        card.className = 'relative group bg-gray-800 rounded-lg overflow-hidden';
+                        
+                        const img = document.createElement('img');
+                        img.src = currentFileToUpload;
+                        img.className = 'w-full h-auto object-cover';
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'absolute top-2 right-2 bg-red-600 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity';
+                        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+                        deleteBtn.onclick = () => card.remove();
+                        
+                        card.appendChild(img);
+                        card.appendChild(deleteBtn);
+                        gallery.appendChild(card);
+                    }
+                    closeModal();
+                });
+
+                cancelBtn.addEventListener('click', closeModal);
+            }
+
             // --- Inicialización y Event Listeners ---
             createInitialUI();
 
             document.querySelectorAll('.home-card-btn, .mobile-nav-link, .home-icon-link').forEach(link => {
                 link.addEventListener('click', (e) => {
-                    e.preventDefault(); // Evita que el enlace recargue la página
+                    e.preventDefault();
                     const pageId = e.currentTarget.dataset.page;
                     showToolsPage(pageId);
                     closeMobileMenu();
