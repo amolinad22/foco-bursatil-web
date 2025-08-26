@@ -60,21 +60,11 @@
             color: #8B949E;
         }
         
-        /* --- NUEVOS EFECTOS INTERACTIVOS --- */
-
-        /* Efecto para las tarjetas de navegación */
-        .nav-card {
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-        .nav-card:hover {
-            transform: scale(1.03);
-            border-color: #3B82F6; /* Azul de acento */
-        }
-
-        /* Efecto para los enlaces del menú superior */
+        /* Estilos para enlaces de navegación superior */
         .nav-link {
+            cursor: pointer;
             position: relative;
-            padding-bottom: 6px; /* Espacio para la línea animada */
+            padding-bottom: 4px; /* Espacio para la línea inferior */
         }
         .nav-link::after {
             content: '';
@@ -87,7 +77,8 @@
             background-color: #D4AF37; /* Color dorado */
             transition: width 0.3s ease-in-out;
         }
-        .nav-link:hover::after, .nav-link.active::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
             width: 100%;
         }
         .nav-link.active {
@@ -95,6 +86,15 @@
             font-weight: 600;
         }
 
+        /* Estilos para las tarjetas de navegación */
+        .nav-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
+        }
         /* Oculta el pie de página de TradingView */
         .tradingview-widget-copyright {
             display: none !important;
@@ -140,6 +140,7 @@
 
                 <!-- Menú de Navegación (Desktop) -->
                 <div id="desktop-nav" class="hidden md:flex items-center space-x-6 lg:space-x-8">
+                    <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="panorama-section"><i data-feather="trending-up" class="w-4 h-4 mr-2"></i>Panorama</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="analisis-section"><i data-feather="bar-chart-2" class="w-4 h-4 mr-2"></i>Análisis Técnico</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="chile-section"><img src="https://flagcdn.com/w20/cl.png" alt="Bandera de Chile" class="w-5 h-auto mr-2">Chile</a>
                     <a href="#" class="nav-link text-gray-300 hover:text-gold transition duration-300 flex items-center" data-target="usa-section"><img src="https://flagcdn.com/w20/us.png" alt="Bandera de USA" class="w-5 h-auto mr-2">USA</a>
@@ -173,51 +174,58 @@
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Explora Nuestras Herramientas</h1>
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto">Selecciona una categoría para ver análisis detallados, gráficos en tiempo real y las últimas noticias del mercado.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Card Panorama del Mercado -->
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="panorama-section">
+                    <i data-feather="trending-up" class="w-12 h-12 text-blue-accent mb-4"></i>
+                    <h2 class="text-2xl font-bold mb-2">Panorama del Mercado</h2>
+                    <p class="text-gray-400 mb-6 flex-grow">Un vistazo general a los principales mercados y activos financieros.</p>
+                    <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="panorama-section">Ver Sección</button>
+                </div>
                 <!-- Card Análisis Técnico -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="analisis-section">
                     <i data-feather="bar-chart-2" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Análisis Técnico</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Herramientas visuales para analizar la acción del precio y tomar decisiones informadas.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="analisis-section">Ver Sección</button>
                 </div>
                 <!-- Card Chile -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="chile-section">
                     <img src="https://flagcdn.com/w40/cl.png" alt="Bandera de Chile" class="w-12 h-auto mb-4 rounded-full">
                     <h2 class="text-2xl font-bold mb-2">Mercado Chileno</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Sigue de cerca el S&P IPSA y las principales acciones de la bolsa de Santiago.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="chile-section">Ver Sección</button>
                 </div>
                 <!-- Card USA -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="usa-section">
                     <img src="https://flagcdn.com/w40/us.png" alt="Bandera de USA" class="w-12 h-auto mb-4 rounded-full">
                     <h2 class="text-2xl font-bold mb-2">Mercado de EE.UU.</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Analiza los gigantes de Wall Street, desde tecnológicas hasta financieras.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="usa-section">Ver Sección</button>
                 </div>
                 <!-- Card Noticias -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="noticias-section">
                     <i data-feather="globe" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Noticias</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Las últimas noticias económicas y financieras que mueven los mercados.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="noticias-section">Ver Sección</button>
                 </div>
                 <!-- Card Calendario -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="calendario-section">
                     <i data-feather="calendar" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Calendario Económico</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Anticípate a los eventos clave que pueden impactar tus inversiones.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="calendario-section">Ver Sección</button>
                 </div>
                 <!-- Card Educación -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="educacion-section">
                     <i data-feather="book-open" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Educación Financiera</h2>
                     <p class="text-gray-400 mb-6 flex-grow">Aprende los conceptos clave del mundo de las inversiones.</p>
                     <button class="section-button bg-blue-accent text-white px-6 py-2 rounded-md font-semibold hover:bg-opacity-90 w-full" data-target="educacion-section">Ver Sección</button>
                 </div>
                  <!-- Card Contacto -->
-                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center">
+                <div class="nav-card bg-card border border-card rounded-lg p-6 flex flex-col items-center text-center" data-target="contacto-section">
                     <i data-feather="mail" class="w-12 h-12 text-blue-accent mb-4"></i>
                     <h2 class="text-2xl font-bold mb-2">Contacto</h2>
                     <p class="text-gray-400 mb-6 flex-grow">¿Tienes dudas o sugerencias? Ponte en contacto con nuestro equipo.</p>
@@ -228,6 +236,70 @@
 
         <!-- CONTENEDOR PARA LAS SECCIONES DETALLADAS -->
         <div id="sections-container" class="hidden">
+            <!-- SECCIÓN DE PANORAMA DEL MERCADO -->
+            <div id="panorama-section" class="page-section hidden">
+                <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
+                <h1 class="text-3xl font-bold mb-8">Panorama del Mercado</h1>
+                <div class="tradingview-widget-container" style="height:800px;width:100%">
+                    <div class="tradingview-widget-container__widget"></div>
+                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
+                    {
+                    "colorTheme": "dark",
+                    "dateRange": "12M",
+                    "showChart": true,
+                    "locale": "es",
+                    "largeChartUrl": "",
+                    "isTransparent": true,
+                    "showSymbolLogo": true,
+                    "showFloatingTooltip": false,
+                    "width": "100%",
+                    "height": "100%",
+                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                    "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                    "gridLineColor": "rgba(240, 243, 250, 0)",
+                    "scaleFontColor": "rgba(120, 123, 134, 1)",
+                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)",
+                    "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)",
+                    "symbolActiveColor": "rgba(41, 98, 255, 0.12)",
+                    "tabs": [
+                      {
+                        "title": "Índices",
+                        "symbols": [
+                          { "s": "BCS:SP_IPSA", "d": "S&P IPSA" },
+                          { "s": "FOREXCOM:SPXUSD", "d": "S&P 500" },
+                          { "s": "FOREXCOM:NSXUSD", "d": "Nasdaq 100" },
+                          { "s": "FOREXCOM:DJI", "d": "Dow 30" }
+                        ],
+                        "originalTitle": "Indices"
+                      },
+                      {
+                        "title": "Materias Primas",
+                        "symbols": [
+                          { "s": "CME_MINI:GC1!", "d": "Oro" },
+                          { "s": "NYMEX:CL1!", "d": "Petróleo Crudo" },
+                          { "s": "COMEX:SI1!", "d": "Plata" },
+                          { "s": "NYMEX:NG1!", "d": "Gas Natural" }
+                        ],
+                        "originalTitle": "Commodities"
+                      },
+                      {
+                        "title": "Divisas",
+                        "symbols": [
+                          { "s": "FX_IDC:USDCLP", "d": "USD/CLP" },
+                          { "s": "FX:EURUSD", "d": "EUR/USD" },
+                          { "s": "FX:GBPUSD", "d": "GBP/USD" },
+                          { "s": "FX:USDJPY", "d": "USD/JPY" }
+                        ],
+                        "originalTitle": "Forex"
+                      }
+                    ]
+                  }
+                    </script>
+                </div>
+            </div>
+
             <!-- SECCIÓN DE ANÁLISIS TÉCNICO -->
             <div id="analisis-section" class="page-section hidden">
                 <button class="back-button mb-8 flex items-center text-gold hover:underline"><i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>Volver a Secciones</button>
@@ -315,42 +387,70 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            feather.replace();
-
-            // --- LISTA DE ACCIONES COMPARTIDA ---
+            // --- DATOS COMPARTIDOS ---
             const stockList = [
-                // ... (lista de acciones sin cambios) ...
+                // Acciones Chilenas
+                { symbol: 'BCS:SP_IPSA', name: 'S&P IPSA' },
+                { symbol: 'BCS:FALABELLA', name: 'Falabella' },
+                { symbol: 'BCS:SQM-B', name: 'SQM Serie B' },
+                { symbol: 'BCS:COPEC', name: 'Copec' },
+                { symbol: 'BCS:CENCOSUD', name: 'Cencosud' },
+                { symbol: 'BCS:BCI', name: 'Banco de Crédito e Inversiones' },
+                { symbol: 'BCS:CHILE', name: 'Banco de Chile' },
+                { symbol: 'BCS:BSANTANDER', name: 'Banco Santander-Chile' },
+                { symbol: 'BCS:VAPORES', name: 'CSAV' },
+                { symbol: 'BCS:ENELAM', name: 'Enel Américas' },
+                { symbol: 'BCS:CMPC', name: 'CMPC' },
+                { symbol: 'BCS:LTM', name: 'LATAM Airlines Group' },
+                // Acciones de USA
+                { symbol: 'NASDAQ:AAPL', name: 'Apple Inc.' },
+                { symbol: 'NASDAQ:MSFT', name: 'Microsoft Corporation' },
+                { symbol: 'NASDAQ:GOOGL', name: 'Alphabet Inc. (Google)' },
+                { symbol: 'NASDAQ:NVDA', name: 'NVIDIA Corporation' },
+                { symbol: 'NASDAQ:AMZN', name: 'Amazon.com, Inc.' },
+                { symbol: 'NASDAQ:TSLA', name: 'Tesla, Inc.' },
+                { symbol: 'NYSE:JPM', name: 'JPMorgan Chase & Co.' },
+                { symbol: 'NYSE:V', name: 'Visa Inc.' },
+                { symbol: 'NYSE:MA', name: 'Mastercard Incorporated' },
+                { symbol: 'NYSE:BAC', name: 'Bank of America Corp' },
+                { symbol: 'NYSE:WMT', name: 'Walmart Inc.' },
+                { symbol: 'NYSE:XOM', name: 'Exxon Mobil Corporation' },
+                // Criptomonedas
+                { symbol: 'BITSTAMP:BTCUSD', name: 'Bitcoin / USD' },
+                { symbol: 'BITSTAMP:ETHUSD', name: 'Ethereum / USD' },
+                // Divisas
+                { symbol: 'FX_IDC:USDCLP', name: 'Dólar Americano / Peso Chileno' }
             ];
 
-            // --- WIDGET DE GRÁFICO AVANZADO ---
+            // --- CREACIÓN DE WIDGETS ---
             function createAdvancedChartWidget(ticker) {
                 const container = document.getElementById('advanced-chart-container');
                 if (!container) return;
                 container.innerHTML = '';
                 new TradingView.widget({
-                  "autosize": true,
-                  "symbol": ticker,
-                  "interval": "D",
-                  "timezone": "America/Santiago",
-                  "theme": "dark",
-                  "style": "1",
-                  "locale": "es",
-                  "details": true,
-                  "allow_symbol_change": true,
-                  "calendar": false,
-                  "hide_side_toolbar": false,
-                  "withdateranges": true,
-                  "studies": [
-                    "STD;SMA",
-                    "STD;RSI"
-                  ],
-                  "backgroundColor": "#161B22",
-                  "gridColor": "rgba(242, 242, 242, 0.05)",
-                  "container_id": "advanced-chart-container"
+                    "autosize": true,
+                    "symbol": ticker,
+                    "interval": "D",
+                    "timezone": "America/Santiago",
+                    "theme": "dark",
+                    "style": "1",
+                    "locale": "es",
+                    "details": true,
+                    "allow_symbol_change": true,
+                    "calendar": false,
+                    "hide_side_toolbar": false,
+                    "withdateranges": true,
+                    "studies": [
+                        "STD;SMA",
+                        "STD;RSI"
+                    ],
+                    "backgroundColor": "#161B22",
+                    "gridColor": "rgba(242, 242, 242, 0.05)",
+                    "container_id": "advanced-chart-container"
                 });
             }
 
-            // --- LÓGICA DE BÚSQUEDA ---
+            // --- FUNCIONES AUXILIARES ---
             function setupSearch(inputId, suggestionsId, buttonId, onSearchCallback) {
                 const tickerInput = document.getElementById(inputId);
                 const suggestionsBox = document.getElementById(suggestionsId);
@@ -358,8 +458,11 @@
 
                 const performSearch = () => {
                     const ticker = tickerInput.value.trim().toUpperCase();
-                    if (ticker) {
-                        onSearchCallback(ticker);
+                    const stock = stockList.find(s => s.symbol.toUpperCase() === ticker || s.name.toUpperCase() === ticker);
+                    const finalTicker = stock ? stock.symbol : ticker;
+
+                    if (finalTicker) {
+                        onSearchCallback(finalTicker);
                         suggestionsBox.classList.add('hidden');
                         tickerInput.blur();
                     }
@@ -397,12 +500,13 @@
                 tickerInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') performSearch(); });
             }
 
+            // --- MÓDULOS DE INICIALIZACIÓN ---
             function initMobileMenu() {
                 const desktopNav = document.getElementById('desktop-nav');
                 const mobileMenu = document.getElementById('mobile-menu');
                 mobileMenu.innerHTML = desktopNav.innerHTML;
                 mobileMenu.querySelectorAll('a').forEach(link => {
-                    link.classList.remove('flex', 'items-center');
+                    link.classList.remove('flex', 'items-center', 'space-x-6', 'lg:space-x-8', 'relative');
                     link.classList.add('block', 'px-4', 'py-3', 'hover:bg-gray-700');
                     link.querySelector('i')?.remove();
                     link.querySelector('img')?.remove();
@@ -419,13 +523,16 @@
 
             function initNavigation() {
                 const navLinks = document.querySelectorAll('.nav-link');
-                const sectionButtons = document.querySelectorAll('.section-button');
+                const navCards = document.querySelectorAll('.nav-card');
                 const backButtons = document.querySelectorAll('.back-button');
                 const logoLink = document.getElementById('logo-link');
                 const tabSelection = document.getElementById('tab-selection');
                 const sectionsContainer = document.getElementById('sections-container');
                 const pageSections = document.querySelectorAll('.page-section');
-                const widgetLoadStatus = { 'criptomonedas-section': false, 'analisis-section': false };
+                const widgetLoadStatus = { 
+                    'criptomonedas-section': false, 
+                    'analisis-section': false 
+                };
 
                 const loadWidget = (targetId) => {
                     if (targetId === 'criptomonedas-section' && !widgetLoadStatus[targetId]) {
@@ -458,7 +565,7 @@
                     navLinks.forEach(link => link.classList.remove('active'));
                 };
 
-                document.querySelectorAll('.nav-link, .section-button').forEach(el => {
+                document.querySelectorAll('.nav-link').forEach(el => {
                     el.addEventListener('click', (e) => {
                         e.preventDefault();
                         const targetId = e.currentTarget.dataset.target;
@@ -469,16 +576,31 @@
                     });
                 });
 
+                navCards.forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = card.dataset.target;
+                         if (targetId) {
+                            showSection(targetId);
+                        }
+                    });
+                });
+
                 backButtons.forEach(button => button.addEventListener('click', showTabSelection));
                 logoLink.addEventListener('click', (e) => { e.preventDefault(); showTabSelection(); });
 
                 showTabSelection();
             }
 
-            // Inicializar todo
-            initMobileMenu();
-            initAnalysisSearch();
-            initNavigation();
+            // --- INICIALIZACIÓN PRINCIPAL DE LA APP ---
+            function initializeApp() {
+                feather.replace();
+                initMobileMenu();
+                initAnalysisSearch();
+                initNavigation();
+            }
+
+            initializeApp();
         });
     </script>
 </body>
