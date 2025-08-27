@@ -3,26 +3,499 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foco Bursátil</title>
-    <!-- Asumo que usas Tailwind CSS por las clases que vi -->
+    <title>Foco Bursátil - Herramientas Financieras</title>
+    
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos personalizados */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D1117;
+        }
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        .tradingview-widget-container__widget {
+            height: 100%;
+            width: 100%;
+        }
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        .tool-tab {
+            transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+        }
+        .tool-tab.active {
+            border-color: #3B82F6; /* blue-500 */
+            color: #F9FAFB; /* gray-50 */
+        }
+        .home-icon-link .icon-label {
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+        }
+
+        /* Animación de entrada para los iconos */
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .home-icon-link {
+            opacity: 0; /* Inicia oculto */
+            animation: fadeInSlideUp 0.5s ease-out forwards;
+        }
+    </style>
 </head>
-<body>
+<body class="text-gray-200">
 
-    <!-- ... Aquí va el resto de tu código HTML ... -->
-    <!-- Mantengo la estructura que mostraste en tu captura -->
+    <canvas id="particle-canvas"></canvas>
 
-    <div class="flex items-center justify-between h-20">
-        <a href="#" id="logo-link" class="text-xl font-bold">
-            
-            <!-- ESTA ES LA LÍNEA QUE HEMOS CORREGIDO -->
-            <img src="nuevo logo.png" alt="Foco Bursátil Logo" class="...">
-
-        </a>
+    <!-- Ticker de Acciones -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+      { "symbols": [ { "proName": "FOREXCOM:SPXUSD", "title": "S&P 500" }, { "proName": "FOREXCOM:NSXUSD", "title": "US 100" }, { "proName": "BITSTAMP:BTCUSD", "title": "Bitcoin" }, { "proName": "BITSTAMP:ETHUSD", "title": "Ethereum" }, { "proName": "BCS:SP_IPSA", "title": "IPSA" }, { "proName": "BCS:SQM_B", "title": "SQM-B" }, { "proName": "BCS:COPEC", "title": "COPEC" }, { "proName": "FX_IDC:USDCLP", "title": "USD/CLP" } ], "colorTheme": "dark", "locale": "es", "isTransparent": false, "showSymbolLogo": true, "displayMode": "adaptive" }
+      </script>
     </div>
 
-    <!-- ... Aquí va el resto de tu código HTML ... -->
+    <!-- Barra de Navegación Principal -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40 border-b border-gray-700">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <a href="#" id="logo-link" class="text-xl font-bold text-white">
+                    <!-- CAMBIO: Se elimina el texto y se pone un ícono de "casa" -->
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </a>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
 
+    <!-- Menú Móvil (Sidebar) -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 transform translate-x-full md:hidden p-6 border-l border-gray-700">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-lg font-semibold text-white">Menú</h2>
+            <button id="close-mobile-menu" class="text-gray-400 hover:text-white">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <nav id="mobile-nav-links" class="flex flex-col space-y-4"></nav>
+    </div>
+
+    <!-- Página de Inicio con Tarjetas -->
+    <main id="home-page" class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div class="text-center mb-16">
+            <!-- CAMBIO: Logo mucho más grande -->
+            <div class="flex justify-center mb-8">
+                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/2745dc29b39c76d412cfeb6462fd70370f033cf8/nuevo%20logo.png?raw=true" alt="Foco Bursátil Logo" class="h-40 w-auto" onerror="this.onerror=null;this.src='https://placehold.co/300x100/0D1117/FFFFFF?text=Logo+Error';">
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">El Pulso del Mercado</h1>
+            <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-400">Todas las herramientas que necesitas, en un solo lugar.</p>
+        </div>
+
+        <!-- Barra de Iconos Interactivos -->
+        <div id="home-icon-bar" class="flex justify-center items-start flex-wrap gap-6 md:gap-10 lg:gap-12 mb-20">
+            <!-- Los iconos se generan dinámicamente -->
+        </div>
+
+        <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Las tarjetas se generan dinámicamente -->
+        </div>
+    </main>
+
+    <!-- Contenedor de Herramientas con Pestañas (oculto por defecto) -->
+    <main id="tools-page-container" class="container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+        <div id="tools-tabs" class="flex justify-center flex-wrap border-b border-gray-700 mb-8">
+            <!-- Las pestañas se generan dinámicamente -->
+        </div>
+        <div id="tools-content-container">
+            <!-- El contenido de la pestaña activa se mostrará aquí -->
+        </div>
+    </main>
+
+    <!-- Plantillas de Contenido para las Herramientas -->
+    <template id="template-panorama-market-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Panorama del Mercado</h1><p class="mt-2 text-lg text-gray-400">Un vistazo general a los principales mercados.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="w-full h-[650px]"><div class="tradingview-widget-container__widget" data-widget-type="market-overview"></div></div></div>
+    </template>
+    <template id="template-analisis-tecnico-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Análisis Técnico</h1><p class="mt-2 text-lg text-gray-400">Gráfico avanzado para analizar tus activos favoritos.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-4"><div class="h-[75vh]"><div class="tradingview-widget-container__widget" data-widget-type="advanced-chart"></div></div></div>
+    </template>
+    <template id="template-chile-market-page">
+        <div class="text-center mb-12"><div class="inline-flex items-center justify-center"><img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile" class="mr-4"><h1 class="text-4xl font-bold text-white">Chile</h1></div><p class="mt-2 text-lg text-gray-400">Mapa de Calor y análisis de las acciones chilenas.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="heatmap-cl"></div></div></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-cl"></div></div></div>
+    </template>
+    <template id="template-usa-market-page">
+        <div class="text-center mb-12"><div class="inline-flex items-center justify-center"><img src="https://flagcdn.com/us.svg" width="40" alt="Bandera de EE.UU." class="mr-4"><h1 class="text-4xl font-bold text-white">USA</h1></div><p class="mt-2 text-lg text-gray-400">Mapa de Calor del S&P 500 y las acciones más activas.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="heatmap-us"></div></div></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-us"></div></div></div>
+    </template>
+    <template id="template-crypto-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Mercado de Cryptomonedas</h1><p class="mt-2 text-lg text-gray-400">Visualiza el rendimiento con nuestro mapa de calor y screener.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="crypto-coins-heatmap"></div></div></div>
+        <div class="text-center mb-12"><h2 class="text-3xl font-bold text-white">Screener de Cryptomonedas</h2><p class="mt-2 text-lg text-gray-400">Filtra y encuentra cryptomonedas según tus criterios.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="crypto-screener"></div></div></div>
+    </template>
+    <template id="template-noticias-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Noticias del Mercado</h1><p class="mt-2 text-lg text-gray-400">Las últimas noticias que mueven los mercados.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="timeline"></div></div></div>
+    </template>
+    <template id="template-calendario-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Calendario Económico</h1><p class="mt-2 text-lg text-gray-400">Anticípate a los eventos clave.</p></div>
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-2 md:p-4"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="economic-calendar"></div></div></div>
+    </template>
+    <template id="template-educacion-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Educación Financiera</h1><p class="mt-2 text-lg text-gray-400">Aprende los conceptos clave para invertir con confianza.</p></div>
+        <div class="max-w-4xl mx-auto space-y-12">
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Trading vs. Inversión</h2><p class="text-gray-400">El **trading** busca ganancias a corto plazo aprovechando la volatilidad del mercado, mientras que la **inversión** se enfoca en el crecimiento a largo plazo mediante la compra y retención de activos sólidos.</p></div>
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Conceptos Básicos</h2><p class="text-gray-400">Aquí encontrarás guías sobre los fundamentos del mercado, análisis técnico y gestión de riesgos para empezar con buen pie.</p></div>
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Comparte tu Análisis</h2><p class="text-gray-400 mb-6">Sube imágenes de tus gráficos y análisis para tenerlos organizados en un solo lugar.</p><label for="analysis-upload" class="cursor-pointer w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-block text-center">Subir Análisis</label><input type="file" id="analysis-upload" class="hidden" accept="image/*"><div id="analysis-gallery" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
+        </div>
+    </template>
+    <template id="template-contacto-page">
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Contacto</h1><p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Contáctanos!</p></div>
+        <div class="max-w-xl mx-auto bg-[#161B22] border border-gray-700 rounded-xl p-8"><form action="#" method="POST"><div class="space-y-6"><div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div><div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div><div><label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label><div class="mt-1"><textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></textarea></div></div><div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div></div></form></div>
+    </template>
+
+    <!-- Modal de Confirmación de Imagen -->
+    <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8 max-w-lg w-full">
+            <h3 class="text-2xl font-semibold text-white mb-4">Confirmar Análisis</h3>
+            <div class="mb-6"><img id="modal-image-preview" src="" alt="Vista previa del análisis" class="max-h-96 w-auto mx-auto rounded-lg"></div>
+            <div class="flex justify-end gap-4">
+                <button id="cancel-upload-btn" class="bg-gray-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-700 transition-colors">Cancelar</button>
+                <button id="confirm-upload-btn" class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors">Confirmar y Subir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-700 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
+            <p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const homePage = document.getElementById('home-page');
+            const toolsPageContainer = document.getElementById('tools-page-container');
+            const toolsContentContainer = document.getElementById('tools-content-container');
+            const homeCardsGrid = document.getElementById('home-cards-grid');
+            const homeIconBar = document.getElementById('home-icon-bar');
+            const toolsTabsContainer = document.getElementById('tools-tabs');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+
+            const tools = [
+                { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>` },
+                { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>` },
+                { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile">` },
+                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" width="40" alt="Bandera de EE.UU.">` },
+                { id: 'crypto-page', title: 'Cryptomonedas', description: 'Explora el mercado de cryptomonedas con nuestro mapa de calor.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H7" /></svg>` },
+                { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v12a2 2 0 01-2 2z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 2v6l-3-3-3 3V2" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6" /><path stroke-linecap="round" stroke-linejoin="round" d="M9 16h6" /></svg>` },
+                { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>` },
+                { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>` },
+                { id: 'contacto-page', title: 'Contacto', description: '¿Tienes preguntas? Ponte en contacto con nosotros.', icon: `<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>` }
+            ];
+
+            const loadedWidgets = new Set();
+            let currentFileToUpload = null;
+
+            function createInitialUI() {
+                tools.forEach((tool, index) => {
+                    const iconLink = document.createElement('a');
+                    iconLink.href = '#';
+                    iconLink.className = 'home-icon-link flex flex-col items-center gap-2 group';
+                    iconLink.dataset.page = tool.id;
+                    iconLink.style.animationDelay = `${index * 100}ms`;
+                    iconLink.innerHTML = `<div class="w-16 h-16 bg-[#161B22] border border-gray-700 rounded-full flex items-center justify-center transform group-hover:scale-110 group-hover:bg-blue-600/20 group-hover:border-blue-500 transition-all duration-300 p-2">${tool.icon}</div><span class="icon-label text-sm font-medium text-gray-400 opacity-0 transform translate-y-2 group-hover:opacity-100 group-hover:translate-y-0">${tool.title}</span>`;
+                    homeIconBar.appendChild(iconLink);
+
+                    const card = document.createElement('div');
+                    card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300';
+                    card.innerHTML = `<div class="bg-blue-600/10 p-4 rounded-lg mb-6 flex items-center justify-center h-16 w-16 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110"><div class="transition-transform duration-300 group-hover:rotate-6">${tool.icon}</div></div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
+                    homeCardsGrid.appendChild(card);
+
+                    const tab = document.createElement('a');
+                    tab.href = '#';
+                    tab.className = 'tool-tab text-gray-400 hover:text-gray-100 py-3 px-4 flex flex-col items-center gap-2 font-medium border-b-2 border-transparent text-sm sm:text-base';
+                    tab.dataset.page = tool.id;
+                    tab.innerHTML = `<span class="h-6 w-6">${tool.icon.replace('h-8 w-8', 'h-6 w-6')}</span><span>${tool.title}</span>`;
+                    toolsTabsContainer.appendChild(tab);
+
+                    const mobileLink = document.createElement('a');
+                    mobileLink.href = '#';
+                    mobileLink.className = 'mobile-nav-link text-gray-300 hover:text-white transition-colors py-2';
+                    mobileLink.textContent = tool.title;
+                    mobileLink.dataset.page = tool.id;
+                    mobileNavLinksContainer.appendChild(mobileLink);
+                });
+            }
+
+            function showToolsPage(pageId) {
+                homePage.style.display = 'none';
+                toolsPageContainer.style.display = 'block';
+                showToolContent(pageId);
+            }
+
+            function showToolContent(pageId) {
+                const template = document.getElementById(`template-${pageId}`);
+                if (!template) return;
+
+                toolsContentContainer.innerHTML = template.innerHTML;
+                loadWidgetsForContent(pageId);
+
+                document.querySelectorAll('.tool-tab').forEach(t => {
+                    t.classList.toggle('active', t.dataset.page === pageId);
+                });
+                
+                window.scrollTo(0, 0);
+            }
+
+            function openMobileMenu() { mobileMenu.classList.remove('translate-x-full'); }
+            function closeMobileMenu() { mobileMenu.classList.add('translate-x-full'); }
+
+            function loadWidgetsForContent(pageId) {
+                if (pageId === 'educacion-page') {
+                    setupImageUpload();
+                }
+
+                const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
+                widgetContainers.forEach(container => {
+                    const widgetType = container.dataset.widgetType;
+                    const widgetKey = `${pageId}-${widgetType}`;
+
+                    if (loadedWidgets.has(widgetKey)) return;
+
+                    let config = {};
+                    let scriptSrc = '';
+                    
+                    switch(widgetType) {
+                        case 'market-overview':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRYPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "COINBASE:SOLUSD", "d": "SOLUSD"}, {"s": "COINBASE:ATOMUSD", "d": "ATOMUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
+                            break;
+                        case 'advanced-chart':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                            config = { "autosize": true, "symbol": "BCS:SP_IPSA", "interval": "D", "timezone": "America/Santiago", "theme": "dark", "style": "1", "locale": "es", "allow_symbol_change": true, "calendar": true, "details": true, "hotlist": true, "hide_side_toolbar": false, "studies": ["Volume@tv-basicstudies", "RSI@tv-basicstudies"] };
+                            break;
+                        case 'heatmap-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "AllCL", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "BCS", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'heatmap-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "SPX500", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "US", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'timeline':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
+                             config = { "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "locale": "es" };
+                             break;
+                        case 'economic-calendar':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
+                             config = { "colorTheme": "dark", "isTransparent": false, "locale": "es", "countryFilter": "", "importanceFilter": "0,1", "width": "100%", "height": "100%" };
+                             break;
+                        case 'crypto-coins-heatmap':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js';
+                             config = { "dataSource": "Crypto", "blockSize": "market_cap_calc", "blockColor": "24h_close_change|5", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                             break;
+                        case 'crypto-screener':
+                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js';
+                             config = { "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "isTransparent": false, "locale": "es", "width": "100%", "height": "100%" };
+                             break;
+                    }
+                    
+                    const script = document.createElement('script');
+                    script.src = scriptSrc;
+                    script.async = true;
+                    script.innerHTML = JSON.stringify(config);
+                    container.innerHTML = ''; // Limpiar contenedor antes de añadir el script
+                    container.appendChild(script);
+                    loadedWidgets.add(widgetKey);
+                });
+            }
+
+            function setupImageUpload() {
+                const uploadInput = document.getElementById('analysis-upload');
+                const gallery = document.getElementById('analysis-gallery');
+                const modal = document.getElementById('image-preview-modal');
+                const modalImage = document.getElementById('modal-image-preview');
+                const confirmBtn = document.getElementById('confirm-upload-btn');
+                const cancelBtn = document.getElementById('cancel-upload-btn');
+
+                if (!uploadInput || !gallery || !modal) return;
+
+                uploadInput.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file && file.type.startsWith('image/')){
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            currentFileToUpload = e.target.result;
+                            modalImage.src = currentFileToUpload;
+                            modal.classList.remove('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                function closeModal() {
+                    modal.classList.add('hidden');
+                    modalImage.src = "";
+                    currentFileToUpload = null;
+                    uploadInput.value = ""; // Permite volver a seleccionar el mismo archivo
+                }
+
+                confirmBtn.addEventListener('click', () => {
+                    if (currentFileToUpload) {
+                        const card = document.createElement('div');
+                        card.className = 'relative group bg-gray-800 rounded-lg overflow-hidden';
+                        
+                        const img = document.createElement('img');
+                        img.src = currentFileToUpload;
+                        img.className = 'w-full h-auto object-cover';
+                        
+                        const deleteBtn = document.createElement('button');
+                        deleteBtn.className = 'absolute top-2 right-2 bg-red-600 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity';
+                        deleteBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>`;
+                        deleteBtn.onclick = () => card.remove();
+                        
+                        card.appendChild(img);
+                        card.appendChild(deleteBtn);
+                        gallery.appendChild(card);
+                    }
+                    closeModal();
+                });
+
+                cancelBtn.addEventListener('click', closeModal);
+            }
+
+            // --- Inicialización y Event Listeners ---
+            createInitialUI();
+
+            document.body.addEventListener('click', (e) => {
+                const target = e.target.closest('.home-card-btn, .mobile-nav-link, .home-icon-link');
+                if (target) {
+                    e.preventDefault();
+                    const pageId = target.dataset.page;
+                    showToolsPage(pageId);
+                    closeMobileMenu();
+                }
+            });
+
+            toolsTabsContainer.addEventListener('click', (e) => {
+                const tab = e.target.closest('.tool-tab');
+                if (tab) {
+                    e.preventDefault();
+                    const pageId = tab.dataset.page;
+                    showToolContent(pageId);
+                }
+            });
+
+            document.getElementById('logo-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                toolsPageContainer.style.display = 'none';
+                homePage.style.display = 'block';
+                 window.scrollTo(0, 0);
+            });
+
+            mobileMenuButton.addEventListener('click', openMobileMenu);
+            closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+
+            // Script para el fondo animado
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticles() {
+                particles = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for(let i = 0; i < numberOfParticles; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: Math.random() * 0.5 - 0.25,
+                        vy: Math.random() * 0.5 - 0.25,
+                        radius: Math.random() * 1.5
+                    });
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            function updateParticles() {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                });
+            }
+
+            function animate() {
+                drawParticles();
+                updateParticles();
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                createParticles();
+            });
+
+            resizeCanvas();
+            createParticles();
+            animate();
+        });
+    </script>
 </body>
 </html>
-"Reemplazar index con nuevo logo" 
+
