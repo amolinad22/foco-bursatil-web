@@ -67,6 +67,16 @@
             margin: 0 1.5rem; /* Add spacing between icons */
         }
 
+        /* --- Active Icon State --- */
+        .home-icon-link.active > div {
+            border-color: #3B82F6;
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+         .home-icon-link.active > span {
+            color: #F9FAFB; /* gray-50 */
+        }
+
+
         /* --- Loading Spinner Styles --- */
         .loader {
             width: 48px;
@@ -86,6 +96,35 @@
             100% {
                 transform: rotate(360deg);
             }
+        }
+
+        /* --- Accordion Styles --- */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding-top: 0;
+        }
+        .accordion-item.active .accordion-content {
+            max-height: 500px; /* Adjust as needed */
+            padding-top: 1rem;
+        }
+        .accordion-arrow {
+            transition: transform 0.3s ease-in-out;
+        }
+        .accordion-item.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* --- Page Transition Styles --- */
+        .page {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .page.fade-out {
+            opacity: 0;
+        }
+        .page.fade-in {
+            opacity: 1;
         }
     </style>
 </head>
@@ -142,7 +181,7 @@
     </div>
 
     <!-- Home Page with Cards -->
-    <main id="home-page" class="container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <main id="home-page" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div class="text-center mb-16">
             <div class="flex justify-center items-center gap-4 sm:gap-8">
                 <div class="text-right">
@@ -159,7 +198,7 @@
     </main>
 
     <!-- Tools Container (Tabs removed) -->
-    <main id="tools-page-container" class="container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+    <main id="tools-page-container" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
         <div id="tools-content-container">
             <!-- Active tab content will be displayed here -->
         </div>
@@ -175,7 +214,14 @@
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-4"><div class="h-[75vh]"><div class="tradingview-widget-container__widget" data-widget-type="advanced-chart"></div></div></div>
     </template>
     <template id="template-chile-market-page">
-        <div class="text-center mb-12"><div class="inline-flex items-center justify-center"><img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile" class="mr-4"><h1 class="text-4xl font-bold text-white">Chile</h1></div><p class="mt-2 text-lg text-gray-400">Mapa de Calor y análisis de las acciones chilenas.</p></div>
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center justify-center">
+                <img src="https://flagcdn.com/cl.svg" width="40" alt="Bandera de Chile" class="mr-4">
+                <h1 class="text-4xl font-bold text-white">Chile</h1>
+            </div>
+            <p class="mt-2 text-lg text-gray-400">Mapa de Calor y análisis de las acciones chilenas.</p>
+            <p class="mt-2 text-sm text-gray-500 italic">La información de mercado presenta un desfase de 20 minutos.</p>
+        </div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="heatmap-cl"></div></div></div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-cl"></div></div></div>
     </template>
@@ -200,9 +246,26 @@
     </template>
     <template id="template-educacion-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Educación Financiera</h1><p class="mt-2 text-lg text-gray-400">Aprende los conceptos clave para invertir con confianza.</p></div>
-        <div class="max-w-4xl mx-auto space-y-12">
-            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Trading vs. Inversión</h2><p class="text-gray-400">El **trading** busca ganancias a corto plazo aprovechando la volatilidad del mercado, mientras que la **inversión** se enfoca en el crecimiento a largo plazo mediante la compra y retención de activos sólidos.</p></div>
-            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Conceptos Básicos</h2><p class="text-gray-400">Aquí encontrarás guías sobre los fundamentos del mercado, análisis técnico y gestión de riesgos para empezar con buen pie.</p></div>
+        <div class="max-w-4xl mx-auto space-y-6">
+            <!-- Accordion structure -->
+            <div class="accordion-item bg-[#161B22] border border-gray-700 rounded-xl overflow-hidden">
+                <button class="accordion-header w-full flex justify-between items-center p-6 text-left">
+                    <h2 class="text-2xl font-semibold text-white">Trading vs. Inversión</h2>
+                    <svg class="accordion-arrow w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content px-6 pb-6">
+                    <p class="text-gray-400">El <strong>trading</strong> busca ganancias a corto plazo aprovechando la volatilidad del mercado, mientras que la <strong>inversión</strong> se enfoca en el crecimiento a largo plazo mediante la compra y retención de activos sólidos.</p>
+                </div>
+            </div>
+            <div class="accordion-item bg-[#161B22] border border-gray-700 rounded-xl overflow-hidden">
+                <button class="accordion-header w-full flex justify-between items-center p-6 text-left">
+                    <h2 class="text-2xl font-semibold text-white">Conceptos Básicos</h2>
+                     <svg class="accordion-arrow w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="accordion-content px-6 pb-6">
+                    <p class="text-gray-400">Aquí encontrarás guías sobre los fundamentos del mercado, análisis técnico y gestión de riesgos para empezar con buen pie.</p>
+                </div>
+            </div>
             <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8"><h2 class="text-2xl font-semibold text-white mb-4">Comparte tu Análisis</h2><p class="text-gray-400 mb-6">Sube imágenes de tus gráficos y análisis para tenerlos organizados en un solo lugar. Tus imágenes se guardarán en este navegador.</p><label for="analysis-upload" class="cursor-pointer w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 inline-block text-center">Subir Análisis</label><input type="file" id="analysis-upload" class="hidden" accept="image/*"><div id="analysis-gallery" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6"></div></div>
         </div>
     </template>
@@ -298,9 +361,16 @@
 
             // Switch view from home page to the tools page
             function showToolsPage(pageId) {
-                homePage.style.display = 'none';
-                toolsPageContainer.style.display = 'block';
-                showToolContent(pageId);
+                homePage.classList.add('fade-out');
+
+                setTimeout(() => {
+                    homePage.style.display = 'none';
+                    homePage.classList.remove('fade-out');
+                    
+                    toolsPageContainer.style.display = 'block';
+                    toolsPageContainer.classList.add('fade-in');
+                    showToolContent(pageId);
+                }, 300);
             }
 
             // Display the content for a specific tool
@@ -319,6 +389,11 @@
                     }
                 }, 500); // 0.5 second delay
 
+                // Update active icon state in the ticker
+                document.querySelectorAll('.home-icon-link').forEach(link => {
+                    link.classList.toggle('active', link.dataset.page === pageId);
+                });
+
                 window.scrollTo(0, 0);
             }
 
@@ -331,6 +406,7 @@
                 // Special setup for the education page
                 if (pageId === 'educacion-page') {
                     setupImageUpload();
+                    setupAccordion(); // NEW: Call accordion setup
                 }
 
                 const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
@@ -356,7 +432,7 @@
                             break;
                         case 'heatmap-cl':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
-                            config = { "dataSource": "AllCL", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            config = { "dataSource": "BCSSPIPSA", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
                             break;
                         case 'hotlists-cl':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
@@ -486,6 +562,17 @@
 
                 // Initial load of images when the function is called
                 loadImagesFromStorage();
+            }
+            
+            // --- Accordion Functionality ---
+            function setupAccordion() {
+                const accordionItems = document.querySelectorAll('.accordion-item');
+                accordionItems.forEach(item => {
+                    const header = item.querySelector('.accordion-header');
+                    header.addEventListener('click', () => {
+                        item.classList.toggle('active');
+                    });
+                });
             }
 
             // --- Initialization and Event Listeners ---
