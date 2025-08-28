@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -247,9 +248,9 @@
             const tools = [
                 { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=200&h=200" alt="Panorama" class="w-full h-full object-cover">` },
                 { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=200&h=200" alt="Análisis Técnico" class="w-full h-full object-cover">` },
-                { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" alt="Bandera de Chile" class="w-full h-full object-cover">` },
-                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" alt="Bandera de EE.UU." class="w-full h-full object-cover">` },
-                { id: 'crypto-page', title: 'Cryptomonedas', description: 'Explora el mercado de cryptomonedas con nuestro mapa de calor.', icon: `<img src="https://images.unsplash.com/photo-1621504450329-87f69f7a1e3a?auto=format&fit=crop&q=80&w=200&h=200" alt="Cryptomonedas" class="w-full h-full object-cover">` },
+                { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" alt="Bandera de Chile" class="w-full h-full object-contain p-2">` },
+                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" alt="Bandera de EE.UU." class="w-full h-full object-contain p-2">` },
+                { id: 'crypto-page', title: 'Cryptomonedas', description: 'Explora el mercado de cryptomonedas con nuestro mapa de calor.', icon: `<img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=200&h=200" alt="Cryptomonedas" class="w-full h-full object-cover">` },
                 { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=200&h=200" alt="Noticias" class="w-full h-full object-cover">` },
                 { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=200&h=200" alt="Calendario" class="w-full h-full object-cover">` },
                 { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=200&h=200" alt="Educación" class="w-full h-full object-cover">` },
@@ -261,11 +262,11 @@
 
             // Function to dynamically create the initial UI from the `tools` array
             function createInitialUI() {
-                // Create home page cards and tool page tabs
+                // Create home page cards and mobile nav links
                 tools.forEach((tool) => {
                     const card = document.createElement('div');
                     card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300';
-                    card.innerHTML = `<div class="h-16 w-16 mb-6 rounded-full overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110">${tool.icon}</div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
+                    card.innerHTML = `<div class="h-16 w-16 mb-6 rounded-full overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:shadow-blue-500/40 group-hover:scale-110 bg-gray-800">${tool.icon}</div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
                     homeCardsGrid.appendChild(card);
 
                     const mobileLink = document.createElement('a');
@@ -276,22 +277,21 @@
                     mobileNavLinksContainer.appendChild(mobileLink);
                 });
 
-                // Create scrolling icons with names for the header ticker
+                // Function to create a single ticker icon element
                 const createTickerIcon = (tool) => {
                     const iconLink = document.createElement('a');
                     iconLink.href = '#';
                     iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
                     iconLink.dataset.page = tool.id;
-                    
                     iconLink.innerHTML = `
-                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800">
                             ${tool.icon}
                         </div>
                         <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
                     `;
                     return iconLink;
                 };
-                
+
                 // Create two sets of icons for a seamless loop
                 tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
                 tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
@@ -308,7 +308,7 @@
             function showToolContent(pageId) {
                 const template = document.getElementById(`template-${pageId}`);
                 if (!template) return;
-                
+
                 // Show loader
                 toolsContentContainer.innerHTML = `<div class="flex justify-center items-center h-64"><span class="loader"></span></div>`;
 
@@ -319,7 +319,7 @@
                         loadWidgetsForContent(pageId);
                     }
                 }, 500); // 0.5 second delay
-                
+
                 window.scrollTo(0, 0);
             }
 
@@ -344,7 +344,7 @@
 
                     let config = {};
                     let scriptSrc = '';
-                    
+
                     // Configuration for each widget type
                     switch(widgetType) {
                         case 'market-overview':
