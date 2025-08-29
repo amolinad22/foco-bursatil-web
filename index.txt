@@ -307,12 +307,10 @@
                 <p class="mt-6 text-center max-w-2xl mx-auto text-gray-300">Esta indecisión comprime el precio hasta que un lado cede, resultando en una ruptura impulsiva. El volumen decreciente durante la formación confirma esta calma antes de la tormenta.</p>
             </div>
             
-            <!-- Section 3: Real Example (Refactorized for larger image) -->
+            <!-- Section 3: Real Example for IPSA -->
             <div class="card">
                 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo del Índice S&P IPSA</h2>
-                <p class="mb-6 text-gray-400">La teoría cobra vida con este ejemplo real del S&P IPSA. Observa cómo el patrón se formó durante meses y cómo la ruptura cumplió el objetivo de precio proyectado casi a la perfección.</p>
-                
-                <!-- Larger image section (now full width) -->
+                <p class="mb-6 text-gray-400">El gráfico del índice S&P IPSA muestra una consolidación perfecta. Puedes ver cómo el precio se comprime entre las dos líneas de tendencia hasta que finalmente rompe al alza con fuerza.</p>
                 <div class="space-y-6 mb-8">
                     <div>
                         <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
@@ -321,12 +319,32 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Analysis section -->
                 <div>
                     <h3 class="text-xl font-semibold mb-3 text-indigo-400">Análisis del Caso Real:</h3>
                     <ul class="space-y-4 text-gray-300">
                         <li><strong>Formación:</strong> Entre mayo y principios de agosto, el IPSA se consolidó, formando mínimos ascendentes y máximos descendentes claros.</li>
+                        <li><strong>Ruptura (Breakout):</strong> A mediados de agosto, el precio rompió la línea de resistencia superior con una vela de gran cuerpo, señalando la victoria de los compradores.</li>
+                        <li><strong>Objetivo Cumplido:</strong> La línea vertical mide la altura de la base del triángulo. Al proyectar esta altura desde el punto de ruptura, se puede ver que el precio alcanzó el objetivo técnico, validando la eficacia del patrón.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Section 3: Real Example for Falabella -->
+            <div class="card">
+                <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Falabella</h2>
+                <p class="mb-6 text-gray-400">La teoría cobra vida con este ejemplo real de Falabella. Observa cómo la acción se consolidó en un patrón de triángulo simétrico, con el volumen disminuyendo a medida que el patrón se formaba.</p>
+                <div class="space-y-6 mb-8">
+                    <div>
+                        <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
+                        <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 aspect-video flex items-center justify-center">
+                            <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/FALABELLA_2025-08-28_22-18-26_c0023.png?raw=true" alt="Gráfico real de Falabella" class="rounded-md w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-3 text-indigo-400">Análisis del Caso Real:</h3>
+                    <ul class="space-y-4 text-gray-300">
+                        <li><strong>Formación:</strong> Entre junio y agosto, Falabella se consolidó, formando mínimos ascendentes y máximos descendentes claros.</li>
                         <li><strong>Ruptura (Breakout):</strong> A mediados de agosto, el precio rompió la línea de resistencia superior con una vela de gran cuerpo, señalando la victoria de los compradores.</li>
                         <li><strong>Objetivo Cumplido:</strong> La línea vertical mide la altura de la base del triángulo. Al proyectar esta altura desde el punto de ruptura, se puede ver que el precio alcanzó el objetivo técnico, validando la eficacia del patrón.</li>
                     </ul>
