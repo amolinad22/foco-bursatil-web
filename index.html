@@ -210,7 +210,7 @@
                     <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">El Pulso del Mercado</h1>
                     <p class="mt-2 text-base sm:text-lg text-gray-400">Todas las herramientas que necesitas, en un solo lugar.</p>
                 </div>
-                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/logo%20redondo%202.png?raw=true" alt="Foco Bursátil Logo" class="h-36 sm:h-56 w-auto flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0D1117/FFFFFF?text=Logo';">
+                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20logo%20redondo%202.png?raw=true" alt="Foco Bursátil Logo" class="h-36 sm:h-56 w-auto flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0D1117/FFFFFF?text=Logo';">
             </div>
         </div>
         <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"></div>
@@ -218,6 +218,15 @@
 
     <!-- Tools Container -->
     <main id="tools-page-container" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+        <!-- New "Back to Home" button for better navigation -->
+        <div class="mb-8">
+            <button id="back-to-home-btn" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg>
+                Volver al Inicio
+            </button>
+        </div>
         <div id="tools-content-container"></div>
     </main>
 
@@ -334,7 +343,7 @@
                             <div>
                                 <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
                                 <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                                    <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/SP_IPSA_2025-08-28_16-30-13_faaf9.png?raw=true" alt="Gráfico real del S&P IPSA" class="rounded-md w-full h-full object-contain">
+                                    <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20SP_IPSA_2025-08-28_16-30-13_faaf9.png?raw=true" alt="Gráfico real del S&P IPSA" class="rounded-md w-full h-full object-contain">
                                 </div>
                             </div>
                         </div>
@@ -435,7 +444,7 @@
                             <div>
                                 <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
                                 <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                                    <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/LTM_2025-08-29_08-43-33_2561e.png?raw=true" alt="Gráfico real de LTM" class="rounded-md w-full h-full object-contain">
+                                    <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20LTM_2025-08-29_08-43-33_2561e.png?raw=true" alt="Gráfico real de LTM" class="rounded-md w-full h-full object-contain">
                                 </div>
                             </div>
                         </div>
@@ -449,6 +458,27 @@
                                 <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
                                     <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/CCU_2025-08-29_08-51-25_bdff6.png?raw=true" alt="Gráfico real de CCU" class="rounded-md w-full h-full object-contain">
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New trading simulator for Trend Channels -->
+                    <div class="card">
+                        <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Canales</h2>
+                        <p class="mb-6 text-gray-400">Practica a identificar y operar canales de tendencia alcistas y bajistas.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                            <div class="md:col-span-3 chart-container h-80">
+                                <canvas id="channelSimulatorChart"></canvas>
+                            </div>
+                            <div class="md:col-span-2">
+                                <div class="space-y-4">
+                                    <p><strong>Paso 1: Identificar el Canal</strong></p>
+                                    <p class="text-sm text-gray-400">El precio se mueve dentro de dos líneas paralelas. Define si es alcista o bajista.</p>
+                                    <button id="toggle-channel-type" class="btn w-full text-sm">Alternar Canal</button>
+                                    <p class="mt-4"><strong>Paso 2: Operar los Límites</strong></p>
+                                    <p class="text-sm text-gray-400">El precio toca el límite del canal. Haz clic para simular una operación en la zona de soporte o resistencia.</p>
+                                    <button id="simulate-channel-trade" class="btn btn-primary w-full text-sm">Simular Operación</button>
+                                </div>
+                                <button id="reset-channel-simulation" class="mt-4 btn w-full">Reiniciar Simulación</button>
                             </div>
                         </div>
                     </div>
@@ -470,6 +500,40 @@
                                 <div id="reversal-description" class="p-4 bg-gray-800 rounded-lg min-h-[150px] border border-gray-700">
                                     <p class="text-gray-300">Selecciona un patrón de reversión para ver su descripción aquí.</p>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New trading simulator for Reversal Patterns -->
+                    <div class="card">
+                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Patrones de Reversión</h2>
+                        <p class="mb-6 text-gray-400">Practica a identificar un cambio de tendencia y a colocar una operación.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                            <div class="md:col-span-3 chart-container h-80">
+                                <canvas id="reversalSimulatorChart"></canvas>
+                            </div>
+                            <div class="md:col-span-2">
+                                <div id="reversal-sim-steps" class="space-y-4">
+                                    <div id="reversal-step-1" class="p-3 bg-gray-800 rounded-lg border border-gray-700">
+                                        <p><strong>Paso 1: Detectar el Patrón</strong></p>
+                                        <p class="text-sm text-gray-400">El precio ha formado un posible doble techo o doble suelo. Identifica el "cuello".</p>
+                                    </div>
+                                    <div id="reversal-step-2" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                                        <p><strong>Paso 2: Esperar la Ruptura</strong></p>
+                                        <p class="text-sm text-gray-400 mb-2">La ruptura del "cuello" confirma la reversión. Haz clic para simular la ruptura bajista.</p>
+                                        <button id="simulate-reversal-breakout" class="btn btn-primary w-full text-sm">Simular Ruptura</button>
+                                    </div>
+                                    <div id="reversal-step-3" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                                        <p><strong>Paso 3: Colocar Stop-Loss</strong></p>
+                                        <p class="text-sm text-gray-400 mb-2">Coloca tu stop-loss por encima del último máximo para gestionar el riesgo.</p>
+                                        <button id="show-reversal-stoploss" class="btn w-full text-sm">Mostrar Stop-Loss</button>
+                                    </div>
+                                    <div id="reversal-step-4" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                                        <p><strong>Paso 4: Calcular Objetivo</strong></p>
+                                        <p class="text-sm text-gray-400 mb-2">Proyecta la altura del patrón desde la ruptura para encontrar el objetivo de ganancias.</p>
+                                        <button id="calculate-reversal-target" class="btn w-full text-sm">Calcular Objetivo</button>
+                                    </div>
+                                </div>
+                                <button id="reset-reversal-simulation" class="mt-4 btn w-full">Reiniciar Simulación</button>
                             </div>
                         </div>
                     </div>
@@ -521,7 +585,7 @@
                         <div>
                             <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
                             <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/SQM_B_2025-08-28_23-27-44_05c71.png?raw=true" alt="Gráfico real de SQM-B" class="rounded-md w-full h-full object-contain">
+                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20SQM_B_2025-08-28_23-27-44_05c71.png?raw=true" alt="Gráfico real de SQM-B" class="rounded-md w-full h-full object-contain">
                             </div>
                         </div>
                     </div>
@@ -576,7 +640,7 @@
                         <div>
                             <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
                             <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/ITAUCL_2025-08-29_07-12-26_1699a.png?raw=true" alt="Gráfico real de ITAÚ" class="rounded-md w-full h-full object-contain">
+                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20ITAUCL_2025-08-29_07-12-26_1699a.png?raw=true" alt="Gráfico real de ITAÚ" class="rounded-md w-full h-full object-contain">
                             </div>
                         </div>
                     </div>
@@ -602,7 +666,7 @@
                         <div>
                             <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
                             <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/SPX_2025-08-29_08-14-29_c5180.png?raw=true" alt="Gráfico real de SPX" class="rounded-md w-full h-full object-contain">
+                                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/Copia%20de%20SPX_2025-08-29_08-14-29_c5180.png?raw=true" alt="Gráfico real de SPX" class="rounded-md w-full h-full object-contain">
                             </div>
                         </div>
                     </div>
@@ -616,78 +680,44 @@
         </div>
     </template>
     <template id="template-contacto-page">
-        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Contacto</h1><p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Contáctanos!</p></div>
-        <div class="max-w-xl mx-auto bg-[#161B22] border border-gray-700 rounded-xl p-8">
-          <form action="#" method="POST">
-            <div class="space-y-6">
-              <div>
-                <label for="name" class="block text-sm font-medium text-gray-300">Nombre</label>
-                <div class="mt-1">
-                  <input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-white">Contacto</h1>
+            <p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Contáctanos!</p>
+        </div>
+        <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+            <div>
+                <h2 class="text-3xl font-bold text-white mb-4">Nuestra Misión</h2>
+                <p class="text-gray-400 mb-6">En Foco Bursátil, nuestra misión es democratizar el acceso a herramientas financieras de alta calidad. Creemos que todos, desde el inversor principiante hasta el trader experimentado, merecen tener la información y los recursos para tomar decisiones informadas en el mercado.</p>
+                 <p class="text-gray-400 mb-6">Esta plataforma es un proyecto en constante evolución, impulsado por la pasión por los mercados y la tecnología.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><span class="sr-only">LinkedIn</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><span class="sr-only">GitHub</span><svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
                 </div>
-              </div>
-              <div>
-                <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-                <div class="mt-1">
-                  <input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500">
-                </div>
-              </div>
-              <div>
-                <label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label>
-                <div class="mt-1">
-                  <textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></textarea>
-                </div>
-              </div>
-              <div>
-                <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button>
-              </div>
             </div>
-          </form>
+            <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
+                <form action="#" method="POST" onsubmit="event.preventDefault();">
+                    <div class="space-y-6">
+                        <div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div>
+                        <div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></div></div>
+                        <div><label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label><div class="mt-1"><textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500"></textarea></div></div>
+                        <div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div>
+                    </div>
+                </form>
+                 <p class="text-xs text-gray-500 mt-4 text-center italic">Este formulario es para fines de demostración y no envía datos.</p>
+            </div>
         </div>
     </template>
 
-    <!-- Image Confirmation Modal -->
-    <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
-        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8 max-w-lg w-full">
-            <h3 class="text-2xl font-semibold text-white mb-4">Confirmar Análisis</h3>
-            <div class="mb-6"><img id="modal-image-preview" src="" alt="Vista previa del análisis" class="max-h-96 w-auto mx-auto rounded-lg"></div>
-            <div class="flex justify-end gap-4">
-                <button id="cancel-upload-btn" class="bg-gray-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-700 transition-colors">Cancelar</button>
-                <button id="confirm-upload-btn" class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors">Confirmar y Subir</button>
-            </div>
-        </div>
-    </div>
-    
     <!-- Footer -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-16">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center md:flex md:items-center md:justify-between text-gray-400">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
             <p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
-            <div class="flex justify-center space-x-6 mt-4 md:mt-0">
-                <a href="https://x.com/FocoBursatil" class="text-gray-400 hover:text-white transition-colors">
-                    <!-- Icono de X (anteriormente Twitter) -->
-                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21-6.848-6.096 6.848H2.433l7.262-8.283L1.503 2.25H8.06L12.062 7.61z"></path>
-                    </svg>
-                </a>
-                <a href="https://www.linkedin.com/in/foco-burs%C3%A1til-486588381/" class="text-gray-400 hover:text-white transition-colors">
-                    <!-- Icono de LinkedIn -->
-                    <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" viewBox="0 0 24 24" class="w-6 h-6">
-                        <path d="M20.447 20.452h-3.415v-5.617c0-1.336-.023-3.064-1.861-3.064-1.86 0-2.144 1.455-2.144 2.97V20.45H9.692V9.45H6.55V20.45h3.142v-5.467c0-.223.004-.447.009-.67a1.696 1.696 0 0 1 .151-.763c.277-.665 1.059-1.33 2.203-1.33 1.579 0 2.221 1.037 2.221 2.54V20.45h3.415V9.45h-3.142v1.5a3.633 3.633 0 0 1 3.284-1.639h.04c2.817 0 4.965 1.83 4.965 5.766v5.823zM3.63 8.353c-.991 0-1.792-.8-1.792-1.791s.8-1.791 1.792-1.791 1.792.8 1.792 1.791-.8 1.791-1.792 1.791zM5.422 20.45H2.288V9.45h3.134v11.001z"></path>
-                    </svg>
-                </a>
-            </div>
         </div>
     </footer>
+
     <script type="module">
-        // Import Firebase modules. These are essential for connecting to the database.
-        // The gallery feature has been removed, so these imports are no longer needed.
-        // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        // import { getFirestore, collection, addDoc, onSnapshot, query, deleteDoc, doc, Timestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        // import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+        // Note: Firebase modules and configuration have been removed as the gallery feature
+        // that used them is no longer present in this version of the application.
         
         // =======================================================================
         // REFACTORING START: Global scope declarations for chart and simulation logic
@@ -934,6 +964,18 @@
             }
         };
 
+        const channelSimulatorData = {
+            labels: Array.from({ length: 25 }, (_, i) => i + 1),
+            priceUp: [100, 102, 101, 104, 103, 106, 105, 108, 107, 110, 109, 112, 111, 114, 113, 116, 115, 118, 117, 120, 119, 122, 121, 124, 123],
+            priceDown: [120, 118, 119, 116, 117, 114, 115, 112, 113, 110, 111, 108, 109, 106, 107, 104, 105, 102, 103, 100, 101, 98, 99, 96, 97]
+        };
+
+        const reversalSimulatorData = {
+            labels: Array.from({ length: 20 }, (_, i) => i + 1),
+            price: [100, 102, 105, 103, 106, 104, 106.5, 105.5, 104, 102, 99, 97, 95, 93, 91, 89, 87, 85, 83, 81],
+            priceDoubleBottom: [80, 78, 75, 77, 74, 76, 73.5, 74.5, 76, 78, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99]
+        };
+        
         // Functions to create and manage the charts for each study
         function createAnatomyChart() {
             const anatomyCtx = document.getElementById('anatomyChart');
@@ -1128,6 +1170,204 @@
             });
         }
 
+        // Functions to create and manage the simulators
+        function createChannelSimulatorChart(isUpTrend = true) {
+            const channelSimCtx = document.getElementById('channelSimulatorChart');
+            if (!channelSimCtx) return;
+            const context = channelSimCtx.getContext('2d');
+            if (window.channelSimulatorChartInstance) window.channelSimulatorChartInstance.destroy();
+
+            const data = isUpTrend ? channelSimulatorData.priceUp : channelSimulatorData.priceDown;
+            const labels = channelSimulatorData.labels;
+            const annotations = isUpTrend ? {
+                support: { type: 'line', xMin: 0, xMax: 24, yMin: 100, yMax: 121, borderColor: 'rgb(34, 197, 94)', borderWidth: 2 },
+                resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 102, yMax: 123, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
+            } : {
+                support: { type: 'line', xMin: 0, xMax: 24, yMin: 120, yMax: 99, borderColor: 'rgb(34, 197, 94)', borderWidth: 2 },
+                resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 122, yMax: 101, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
+            };
+
+            window.channelSimulatorChartInstance = new Chart(context, {
+                type: 'line',
+                data: { labels: labels, datasets: [{ label: 'Precio', data: data, borderColor: '#60a5fa', fill: false, tension: 0.1 }] },
+                options: {
+                    ...chartDefaultOptions,
+                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 90, max: 130 } },
+                    plugins: { ...chartDefaultOptions.plugins, annotation: { annotations: annotations } }
+                }
+            });
+        }
+
+        function createReversalSimulatorChart(isDoubleTop = true) {
+             const reversalSimCtx = document.getElementById('reversalSimulatorChart');
+             if (!reversalSimCtx) return;
+             const context = reversalSimCtx.getContext('2d');
+             if (window.reversalSimulatorChartInstance) window.reversalSimulatorChartInstance.destroy();
+             
+             const data = isDoubleTop ? reversalSimulatorData.price : reversalSimulatorData.priceDoubleBottom;
+             const labels = reversalSimulatorData.labels;
+             const annotations = isDoubleTop ? {
+                 neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 104, yMax: 104, borderColor: '#60a5fa', borderWidth: 2 },
+              } : {
+                 neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 },
+              };
+
+             window.reversalSimulatorChartInstance = new Chart(context, {
+                 type: 'line',
+                 data: { labels: labels, datasets: [{ label: 'Precio', data: data, borderColor: '#60a5fa', fill: false, tension: 0.1 }] },
+                 options: {
+                     ...chartDefaultOptions,
+                     scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: isDoubleTop ? 80 : 60, max: isDoubleTop ? 110 : 100 } },
+                     plugins: { ...chartDefaultOptions.plugins, annotation: { annotations: annotations } }
+                 }
+             });
+        }
+
+        function setupReversalSim(isDoubleTop = true) {
+            createReversalSimulatorChart(isDoubleTop);
+            const simSteps = document.getElementById('reversal-sim-steps');
+            const simulateBreakoutBtn = document.getElementById('simulate-reversal-breakout');
+            const showStoplossBtn = document.getElementById('show-reversal-stoploss');
+            const calculateTargetBtn = document.getElementById('calculate-reversal-target');
+            if(!simSteps || !simulateBreakoutBtn || !showStoplossBtn || !calculateTargetBtn) return;
+
+
+            const resetSim = () => {
+                createReversalSimulatorChart(isDoubleTop);
+                simSteps.querySelector('#reversal-step-1').classList.remove('opacity-50');
+                simSteps.querySelector('#reversal-step-2').classList.remove('opacity-50');
+                simSteps.querySelector('#reversal-step-3').classList.add('opacity-50');
+                simSteps.querySelector('#reversal-step-4').classList.add('opacity-50');
+                simulateBreakoutBtn.disabled = false;
+                showStoplossBtn.disabled = true;
+                calculateTargetBtn.disabled = true;
+                simState = { breakout: false, stoploss: false, target: false };
+            };
+
+            const resetBtn = document.getElementById('reset-reversal-simulation');
+            if (resetBtn) resetBtn.onclick = resetSim;
+            
+            if (simulateBreakoutBtn) {
+                 simulateBreakoutBtn.onclick = () => {
+                     if (simState.breakout) return;
+                     simState.breakout = true;
+
+                     const chart = window.reversalSimulatorChartInstance;
+                     const data = isDoubleTop ? reversalSimulatorData.price : reversalSimulatorData.priceDoubleBottom;
+                     
+                     const breakoutPoint = isDoubleTop ? data[9] - 1 : data[9] + 1; // Simulate breakout below neckline
+                     const newLabels = [...reversalSimulatorData.labels, 21, 22];
+                     const newPrices = [...data.slice(0,10), breakoutPoint, breakoutPoint - 2, breakoutPoint - 4, breakoutPoint - 6, breakoutPoint - 8, breakoutPoint - 10, breakoutPoint - 12, breakoutPoint - 14, breakoutPoint - 16, breakoutPoint - 18, breakoutPoint - 20];
+
+                     chart.data.labels = newLabels;
+                     chart.data.datasets[0].data = newPrices;
+
+                     const annotations = chart.options.plugins.annotation.annotations;
+                     annotations.breakoutArrow = {
+                         type: 'arrow', xMin: 9.5, xMax: 10.5, yMin: isDoubleTop ? 104 : 76, yMax: isDoubleTop ? 102 : 78, borderColor: '#a78bfa', borderWidth: 3
+                     };
+                     annotations.entry = {
+                         type: 'point', xValue: 10, yValue: breakoutPoint, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2, label: { content: 'Entrada', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'white' }
+                     };
+
+                     chart.update();
+
+                     simSteps.querySelector('#reversal-step-2').classList.add('opacity-50');
+                     simSteps.querySelector('#reversal-step-3').classList.remove('opacity-50');
+                     simulateBreakoutBtn.disabled = true;
+                     showStoplossBtn.disabled = false;
+                 };
+            }
+
+            if (showStoplossBtn) {
+                showStoplossBtn.onclick = () => {
+                    if (simState.stoploss) return;
+                    simState.stoploss = true;
+                    const chart = window.reversalSimulatorChartInstance;
+                    const annotations = chart.options.plugins.annotation.annotations;
+                    const stopLossPrice = isDoubleTop ? Math.max(...reversalSimulatorData.price.slice(0, 9)) + 2 : Math.min(...reversalSimulatorData.priceDoubleBottom.slice(0,9)) - 2;
+
+                    annotations.stoploss = {
+                        type: 'line', xMin: 9.5, xMax: 18, yMin: stopLossPrice, yMax: stopLossPrice, borderColor: 'rgb(239, 68, 68)', borderWidth: 2, borderDash: [6, 6], label: { content: 'Stop-Loss', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(239, 68, 68)' }
+                    };
+                    chart.update();
+
+                    simSteps.querySelector('#reversal-step-3').classList.add('opacity-50');
+                    simSteps.querySelector('#reversal-step-4').classList.remove('opacity-50');
+                    showStoplossBtn.disabled = true;
+                    calculateTargetBtn.disabled = false;
+                };
+            }
+
+            if (calculateTargetBtn) {
+                 calculateTargetBtn.onclick = () => {
+                     if (simState.target) return;
+                     simState.target = true;
+                     const chart = window.reversalSimulatorChartInstance;
+                     const annotations = chart.options.plugins.annotation.annotations;
+                     const height = isDoubleTop ? Math.max(...reversalSimulatorData.price.slice(0, 9)) - annotations.neckline.yMin : annotations.neckline.yMin - Math.min(...reversalSimulatorData.priceDoubleBottom.slice(0,9));
+                     const targetPrice = isDoubleTop ? annotations.neckline.yMin - height : annotations.neckline.yMin + height;
+                     
+                     annotations.target = {
+                         type: 'line', xMin: 9.5, xMax: 18, yMin: targetPrice, yMax: targetPrice, borderColor: 'rgb(34, 197, 94)', borderWidth: 2, borderDash: [6, 6], label: { content: `Objetivo`, enabled: true, position: 'end', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(34, 197, 94)' }
+                     };
+                     chart.update();
+                     calculateTargetBtn.disabled = true;
+                 };
+            }
+        }
+        
+        function setupChannelSim() {
+            let isUpTrend = true;
+            createChannelSimulatorChart(isUpTrend);
+
+            const toggleBtn = document.getElementById('toggle-channel-type');
+            const simBtn = document.getElementById('simulate-channel-trade');
+            const resetBtn = document.getElementById('reset-channel-simulation');
+
+            if (toggleBtn) {
+                toggleBtn.onclick = () => {
+                    isUpTrend = !isUpTrend;
+                    createChannelSimulatorChart(isUpTrend);
+                    toggleBtn.textContent = isUpTrend ? 'Alternar a Canal Bajista' : 'Alternar a Canal Alcista';
+                    simBtn.textContent = 'Simular Operación';
+                    simBtn.disabled = false;
+                    resetBtn.style.display = 'none';
+                };
+            }
+
+            if (simBtn) {
+                simBtn.onclick = () => {
+                     const chart = window.channelSimulatorChartInstance;
+                     const annotations = chart.options.plugins.annotation.annotations;
+                     
+                     // Simulate a breakout
+                     const breakoutPoint = isUpTrend ? 128 : 95;
+                     const newLabels = [...channelSimulatorData.labels, 25];
+                     const newPrices = [...chart.data.datasets[0].data, breakoutPoint];
+                     
+                     chart.data.labels = newLabels;
+                     chart.data.datasets[0].data = newPrices;
+
+                     annotations.breakoutArrow = {
+                         type: 'arrow', xMin: 23, xMax: 24, yMin: isUpTrend ? 123 : 101, yMax: breakoutPoint, borderColor: '#a78bfa', borderWidth: 3
+                     };
+                     
+                     chart.update();
+                     simBtn.disabled = true;
+                     if(resetBtn) resetBtn.style.display = 'block';
+                };
+            }
+
+            if(resetBtn) {
+                 resetBtn.onclick = () => {
+                    createChannelSimulatorChart(isUpTrend);
+                    simBtn.disabled = false;
+                    resetBtn.style.display = 'none';
+                 };
+            }
+        }
+
         function resetSimulation() {
             simState = { breakout: false, stoploss: false, target: false };
             createSimulatorChart();
@@ -1150,7 +1390,7 @@
         // Setup functions for each study
         function setupSymmetricTriangleStudy() {
             createAnatomyChart();
-            createSimulatorChart();
+            resetSimulation();
             const anatomyButtons = document.getElementById('anatomy-buttons');
             const anatomyDescriptionEl = document.getElementById('anatomy-description');
             if (anatomyButtons && anatomyDescriptionEl) {
@@ -1181,13 +1421,15 @@
                     const newLabels = [...initialSimData.labels, 16];
                     const newPriceData = [...initialSimData.price, breakoutPrice];
                     const newVolumeData = [...initialSimData.volume, 180];
-                    simulatorChartInstance.data.labels = newLabels;
-                    simulatorChartInstance.data.datasets[0].data = newPriceData;
-                    simulatorChartInstance.data.datasets[1].data = newVolumeData;
-                    simulatorChartInstance.options.plugins.annotation.annotations.entry = {
-                        type: 'point', xValue: 15, yValue: breakoutPrice, backgroundColor: 'rgba(34, 197, 94, 0.8)', borderColor: 'white', borderWidth: 2, radius: 6, label: { content: 'Entrada', enabled: true, position: 'start', yAdjust: -15, backgroundColor: 'rgba(0,0,0,0)', color: 'white' }
-                    };
-                    simulatorChartInstance.update();
+                    if(simulatorChartInstance) {
+                        simulatorChartInstance.data.labels = newLabels;
+                        simulatorChartInstance.data.datasets[0].data = newPriceData;
+                        simulatorChartInstance.data.datasets[1].data = newVolumeData;
+                        simulatorChartInstance.options.plugins.annotation.annotations.entry = {
+                            type: 'point', xValue: 15, yValue: breakoutPrice, backgroundColor: 'rgba(34, 197, 94, 0.8)', borderColor: 'white', borderWidth: 2, radius: 6, label: { content: 'Entrada', enabled: true, position: 'start', yAdjust: -15, backgroundColor: 'rgba(0,0,0,0)', color: 'white' }
+                        };
+                        simulatorChartInstance.update();
+                    }
                     const step3 = document.getElementById('step-3');
                     const step4 = document.getElementById('step-4');
                     const showStoplossBtn = document.getElementById('show-stoploss');
@@ -1202,10 +1444,12 @@
                 showStoplossBtn.addEventListener('click', () => {
                     if (!simState.breakout || simState.stoploss) return;
                     simState.stoploss = true;
-                    simulatorChartInstance.options.plugins.annotation.annotations.stoploss = {
-                        type: 'line', xMin: 13, xMax: 18, yMin: 49, yMax: 49, borderColor: 'rgb(239, 68, 68)', borderWidth: 2, borderDash: [6, 6], label: { content: 'Stop-Loss', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(239, 68, 68)' }
-                    };
-                    simulatorChartInstance.update();
+                    if(simulatorChartInstance) {
+                        simulatorChartInstance.options.plugins.annotation.annotations.stoploss = {
+                            type: 'line', xMin: 13, xMax: 18, yMin: 49, yMax: 49, borderColor: 'rgb(239, 68, 68)', borderWidth: 2, borderDash: [6, 6], label: { content: 'Stop-Loss', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(239, 68, 68)' }
+                        };
+                        simulatorChartInstance.update();
+                    }
                     const step5 = document.getElementById('step-5');
                     const calculateTargetBtn = document.getElementById('calculate-target');
                     if(step5) step5.classList.remove('opacity-50');
@@ -1221,16 +1465,18 @@
                     const baseHeight = 52 - 49;
                     const breakoutPoint = 52.5;
                     const targetPrice = breakoutPoint + baseHeight;
-                    simulatorChartInstance.options.plugins.annotation.annotations.height = {
-                        type: 'line', xMin: 2, xMax: 2, yMin: 49, yMax: 52, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
-                    };
-                    simulatorChartInstance.options.plugins.annotation.annotations.projection = {
-                        type: 'line', xMin: 15, xMax: 15, yMin: 52.5, yMax: targetPrice, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
-                    };
-                    simulatorChartInstance.options.plugins.annotation.annotations.target = {
-                        type: 'line', xMin: 15, xMax: 18, yMin: targetPrice, yMax: targetPrice, borderColor: 'rgb(34, 197, 94)', borderWidth: 2, borderDash: [6, 6], label: { content: `Objetivo: $${targetPrice.toFixed(1)}`, enabled: true, position: 'end', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(34, 197, 94)' }
-                    };
-                    simulatorChartInstance.update();
+                    if(simulatorChartInstance) {
+                        simulatorChartInstance.options.plugins.annotation.annotations.height = {
+                            type: 'line', xMin: 2, xMax: 2, yMin: 49, yMax: 52, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
+                        };
+                        simulatorChartInstance.options.plugins.annotation.annotations.projection = {
+                            type: 'line', xMin: 15, xMax: 15, yMin: 52.5, yMax: targetPrice, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
+                        };
+                        simulatorChartInstance.options.plugins.annotation.annotations.target = {
+                            type: 'line', xMin: 15, xMax: 18, yMin: targetPrice, yMax: targetPrice, borderColor: 'rgb(34, 197, 94)', borderWidth: 2, borderDash: [6, 6], label: { content: `Objetivo: $${targetPrice.toFixed(1)}`, enabled: true, position: 'end', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(34, 197, 94)' }
+                        };
+                        simulatorChartInstance.update();
+                    }
                     if(calculateTargetBtn) calculateTargetBtn.disabled = true;
                 });
             }
@@ -1240,6 +1486,7 @@
 
         function setupTrendChannelStudy() {
             createTrendChannelChart();
+            createChannelSimulatorChart(true);
             const trendChannelButtons = document.getElementById('trend-channel-buttons');
             const trendChannelDescriptionEl = document.getElementById('trend-channel-description');
             if (trendChannelButtons && trendChannelDescriptionEl) {
@@ -1270,11 +1517,13 @@
                     }
                 });
             }
+            setupChannelSim();
         }
         
         // Setup function for the new reversal patterns study
         function setupReversalStudy() {
             createReversalChart();
+            createReversalSimulatorChart();
             const reversalButtons = document.getElementById('reversal-buttons');
             const reversalDescriptionEl = document.getElementById('reversal-description');
             if (reversalButtons && reversalDescriptionEl) {
@@ -1294,10 +1543,12 @@
                                 reversalChartInstance.data.datasets[0].data = reversalData.priceDoubleTop;
                                 reversalChartInstance.options.scales.y.min = 0;
                                 reversalChartInstance.options.scales.y.max = 60;
+                                setupReversalSim(true);
                             } else {
                                 reversalChartInstance.data.datasets[0].data = reversalData.priceDoubleBottom;
                                 reversalChartInstance.options.scales.y.min = 0;
                                 reversalChartInstance.options.scales.y.max = 60;
+                                setupReversalSim(false);
                             }
                             reversalChartInstance.options.plugins.annotation.annotations = desc.annotations;
                             reversalChartInstance.update();
@@ -1396,7 +1647,6 @@
             if (chartistPatternsStudy) chartistPatternsStudy.classList.remove('hidden');
             if (fibonacciStudy) fibonacciStudy.classList.add('hidden');
             if (srStudy) srStudy.classList.add('hidden');
-            setupSymmetricTriangleStudy();
             
             // Switch between studies
             if (showChartistBtn) {
@@ -1524,10 +1774,10 @@
                 { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=200&h=200" alt="Noticias" class="w-full h-full object-cover">` },
                 { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=200&h=200" alt="Calendario" class="w-full h-full object-cover">` },
                 { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=200&h=200" alt="Educación" class="w-full h-full object-cover">` },
+                { id: 'contacto-page', title: 'Contacto', description: '¿Tienes dudas o sugerencias? Háznoslo saber.', icon: `<img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80&w=200&h=200" alt="Contacto" class="w-full h-full object-cover">` },
             ];
 
             const loadedWidgets = new Set();
-            let currentFileToUpload = null;
 
             // Function to dynamically create the initial UI from the `tools` array
             function createInitialUI() {
@@ -1553,7 +1803,7 @@
                     iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
                     iconLink.dataset.page = tool.id;
                     iconLink.innerHTML = `
-                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800">
+                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
                             ${tool.icon}
                         </div>
                         <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
@@ -1630,7 +1880,7 @@
                     switch(widgetType) {
                         case 'market-overview':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
-                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRYPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "COINBASE:SOLUSD", "d": "SOLUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
+                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRYPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
                             break;
                         case 'advanced-chart':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
@@ -1713,8 +1963,12 @@
                 }
             });
 
-            // Logo click listener to return to the home page
+            // Listeners for logo and new back button to return home
             document.getElementById('logo-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                returnToHome();
+            });
+            document.getElementById('back-to-home-btn').addEventListener('click', (e) => {
                 e.preventDefault();
                 returnToHome();
             });
@@ -1785,3 +2039,6 @@
     </script>
 </body>
 </html>
+
+
+
