@@ -830,6 +830,8 @@
                 <form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
                     <!-- Asunto para el correo -->
                     <input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
+                    <!-- Página de agradecimiento personalizada -->
+                    <input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
                     <!-- Deshabilitar reCAPTCHA (opcional, pero simplifica para el usuario) -->
                     <input type="hidden" name="_captcha" value="false">
                     <div class="space-y-6">
@@ -839,6 +841,18 @@
                         <div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </template>
+     <template id="template-gracias-page">
+        <div class="text-center py-20">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h1 class="mt-4 text-4xl font-bold text-white">¡Mensaje Enviado!</h1>
+            <p class="mt-2 text-lg text-gray-400">Gracias por contactarnos. Te responderemos a la brevedad.</p>
+            <div class="mt-8">
+                <button id="back-to-home-from-thanks" class="btn btn-primary">Volver al Inicio</button>
             </div>
         </div>
     </template>
@@ -1974,16 +1988,9 @@
             }
 
             function showToolsPage(pageId) {
-                homePage.classList.add('fade-out');
-
-                setTimeout(() => {
-                    homePage.style.display = 'none';
-                    homePage.classList.remove('fade-out');
-
-                    toolsPageContainer.style.display = 'block';
-                    toolsPageContainer.classList.add('fade-in');
-                    showToolContent(pageId);
-                }, 300);
+                homePage.style.display = 'none';
+                toolsPageContainer.style.display = 'block';
+                showToolContent(pageId);
             }
 
             function showToolContent(pageId) {
@@ -1996,6 +2003,13 @@
                     if (document.querySelector(`#template-${pageId}`)) {
                         toolsContentContainer.innerHTML = template.innerHTML;
                         loadWidgetsForContent(pageId);
+                        if (pageId === 'gracias-page') {
+                            document.getElementById('back-to-home-from-thanks').addEventListener('click', (e) => {
+                                e.preventDefault();
+                                window.location.hash = ''; // Clear the hash
+                                returnToHome(false); // Return home without fade
+                            });
+                        }
                     }
                 }, 500); 
 
@@ -2081,20 +2095,25 @@
 
             createInitialUI();
 
-            function returnToHome() {
-                toolsPageContainer.classList.add('fade-out');
-
-                setTimeout(() => {
+            function returnToHome(useFade = true) {
+                if (useFade) {
+                    toolsPageContainer.classList.add('fade-out');
+                    setTimeout(() => {
+                        toolsPageContainer.style.display = 'none';
+                        toolsPageContainer.classList.remove('fade-out');
+                        homePage.style.display = 'block';
+                        homePage.classList.add('fade-in');
+                        document.querySelectorAll('.home-icon-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                    }, 300);
+                } else {
                     toolsPageContainer.style.display = 'none';
-                    toolsPageContainer.classList.remove('fade-out');
-
                     homePage.style.display = 'block';
-                    homePage.classList.add('fade-in');
                     document.querySelectorAll('.home-icon-link').forEach(link => {
                         link.classList.remove('active');
                     });
-                }, 300);
-
+                }
                 window.scrollTo(0, 0);
             }
 
@@ -2116,6 +2135,12 @@
                 e.preventDefault();
                 returnToHome();
             });
+
+             // Check for form success on page load
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('form') === 'success') {
+                showToolsPage('gracias-page');
+            }
 
             mobileMenuButton.addEventListener('click', openMobileMenu);
             closeMobileMenuButton.addEventListener('click', closeMobileMenu);
