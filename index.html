@@ -868,18 +868,6 @@
         </div>
     </div>
     
-    <!-- Modal de Confirmación de Imagen -->
-    <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
-        <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8 max-w-lg w-full">
-            <h3 class="text-2xl font-semibold text-white mb-4">Confirmar Análisis</h3>
-            <div class="mb-6"><img id="modal-image-preview" src="" alt="Vista previa del análisis" class="max-h-96 w-auto mx-auto rounded-lg"></div>
-            <div class="flex justify-end gap-4">
-                <button id="cancel-upload-btn" class="bg-gray-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-gray-700 transition-colors">Cancelar</button>
-                <button id="confirm-upload-btn" class="bg-blue-600 text-white font-semibold py-2 px-5 rounded-lg hover:bg-blue-700 transition-colors">Confirmar y Subir</button>
-            </div>
-        </div>
-    </div>
-    
     <!-- Pie de página -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
@@ -888,27 +876,6 @@
     </footer>
 
     <script type="module">
-        // --- Funciones de Modal y Formulario ---
-        function showModal(title, message) {
-            const modal = document.getElementById('alert-modal');
-            const modalTitle = document.getElementById('modal-title');
-            const modalMessage = document.getElementById('modal-message');
-            const modalOkBtn = document.getElementById('modal-ok-btn');
-
-            if (!modal || !modalTitle || !modalMessage || !modalOkBtn) {
-                console.error("No se encontraron los elementos del modal.");
-                return;
-            }
-
-            modalTitle.textContent = title;
-            modalMessage.textContent = message;
-            modal.style.display = 'flex';
-
-            modalOkBtn.onclick = () => {
-                modal.style.display = 'none';
-            };
-        }
-        
         // --- Módulo de Gráficos y Educación ---
         let anatomyChartInstance = null;
         let simulatorChartInstance = null;
@@ -1351,233 +1318,6 @@
             });
         }
 
-        // Funciones para crear y gestionar los simuladores
-        function createChannelSimulatorChart(isUpTrend = true) {
-            const channelSimCtx = document.getElementById('channelSimulatorChart');
-            if (!channelSimCtx) return;
-            const context = channelSimCtx.getContext('2d');
-            if (window.channelSimulatorChartInstance) window.channelSimulatorChartInstance.destroy();
-
-            const data = isUpTrend ? channelSimulatorData.priceUp : channelSimulatorData.priceDown;
-            const labels = channelSimulatorData.labels;
-            const annotations = isUpTrend ? {
-                support: { type: 'line', xMin: 0, xMax: 24, yMin: 100, yMax: 121, borderColor: 'rgb(34, 197, 94)', borderWidth: 2 },
-                resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 102, yMax: 123, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
-            } : {
-                support: { type: 'line', xMin: 0, xMax: 24, yMin: 120, yMax: 99, borderColor: 'rgb(34, 197, 94)', borderWidth: 2 },
-                resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 122, yMax: 101, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
-            };
-
-            window.channelSimulatorChartInstance = new Chart(context, {
-                type: 'line',
-                data: { labels: labels, datasets: [{ label: 'Precio', data: data, borderColor: '#60a5fa', fill: false, tension: 0.1 }] },
-                options: {
-                    ...chartDefaultOptions,
-                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 90, max: 130 } },
-                    plugins: { ...chartDefaultOptions.plugins, annotation: { annotations: annotations } }
-                }
-            });
-        }
-
-        function createReversalSimulatorChart(isDoubleTop = true) {
-            const reversalSimCtx = document.getElementById('reversalSimulatorChart');
-            if (!reversalSimCtx) return;
-            const context = reversalSimCtx.getContext('2d');
-            if (window.reversalSimulatorChartInstance) window.reversalSimulatorChartInstance.destroy();
-            
-            const data = isDoubleTop ? reversalData.priceDoubleTop : reversalData.priceDoubleBottom;
-            const labels = reversalData.labels;
-            const annotations = isDoubleTop ? {
-                neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 104, yMax: 104, borderColor: '#60a5fa', borderWidth: 2 },
-            } : {
-                neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 },
-            };
-
-            window.reversalSimulatorChartInstance = new Chart(context, {
-                type: 'line',
-                data: { labels: labels, datasets: [{ label: 'Precio', data: data, borderColor: '#60a5fa', fill: false, tension: 0.1 }] },
-                options: {
-                    ...chartDefaultOptions,
-                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 65, max: 115 } },
-                    plugins: { ...chartDefaultOptions.plugins, annotation: { annotations: annotations } }
-                }
-            });
-        }
-        
-        function setupReversalSim(isDoubleTop = true) {
-            createReversalSimulatorChart(isDoubleTop);
-            const simSteps = document.getElementById('reversal-sim-steps');
-            const simulateBreakoutBtn = document.getElementById('simulate-reversal-breakout');
-            const showStoplossBtn = document.getElementById('show-reversal-stoploss');
-            const calculateTargetBtn = document.getElementById('calculate-reversal-target');
-            if(!simSteps || !simulateBreakoutBtn || !showStoplossBtn || !calculateTargetBtn) return;
-
-
-            const resetSim = () => {
-                createReversalSimulatorChart(isDoubleTop);
-                simSteps.querySelector('#reversal-step-1').classList.remove('opacity-50');
-                simSteps.querySelector('#reversal-step-2').classList.remove('opacity-50');
-                simSteps.querySelector('#reversal-step-3').classList.add('opacity-50');
-                simSteps.querySelector('#reversal-step-4').classList.add('opacity-50');
-                simulateBreakoutBtn.disabled = false;
-                showStoplossBtn.disabled = true;
-                calculateTargetBtn.disabled = true;
-                simState = { breakout: false, stoploss: false, target: false };
-            };
-
-            const resetBtn = document.getElementById('reset-reversal-simulation');
-            if (resetBtn) resetBtn.onclick = resetSim;
-            
-            if (simulateBreakoutBtn) {
-                simulateBreakoutBtn.onclick = () => {
-                    if (simState.breakout) return;
-                    simState.breakout = true;
-
-                    const chart = window.reversalSimulatorChartInstance;
-                    const data = isDoubleTop ? reversalData.priceDoubleTop : reversalData.priceDoubleBottom;
-                    
-                    let breakoutPoint;
-                    if (isDoubleTop) {
-                        breakoutPoint = data[9] - 1; 
-                    } else {
-                        breakoutPoint = data[9] + 5; 
-                    }
-
-                    const newLabels = [...reversalSimulatorData.labels.slice(0,10), 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
-                    let newPrices = [...data.slice(0,10)];
-                    if (isDoubleTop) {
-                        newPrices = [...newPrices, breakoutPoint, breakoutPoint - 2, breakoutPoint - 4, breakoutPoint - 6, breakoutPoint - 8, breakoutPoint - 10, breakoutPoint - 12, breakoutPoint - 14, breakoutPoint - 16, breakoutPoint - 18, breakoutPoint - 20];
-                    } else {
-                        newPrices = [...newPrices, breakoutPoint, breakoutPoint + 2, breakoutPoint + 4, breakoutPoint + 6, breakoutPoint + 8, breakoutPoint + 10, breakoutPoint + 12, breakoutPoint + 14, breakoutPoint + 16, breakoutPoint + 18, breakoutPoint + 20];
-                    }
-
-                    chart.data.labels = newLabels;
-                    chart.data.datasets[0].data = newPrices;
-
-                    const annotations = chart.options.plugins.annotation.annotations;
-                    annotations.breakoutArrow = {
-                        type: 'arrow', xMin: 9.5, xMax: 10.5, yMin: isDoubleTop ? 104 : 76, yMax: isDoubleTop ? 102 : 78, borderColor: '#a78bfa', borderWidth: 3
-                    };
-                    annotations.entry = {
-                        type: 'point', xValue: 10, yValue: breakoutPoint, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2, label: { content: 'Entrada', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'white' }
-                    };
-
-                    chart.update();
-
-                    simSteps.querySelector('#reversal-step-2').classList.add('opacity-50');
-                    simSteps.querySelector('#reversal-step-3').classList.remove('opacity-50');
-                    simulateBreakoutBtn.disabled = true;
-                    showStoplossBtn.disabled = false;
-                };
-            }
-
-            if (showStoplossBtn) {
-                showStoplossBtn.onclick = () => {
-                    if (simState.stoploss) return;
-                    simState.stoploss = true;
-                    const chart = window.reversalSimulatorChartInstance;
-                    const annotations = chart.options.plugins.annotation.annotations;
-                    const stopLossPrice = isDoubleTop ? Math.max(...reversalData.priceDoubleTop.slice(0, 9)) + 2 : Math.min(...reversalData.priceDoubleBottom.slice(0,9)) - 2;
-
-                    annotations.stoploss = {
-                        type: 'line', xMin: 9.5, xMax: 19, yMin: stopLossPrice, yMax: stopLossPrice, borderColor: 'rgb(239, 68, 68)', borderWidth: 2, borderDash: [6, 6], label: { content: 'Stop-Loss', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(239, 68, 68)' }
-                    };
-                    chart.update();
-
-                    simSteps.querySelector('#reversal-step-3').classList.add('opacity-50');
-                    simSteps.querySelector('#reversal-step-4').classList.remove('opacity-50');
-                    showStoplossBtn.disabled = true;
-                    calculateTargetBtn.disabled = false;
-                };
-            }
-
-            if (calculateTargetBtn) {
-                calculateTargetBtn.onclick = () => {
-                    if (simState.target) return;
-                    simState.target = true;
-                    const chart = window.reversalSimulatorChartInstance;
-                    const annotations = chart.options.plugins.annotation.annotations;
-                    const height = isDoubleTop ? Math.max(...reversalData.priceDoubleTop.slice(0, 9)) - annotations.neckline.yMin : annotations.neckline.yMin - Math.min(...reversalData.priceDoubleBottom.slice(0,9));
-                    const targetPrice = isDoubleTop ? annotations.neckline.yMin - height : annotations.neckline.yMin + height;
-                    
-                    annotations.target = {
-                        type: 'line', xMin: 9.5, xMax: 19, yMin: targetPrice, yMax: targetPrice, borderColor: 'rgb(34, 197, 94)', borderWidth: 2, borderDash: [6, 6], label: { content: `Objetivo: $${targetPrice.toFixed(1)}`, enabled: true, position: 'end', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(34, 197, 94)' }
-                    };
-                    chart.update();
-                    calculateTargetBtn.disabled = true;
-                };
-            }
-        }
-        
-        function setupChannelSim() {
-            let isUpTrend = true;
-            createChannelSimulatorChart(isUpTrend);
-
-            const toggleBtn = document.getElementById('toggle-channel-type');
-            const simBtn = document.getElementById('simulate-channel-trade');
-            const resetBtn = document.getElementById('reset-channel-simulation');
-
-            if (toggleBtn) {
-                toggleBtn.onclick = () => {
-                    isUpTrend = !isUpTrend;
-                    createChannelSimulatorChart(isUpTrend);
-                    toggleBtn.textContent = isUpTrend ? 'Alternar a Canal Bajista' : 'Alternar a Canal Alcista';
-                    simBtn.textContent = 'Simular Operación';
-                    simBtn.disabled = false;
-                    resetBtn.style.display = 'none';
-                };
-            }
-
-            if (simBtn) {
-                simBtn.onclick = () => {
-                    const chart = window.channelSimulatorChartInstance;
-                    const annotations = chart.options.plugins.annotation.annotations;
-                    
-                    const breakoutPoint = isUpTrend ? 128 : 95;
-                    const newLabels = [...channelSimulatorData.labels, 25];
-                    const newPrices = [...chart.data.datasets[0].data, breakoutPoint];
-                    
-                    chart.data.labels = newLabels;
-                    chart.data.datasets[0].data = newPrices;
-
-                    annotations.breakoutArrow = {
-                        type: 'arrow', xMin: 23, xMax: 24, yMin: isUpTrend ? 123 : 101, yMax: breakoutPoint, borderColor: '#a78bfa', borderWidth: 3
-                    };
-                    
-                    chart.update();
-                    simBtn.disabled = true;
-                    if(resetBtn) resetBtn.style.display = 'block';
-                };
-            }
-
-            if(resetBtn) {
-                resetBtn.onclick = () => {
-                    createChannelSimulatorChart(isUpTrend);
-                    simBtn.disabled = false;
-                    resetBtn.style.display = 'none';
-                };
-            }
-        }
-
-        function resetSimulation() {
-            simState = { breakout: false, stoploss: false, target: false };
-            createSimulatorChart();
-            const step2 = document.getElementById('step-2');
-            const step3 = document.getElementById('step-3');
-            const step4 = document.getElementById('step-4');
-            const step5 = document.getElementById('step-5');
-            if (step2) step2.classList.remove('opacity-50');
-            if (step3) step3.classList.add('opacity-50');
-            if (step4) step4.classList.add('opacity-50');
-            if (step5) step5.classList.add('opacity-50');
-            const simulateBreakoutBtn = document.getElementById('simulate-breakout');
-            const showStoplossBtn = document.getElementById('show-stoploss');
-            const calculateTargetBtn = document.getElementById('calculate-target');
-            if(simulateBreakoutBtn) simulateBreakoutBtn.disabled = false;
-            if(showStoplossBtn) showStoplossBtn.disabled = true;
-            if(calculateTargetBtn) calculateTargetBtn.disabled = true;
-        }
-
         // Funciones de configuración para cada estudio
         function setupSymmetricTriangleStudy() {
             createAnatomyChart();
@@ -2007,6 +1747,8 @@
                             document.getElementById('back-to-home-from-thanks').addEventListener('click', (e) => {
                                 e.preventDefault();
                                 window.location.hash = ''; // Clear the hash
+                                // Use replaceState to clean the URL without reloading
+                                history.replaceState(null, null, window.location.pathname);
                                 returnToHome(false); // Return home without fade
                             });
                         }
