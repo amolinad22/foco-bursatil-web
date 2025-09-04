@@ -18,10 +18,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
 
     <style>
-        /* Custom styles for the application */
+        /* Estilos personalizados para la aplicación */
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0D1117;
+            color: #d1d5db;
         }
         #particle-canvas {
             position: fixed;
@@ -39,7 +40,7 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        /* --- Integrated Icon Ticker Styles --- */
+        /* --- Estilos del Ticker de Iconos Integrado --- */
         .icon-ticker-wrapper {
             flex-grow: 1;
             overflow: hidden;
@@ -66,7 +67,7 @@
             margin: 0 1.5rem;
         }
 
-        /* --- Active Icon State --- */
+        /* --- Estado de Icono Activo --- */
         .home-icon-link.active > div {
             border-color: #3B82F6;
             box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
@@ -75,7 +76,7 @@
             color: #F9FAFB;
         }
 
-        /* --- Loading Spinner Styles --- */
+        /* --- Estilos del Spinner de Carga --- */
         .loader {
             width: 48px;
             height: 48px;
@@ -92,14 +93,14 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* --- Page Transition Styles --- */
+        /* --- Estilos de Transición de Página --- */
         .page {
             transition: opacity 0.3s ease-in-out;
         }
         .page.fade-out { opacity: 0; }
         .page.fade-in { opacity: 1; }
 
-        /* --- Education Module Styles --- */
+        /* --- Estilos del Módulo de Educación --- */
         .chart-container {
             position: relative;
             width: 100%;
@@ -121,11 +122,14 @@
             border-radius: 0.5rem;
             transition: all 0.2s ease-in-out;
             border: 1px solid #4b5563;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         .btn:hover, .btn.active {
             background-color: #4f46e5;
             color: #ffffff;
             border-color: #4f46e5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(79, 70, 229, 0.2);
         }
         .btn-primary {
             background-color: #4f46e5;
@@ -152,9 +156,14 @@
             border-radius: 0.75rem;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            transition: box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+        .card:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
         }
         
-        /* Modal specific styles */
+        /* Estilos específicos del Modal */
         .modal {
             display: none;
             position: fixed;
@@ -183,14 +192,13 @@
             gap: 1rem;
             margin-top: 1rem;
         }
-
     </style>
 </head>
-<body class="text-gray-200">
+<body>
 
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Stock Ticker Tape -->
+    <!-- Ticker de Acciones -->
     <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
@@ -198,7 +206,7 @@
         </script>
     </div>
 
-    <!-- Main Navigation Bar -->
+    <!-- Barra de Navegación Principal -->
     <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40 border-b border-gray-700">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -219,7 +227,7 @@
         </div>
     </header>
 
-    <!-- Mobile Menu (Sidebar) -->
+    <!-- Menú Móvil (Barra Lateral) -->
     <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 transform translate-x-full md:hidden p-6 border-l border-gray-700">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-lg font-semibold text-white">Menú</h2>
@@ -232,7 +240,7 @@
         </nav>
     </div>
 
-    <!-- Home Page with Cards -->
+    <!-- Página de Inicio con Tarjetas -->
     <main id="home-page" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div class="text-center mb-16">
             <div class="flex justify-center items-center gap-4 sm:gap-8">
@@ -240,15 +248,15 @@
                     <h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">El Pulso del Mercado</h1>
                     <p class="mt-2 text-base sm:text-lg text-gray-400">Todas las herramientas que necesitas, en un solo lugar.</p>
                 </div>
-                <img src="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/main/logo%20redondo%202.png" alt="Foco Bursátil Logo" class="h-36 sm:h-56 w-auto flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0D1117/FFFFFF?text=Logo';">
+                <img src="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/main/logo%20redondo%202.png" alt="Logo de Foco Bursátil" class="h-36 sm:h-56 w-auto flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0D1117/FFFFFF?text=Logo';">
             </div>
         </div>
         <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"></div>
     </main>
 
-    <!-- Tools Container -->
+    <!-- Contenedor de Herramientas -->
     <main id="tools-page-container" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
-        <!-- New "Back to Home" button for better navigation -->
+        <!-- Nuevo botón "Volver al Inicio" para una mejor navegación -->
         <div class="mb-8">
             <button id="back-to-home-btn" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -260,7 +268,7 @@
         <div id="tools-content-container"></div>
     </main>
 
-    <!-- Content Templates for Tools -->
+    <!-- Plantillas de Contenido para Herramientas -->
     <template id="template-panorama-market-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Panorama del Mercado</h1><p class="mt-2 text-lg text-gray-400">Un vistazo general a los principales mercados.</p></div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="w-full h-[650px]"><div class="tradingview-widget-container__widget" data-widget-type="market-overview"></div></div></div>
@@ -287,9 +295,9 @@
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><h2 class="text-2xl font-semibold text-white mb-4 text-center">Acciones Más Activas</h2><div class="h-[550px]"><div class="tradingview-widget-container__widget" data-widget-type="hotlists-us"></div></div></div>
     </template>
     <template id="template-crypto-page">
-        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Mercado de Cryptomonedas</h1><p class="mt-2 text-lg text-gray-400">Visualiza el rendimiento con nuestro mapa de calor y screener.</p></div>
+        <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Mercado de Criptomonedas</h1><p class="mt-2 text-lg text-gray-400">Visualiza el rendimiento con nuestro mapa de calor y screener.</p></div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8 mb-12"><div class="h-[700px]"><div class="tradingview-widget-container__widget" data-widget-type="crypto-coins-heatmap"></div></div></div>
-        <div class="text-center mb-12"><h2 class="text-3xl font-bold text-white">Screener de Cryptomonedas</h2><p class="mt-2 text-lg text-gray-400">Filtra y encuentra cryptomonedas según tus criterios.</p></div>
+        <div class="text-center mb-12"><h2 class="text-3xl font-bold text-white">Screener de Criptomonedas</h2><p class="mt-2 text-lg text-gray-400">Filtra y encuentra criptomonedas según tus criterios.</p></div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="h-[80vh]"><div class="tradingview-widget-container__widget" data-widget-type="crypto-screener"></div></div></div>
     </template>
     <template id="template-noticias-page">
@@ -303,26 +311,103 @@
     <template id="template-educacion-page">
         <div class="text-gray-300">
             <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">Patrones de Análisis Técnico</h1>
+                <h1 class="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">Centro de Educación Financiera</h1>
                 <p class="text-lg text-gray-400 max-w-3xl mx-auto">Explora guías interactivas para entender y operar los patrones de consolidación y niveles de retroceso más comunes.</p>
             </div>
 
-            <!-- Education Sub-Navigation -->
-            <div class="flex justify-center mb-8 space-x-4">
-                <button id="show-chartist-patterns" class="btn active">Patrones Chartistas</button>
+            <!-- Subnavegación de Educación -->
+            <div class="flex flex-wrap justify-center mb-8 gap-4">
+                <button id="show-what-is-ta" class="btn active">¿Qué es el Análisis Técnico?</button>
+                <button id="show-chartist-patterns" class="btn">Patrones Chartistas</button>
                 <button id="show-sr-study" class="btn">Soportes y Resistencias</button>
                 <button id="show-fibonacci-study" class="btn">Retroceso de Fibonacci</button>
             </div>
 
-            <!-- Content for Chartist Patterns Study -->
-            <div id="chartist-patterns-study" class="study-content">
+            <!-- Contenido: ¿Qué es el Análisis Técnico? -->
+            <div id="what-is-ta-study" class="study-content">
+                <div class="card">
+                    <h2 class="text-3xl font-bold mb-4 text-white">¿Qué es el Análisis Técnico?</h2>
+                    <div class="flex flex-col md:flex-row gap-8 items-center">
+                        <div class="md:w-2/3">
+                            <p class="mb-4 text-gray-300">El análisis técnico es una disciplina que busca predecir futuros movimientos de precios mediante el estudio de datos históricos del mercado, principalmente el precio y el volumen. A diferencia del análisis fundamental, que se enfoca en el valor intrínseco de una empresa (sus finanzas, gestión, etc.), el análisis técnico se concentra en los patrones de gráficos y los indicadores estadísticos.</p>
+                            <p class="text-gray-300">La premisa es simple: la psicología de los participantes del mercado crea patrones de precios que tienden a repetirse. Al identificar estos patrones, los analistas técnicos intentan anticipar la dirección más probable del mercado.</p>
+                        </div>
+                        <div class="md:w-1/3">
+                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1470&auto=format&fit=crop" alt="Gráfico de análisis técnico" class="rounded-lg shadow-lg w-full h-auto object-cover">
+                        </div>
+                    </div>
+                </div>
+                 <div class="card">
+                    <h2 class="text-2xl font-bold mb-6 text-white text-center">Los Tres Pilares del Análisis Técnico</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="p-6 bg-gray-800 rounded-lg border border-gray-700">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-2">1. El mercado lo descuenta todo</h3>
+                            <p class="text-gray-400">Toda la información relevante (noticias, resultados financieros, factores políticos) ya está reflejada en el precio del activo. Por lo tanto, el estudio del precio es todo lo que se necesita.</p>
+                        </div>
+                        <div class="p-6 bg-gray-800 rounded-lg border border-gray-700">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-2">2. Los precios se mueven en tendencias</h3>
+                            <p class="text-gray-400">Los movimientos de precios siguen tendencias (alcistas, bajistas o laterales) que persisten en el tiempo. El objetivo es identificar una tendencia y operar en su dirección.</p>
+                        </div>
+                        <div class="p-6 bg-gray-800 rounded-lg border border-gray-700">
+                            <h3 class="text-xl font-semibold text-blue-400 mb-2">3. La historia tiende a repetirse</h3>
+                            <p class="text-gray-400">Los patrones gráficos que han funcionado en el pasado son propensos a repetirse porque se basan en la psicología humana, que es predecible y no cambia con el tiempo.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card">
+                    <h2 class="text-2xl font-bold mb-6 text-white text-center">Análisis Técnico vs. Análisis Fundamental</h2>
+                     <div class="flex justify-center">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr>
+                                        <th class="p-4 bg-gray-800 border-b-2 border-gray-700 font-semibold text-white">Característica</th>
+                                        <th class="p-4 bg-gray-800 border-b-2 border-gray-700 font-semibold text-white">Análisis Técnico</th>
+                                        <th class="p-4 bg-gray-800 border-b-2 border-gray-700 font-semibold text-white">Análisis Fundamental</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-gray-900/50">
+                                        <td class="p-4 border-b border-gray-700">Enfoque</td>
+                                        <td class="p-4 border-b border-gray-700">Precio y volumen</td>
+                                        <td class="p-4 border-b border-gray-700">Valor intrínseco del negocio</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4 border-b border-gray-700">Herramientas</td>
+                                        <td class="p-4 border-b border-gray-700">Gráficos, patrones, indicadores</td>
+                                        <td class="p-4 border-b border-gray-700">Estados financieros, ratios, economía</td>
+                                    </tr>
+                                    <tr class="bg-gray-900/50">
+                                        <td class="p-4 border-b border-gray-700">Horizonte Temporal</td>
+                                        <td class="p-4 border-b border-gray-700">Corto a mediano plazo</td>
+                                        <td class="p-4 border-b border-gray-700">Largo plazo</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-4">Objetivo</td>
+                                        <td class="p-4">Identificar tendencias y oportunidades de trading</td>
+                                        <td class="p-4">Determinar si una acción está sobrevalorada o infravalorada</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <h2 class="text-2xl font-bold mb-4 text-white">Críticas y Limitaciones</h2>
+                    <p class="text-gray-400">Es importante entender que el análisis técnico no es una ciencia exacta. Sus críticos argumentan que los patrones son a menudo coincidencias y que puede convertirse en una "profecía autocumplida" (si suficientes traders creen que un nivel es importante, sus acciones colectivas lo harán importante).</p>
+                    <p class="mt-4 text-gray-400">Por ello, muchos inversores exitosos combinan el análisis técnico (para decidir <span class="font-semibold text-indigo-400">cuándo</span> comprar o vender) con el análisis fundamental (para decidir <span class="font-semibold text-green-400">qué</span> comprar o vender).</p>
+                </div>
+            </div>
+
+            <!-- Contenido para el Estudio de Patrones Chartistas -->
+            <div id="chartist-patterns-study" class="study-content hidden">
                 <div class="flex justify-center mb-8 space-x-4">
                     <button id="show-symmetric-triangle" class="btn active">Triángulo Simétrico</button>
                     <button id="show-trend-channels" class="btn">Canales de Tendencia</button>
                     <button id="show-reversal-patterns" class="btn">Patrones de Reversión</button>
                 </div>
                 <div id="symmetric-triangle-study-content">
-                    <!-- Section 1: Anatomy of the Pattern -->
+                    <!-- Sección 1: Anatomía del Patrón -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Anatomía del Patrón: Triángulo Simétrico</h2>
                         <p class="mb-6 text-gray-400">Esta sección desglosa los componentes clave de un triángulo simétrico. Haz clic en cada botón para resaltar y entender las diferentes partes del patrón en el gráfico interactivo.</p>
@@ -344,7 +429,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 2: Market Psychology -->
+                    <!-- Sección 2: Psicología del Mercado -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">La Psicología del Mercado</h2>
                         <p class="mb-6 text-gray-400">El triángulo simétrico es más que una simple forma en un gráfico; representa una batalla temporalmente equilibrada entre las fuerzas de la oferta y la demanda.</p>
@@ -364,7 +449,7 @@
                         <p class="mt-6 text-center max-w-2xl mx-auto text-gray-300">Esta indecisión comprime el precio hasta que un lado cede, resultando en una ruptura impulsiva. El volumen decreciente durante la formación confirma esta calma antes de la tormenta.</p>
                     </div>
 
-                    <!-- Real-world examples for Symmetric Triangle -->
+                    <!-- Ejemplos del mundo real para Triángulo Simétrico -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo del Índice S&P IPSA</h2>
                         <p class="mb-6 text-gray-400">El gráfico del índice S&P IPSA muestra una consolidación perfecta. Puedes ver cómo el precio se comprime entre las dos líneas de tendencia hasta que finalmente rompe al alza con fuerza.</p>
@@ -407,7 +492,7 @@
                         </div>
                     </div>
 
-                    <!-- Section 4: Trading Simulator -->
+                    <!-- Sección 4: Simulador de Trading -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Opera el Patrón</h2>
                         <p class="mb-6 text-gray-400">Ahora, pongamos la teoría en práctica. Sigue los pasos para simular una operación completa de un triángulo simétrico, desde la identificación hasta la toma de ganancias.</p>
@@ -490,7 +575,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New trading simulator for Trend Channels -->
+                    <!-- Nuevo simulador de trading para Canales de Tendencia -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Canales</h2>
                         <p class="mb-6 text-gray-400">Practica a identificar y operar canales de tendencia alcistas y bajistas.</p>
@@ -532,7 +617,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Real-world examples for Reversal Patterns -->
+                    <!-- Ejemplos del mundo real para Patrones de Reversión -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Suelo: Salfacorp</h2>
                         <p class="mb-6 text-gray-400">En este gráfico de Salfacorp, se puede observar una clara formación de **doble suelo** después de una consolidación lateral. El precio encontró soporte dos veces en un nivel similar, creando dos mínimos ("suelos") antes de romper la resistencia del "cuello" (neckline). Esta ruptura con volumen creciente señaló el cambio de tendencia, llevando al precio a un nuevo impulso alcista.</p>
@@ -545,7 +630,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New real-world example for Double Top: SQM_B -->
+                    <!-- Nuevo ejemplo del mundo real para Doble Techo: SQM_B -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Techo: SQM_B</h2>
                         <p class="mb-6 text-gray-400">Este gráfico de SQM_B es un claro ejemplo de un patrón de **doble techo**. El precio intentó superar un nivel de resistencia dos veces, formando dos máximos ("techos") en un nivel similar. Tras no poder superarlo, el precio retrocedió y finalmente rompió el nivel de soporte del "cuello" (neckline), confirmando la reversión de la tendencia de alcista a bajista.</p>
@@ -558,7 +643,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New trading simulator for Reversal Patterns -->
+                    <!-- Nuevo simulador de trading para Patrones de Reversión -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Patrones de Reversión</h2>
                         <p class="mb-6 text-gray-400">Practica a identificar un cambio de tendencia y a colocar una operación.</p>
@@ -595,7 +680,7 @@
                 </div>
             </div>
 
-            <!-- Content for Fibonacci Retracement Study -->
+            <!-- Contenido para el Estudio del Retroceso de Fibonacci -->
             <div id="fibonacci-study" class="study-content hidden">
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Retroceso de Fibonacci: Entendiendo los Niveles de Soporte</h2>
@@ -618,7 +703,7 @@
                     </div>
                 </div>
 
-                <!-- Real-world examples for ENELCHILE -->
+                <!-- Ejemplos del mundo real para ENELCHILE -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: ENELCHILE</h2>
                     <p class="mb-6 text-gray-400">El gráfico de la acción ENELCHILE muestra un rally alcista. Después de este impulso, el precio retrocedió y probó el nivel de **61.8% de Fibonacci**. Es notable cómo el precio bajó sutilmente por debajo de este nivel clave, lo que se conoce como una "caza de stop-loss" o un movimiento para liquidar órdenes, antes de rebotar con fuerza y continuar su tendencia alcista original.</p>
@@ -632,7 +717,7 @@
                     </div>
                 </div>
 
-                <!-- Real-world examples for SQM-B -->
+                <!-- Ejemplos del mundo real para SQM-B -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: SQM-B</h2>
                     <p class="mb-6 text-gray-400">En este gráfico de SQM-B, la acción experimentó un fuerte movimiento alcista. Posteriormente, el precio retrocedió y encontró soporte en el nivel de **50% de Fibonacci** antes de reanudar su tendencia principal. Este nivel clave actuó como una zona de acumulación donde los compradores volvieron a tomar el control.</p>
@@ -647,7 +732,7 @@
                 </div>
             </div>
 
-            <!-- Content for Support and Resistance Study -->
+            <!-- Contenido para el Estudio de Soportes y Resistencias -->
             <div id="sr-study" class="study-content hidden">
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Soportes y Resistencias Horizontales</h2>
@@ -687,7 +772,7 @@
                     </div>
                 </div>
 
-                <!-- Real-world examples for SR -->
+                <!-- Ejemplos del mundo real para SR -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Soportes y Resistencias: ITAÚ</h2>
                     <p class="mb-6 text-gray-400">En este ejemplo con la acción de ITAÚ, se puede observar cómo el precio ha respetado en múltiples ocasiones un nivel de **soporte** horizontal. Sin embargo, en la parte superior del gráfico, el precio también ha sido frenado por un nivel de **resistencia** claro, lo que ha mantenido al activo en un rango de negociación horizontal, conocido como consolidación. Esto demuestra que los soportes y resistencias son igualmente importantes para definir los límites del movimiento del precio.</p>
@@ -728,7 +813,7 @@
                 </div>
             </div>
 
-            <!-- Disclaimer -->
+            <!-- Descargo de Responsabilidad -->
             <div class="text-center text-xs text-gray-500 py-8">
                 <p><strong>Disclaimer:</strong> Este contenido es únicamente para fines educativos e informativos. No constituye asesoramiento financiero, de inversión ni de ningún otro tipo. El trading y la inversión en los mercados financieros conllevan un riesgo significativo. Realice siempre su propia investigación y consulte a un profesional financiero calificado antes de tomar cualquier decisión de inversión.</p>
             </div>
@@ -742,7 +827,11 @@
                 <p class="text-gray-400 mb-6">En Foco Bursátil, nuestra misión es ofrecer información educativa y herramientas prácticas para el análisis financiero, respaldadas por ejemplos y experiencia real en el mercado. Creemos que el conocimiento es la mejor herramienta para tomar decisiones informadas, y nuestro objetivo es guiarte en cada paso de tu camino.</p>
             </div>
             <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
-                <form id="contact-form">
+                <form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
+                    <!-- Asunto para el correo -->
+                    <input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
+                    <!-- Deshabilitar reCAPTCHA (opcional, pero simplifica para el usuario) -->
+                    <input type="hidden" name="_captcha" value="false">
                     <div class="space-y-6">
                         <div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
                         <div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
@@ -750,12 +839,11 @@
                         <div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div>
                     </div>
                 </form>
-                <p class="text-xs text-gray-500 mt-4 text-center italic">Este formulario es para fines de demostración y no envía datos.</p>
             </div>
         </div>
     </template>
     
-    <!-- Modal for Alert messages -->
+    <!-- Modal para mensajes de Alerta -->
     <div id="alert-modal" class="modal">
         <div class="modal-content">
             <h3 id="modal-title" class="text-xl font-semibold text-white mb-2"></h3>
@@ -766,7 +854,7 @@
         </div>
     </div>
     
-    <!-- Image Confirmation Modal -->
+    <!-- Modal de Confirmación de Imagen -->
     <div id="image-preview-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden p-4">
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8 max-w-lg w-full">
             <h3 class="text-2xl font-semibold text-white mb-4">Confirmar Análisis</h3>
@@ -778,7 +866,7 @@
         </div>
     </div>
     
-    <!-- Footer -->
+    <!-- Pie de página -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
             <p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
@@ -786,7 +874,7 @@
     </footer>
 
     <script type="module">
-        // --- Modal and Form Functions ---
+        // --- Funciones de Modal y Formulario ---
         function showModal(title, message) {
             const modal = document.getElementById('alert-modal');
             const modalTitle = document.getElementById('modal-title');
@@ -794,7 +882,7 @@
             const modalOkBtn = document.getElementById('modal-ok-btn');
 
             if (!modal || !modalTitle || !modalMessage || !modalOkBtn) {
-                console.error("Modal elements not found.");
+                console.error("No se encontraron los elementos del modal.");
                 return;
             }
 
@@ -807,23 +895,7 @@
             };
         }
         
-        function handleContactFormSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const name = form.querySelector('#name').value;
-            const email = form.querySelector('#email').value;
-            const message = form.querySelector('#message').value;
-
-            // Simple validation
-            if (name && email && message) {
-                showModal("Mensaje Enviado", "Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.");
-                form.reset(); // Clear the form
-            } else {
-                showModal("Faltan Campos", "Por favor, completa todos los campos para enviar el mensaje.");
-            }
-        }
-
-        // --- Charting and Education Module ---
+        // --- Módulo de Gráficos y Educación ---
         let anatomyChartInstance = null;
         let simulatorChartInstance = null;
         let fibonacciChartInstance = null;
@@ -1071,7 +1143,7 @@
             priceDoubleBottom: [80, 75, 72, 75, 71, 74, 70, 73, 76, 80, 83, 86, 89, 92, 95, 98, 101, 104, 107, 110]
         };
         
-        // Functions to create and manage the charts for each study
+        // Funciones para crear y gestionar los gráficos de cada estudio
         function createAnatomyChart() {
             const anatomyCtx = document.getElementById('anatomyChart');
             if (!anatomyCtx) return;
@@ -1265,7 +1337,7 @@
             });
         }
 
-        // Functions to create and manage the simulators
+        // Funciones para crear y gestionar los simuladores
         function createChannelSimulatorChart(isUpTrend = true) {
             const channelSimCtx = document.getElementById('channelSimulatorChart');
             if (!channelSimCtx) return;
@@ -1492,7 +1564,7 @@
             if(calculateTargetBtn) calculateTargetBtn.disabled = true;
         }
 
-        // Setup functions for each study
+        // Funciones de configuración para cada estudio
         function setupSymmetricTriangleStudy() {
             createAnatomyChart();
             createSimulatorChart();
@@ -1737,61 +1809,53 @@
         }
 
         function setupEducationCharts() {
-            const chartistPatternsStudy = document.getElementById('chartist-patterns-study');
-            const fibonacciStudy = document.getElementById('fibonacci-study');
-            const srStudy = document.getElementById('sr-study');
-            const showChartistBtn = document.getElementById('show-chartist-patterns');
-            const showFibonacciBtn = document.getElementById('show-fibonacci-study');
-            const showSRBtn = document.getElementById('show-sr-study');
+            const studies = {
+                'what-is-ta': {
+                    btn: document.getElementById('show-what-is-ta'),
+                    content: document.getElementById('what-is-ta-study'),
+                    init: () => {}
+                },
+                'chartist-patterns': {
+                    btn: document.getElementById('show-chartist-patterns'),
+                    content: document.getElementById('chartist-patterns-study'),
+                    init: setupSymmetricTriangleStudy
+                },
+                'sr': {
+                    btn: document.getElementById('show-sr-study'),
+                    content: document.getElementById('sr-study'),
+                    init: setupSRStudy
+                },
+                'fibonacci': {
+                    btn: document.getElementById('show-fibonacci-study'),
+                    content: document.getElementById('fibonacci-study'),
+                    init: setupFibonacciRetracementStudy
+                }
+            };
 
-            let currentStudy = 'chartist';
-            if (chartistPatternsStudy) chartistPatternsStudy.classList.remove('hidden');
-            if (fibonacciStudy) fibonacciStudy.classList.add('hidden');
-            if (srStudy) srStudy.classList.add('hidden');
-            setupSymmetricTriangleStudy();
+            let currentStudyKey = null;
 
-            if (showChartistBtn) {
-                showChartistBtn.addEventListener('click', () => {
-                    if (currentStudy !== 'chartist') {
-                        if (chartistPatternsStudy) chartistPatternsStudy.classList.remove('hidden');
-                        if (fibonacciStudy) fibonacciStudy.classList.add('hidden');
-                        if (srStudy) srStudy.classList.add('hidden');
-                        if (showChartistBtn) showChartistBtn.classList.add('active');
-                        if (showFibonacciBtn) showFibonacciBtn.classList.remove('active');
-                        if (showSRBtn) showSRBtn.classList.remove('active');
-                        setupSymmetricTriangleStudy();
-                        currentStudy = 'chartist';
-                    }
-                });
-            }
-            if (showFibonacciBtn) {
-                showFibonacciBtn.addEventListener('click', () => {
-                    if (currentStudy !== 'fibonacci') {
-                        if (chartistPatternsStudy) chartistPatternsStudy.classList.add('hidden');
-                        if (fibonacciStudy) fibonacciStudy.classList.remove('hidden');
-                        if (srStudy) srStudy.classList.add('hidden');
-                        if (showFibonacciBtn) showFibonacciBtn.classList.add('active');
-                        if (showChartistBtn) showChartistBtn.classList.remove('active');
-                        if (showSRBtn) showSRBtn.classList.remove('active');
-                        setupFibonacciRetracementStudy();
-                        currentStudy = 'fibonacci';
-                    }
-                });
-            }
-            if (showSRBtn) {
-                showSRBtn.addEventListener('click', () => {
-                    if (currentStudy !== 'sr') {
-                        if (chartistPatternsStudy) chartistPatternsStudy.classList.add('hidden');
-                        if (fibonacciStudy) fibonacciStudy.classList.add('hidden');
-                        if (srStudy) srStudy.classList.remove('hidden');
-                        if (showSRBtn) showSRBtn.classList.add('active');
-                        if (showChartistBtn) showChartistBtn.classList.remove('active');
-                        if (showFibonacciBtn) showFibonacciBtn.classList.remove('active');
-                        setupSRStudy();
-                        currentStudy = 'sr';
-                    }
-                });
-            }
+            const switchStudy = (newKey) => {
+                if (currentStudyKey === newKey || !studies[newKey]) return;
+
+                if (currentStudyKey && studies[currentStudyKey]) {
+                    studies[currentStudyKey].btn?.classList.remove('active');
+                    studies[currentStudyKey].content?.classList.add('hidden');
+                }
+
+                studies[newKey].btn?.classList.add('active');
+                studies[newKey].content?.classList.remove('hidden');
+                studies[newKey].init();
+                
+                currentStudyKey = newKey;
+            };
+
+            Object.keys(studies).forEach(key => {
+                studies[key].btn?.addEventListener('click', () => switchStudy(key));
+            });
+
+            // Set initial state
+            switchStudy('what-is-ta');
+
 
             const showSymmetricTriangleBtn = document.getElementById('show-symmetric-triangle');
             const showTrendChannelsBtn = document.getElementById('show-trend-channels');
@@ -1861,22 +1925,17 @@
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const closeMobileMenuButton = document.getElementById('close-mobile-menu');
             const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
-            const contactForm = document.getElementById('contact-form');
-
-            if(contactForm) {
-                 contactForm.addEventListener('submit', handleContactFormSubmit);
-            }
-
+            
             const tools = [
-                { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=200&h=200" alt="Panorama" class="w-full h-full object-cover">` },
-                { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=200&h=200" alt="Análisis Técnico" class="w-full h-full object-cover">` },
+                { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Panorama del Mercado" class="w-full h-full object-cover">` },
+                { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Análisis Técnico" class="w-full h-full object-cover">` },
                 { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" alt="Bandera de Chile" class="w-full h-full object-contain p-2">` },
-                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" width="40" alt="Bandera de EE.UU." class="w-full h-full object-contain p-2">` },
-                { id: 'crypto-page', title: 'Cryptomonedas', description: 'Explora el mercado de cryptomonedas con nuestro mapa de calor.', icon: `<img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=200&h=200" alt="Cryptomonedas" class="w-full h-full object-cover">` },
-                { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=200&h=200" alt="Noticias" class="w-full h-full object-cover">` },
-                { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=200&h=200" alt="Calendario" class="w-full h-full object-cover">` },
-                { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=200&h=200" alt="Educación" class="w-full h-full object-cover">` },
-                { id: 'contacto-page', title: 'Contacto', description: '¿Tienes dudas o sugerencias? Háznoslo saber.', icon: `<img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80&w=200&h=200" alt="Contacto" class="w-full h-full object-cover">` },
+                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" alt="Bandera de EE.UU." class="w-full h-full object-contain p-2">` },
+                { id: 'crypto-page', title: 'Criptomonedas', description: 'Explora el mercado de criptomonedas con nuestro mapa de calor.', icon: `<img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Criptomonedas" class="w-full h-full object-cover">` },
+                { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Noticias" class="w-full h-full object-cover">` },
+                { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Calendario" class="w-full h-full object-cover">` },
+                { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Educación" class="w-full h-full object-cover">` },
+                { id: 'contacto-page', title: 'Contacto', description: '¿Tienes dudas o sugerencias? Háznoslo saber.', icon: `<img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Contacto" class="w-full h-full object-cover">` },
             ];
 
             const loadedWidgets = new Set();
@@ -1937,10 +1996,6 @@
                     if (document.querySelector(`#template-${pageId}`)) {
                         toolsContentContainer.innerHTML = template.innerHTML;
                         loadWidgetsForContent(pageId);
-                        if(pageId === 'contacto-page') {
-                             const form = document.getElementById('contact-form');
-                             if(form) form.addEventListener('submit', handleContactFormSubmit);
-                        }
                     }
                 }, 500); 
 
@@ -1972,7 +2027,7 @@
                     switch(widgetType) {
                         case 'market-overview':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
-                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRYPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
+                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRIPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
                             break;
                         case 'advanced-chart':
                             scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
@@ -2127,3 +2182,4 @@
     </script>
 </body>
 </html>
+
