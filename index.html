@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Foco Bursátil - Herramientas Financieras</title>
 
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
 
@@ -163,7 +166,7 @@
             border-color: rgba(59, 130, 246, 0.5);
             box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
         }
-        
+
         /* Estilos específicos del Modal */
         .modal {
             display: none;
@@ -199,6 +202,7 @@
 
     <canvas id="particle-canvas"></canvas>
 
+    <!-- Ticker de Acciones -->
     <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
@@ -206,6 +210,7 @@
         </script>
     </div>
 
+    <!-- Barra de Navegación Principal -->
     <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-40 border-b border-gray-700">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
@@ -226,6 +231,7 @@
         </div>
     </header>
 
+    <!-- Menú Móvil (Barra Lateral) -->
     <div id="mobile-menu" class="fixed top-0 right-0 h-full w-64 bg-gray-900 z-50 transform translate-x-full md:hidden p-6 border-l border-gray-700">
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-lg font-semibold text-white">Menú</h2>
@@ -238,6 +244,7 @@
         </nav>
     </div>
 
+    <!-- Página de Inicio con Tarjetas -->
     <main id="home-page" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
         <div class="text-center mb-16">
             <div class="flex justify-center items-center gap-4 sm:gap-8">
@@ -251,7 +258,9 @@
         <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"></div>
     </main>
 
+    <!-- Contenedor de Herramientas -->
     <main id="tools-page-container" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+        <!-- Nuevo botón "Volver al Inicio" para una mejor navegación -->
         <div class="mb-8">
             <button id="back-to-home-btn" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -263,6 +272,7 @@
         <div id="tools-content-container"></div>
     </main>
 
+    <!-- Plantillas de Contenido para Herramientas -->
     <template id="template-panorama-market-page">
         <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Panorama del Mercado</h1><p class="mt-2 text-lg text-gray-400">Un vistazo general a los principales mercados.</p></div>
         <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="w-full h-[650px]"><div class="tradingview-widget-container__widget" data-widget-type="market-overview"></div></div></div>
@@ -309,6 +319,7 @@
                 <p class="text-lg text-gray-400 max-w-3xl mx-auto">Explora guías interactivas para entender y operar los patrones de consolidación y niveles de retroceso más comunes.</p>
             </div>
 
+            <!-- Subnavegación de Educación -->
             <div class="flex flex-wrap justify-center mb-8 gap-4">
                 <button id="show-what-is-ta" class="btn active">¿Qué es el Análisis Técnico?</button>
                 <button id="show-chartist-patterns" class="btn">Patrones Chartistas</button>
@@ -316,6 +327,7 @@
                 <button id="show-fibonacci-study" class="btn">Retroceso de Fibonacci</button>
             </div>
 
+            <!-- Contenido: ¿Qué es el Análisis Técnico? -->
             <div id="what-is-ta-study" class="study-content">
                 <div class="card">
                     <h2 class="text-3xl font-bold mb-4 text-white">¿Qué es el Análisis Técnico?</h2>
@@ -391,6 +403,7 @@
                 </div>
             </div>
 
+            <!-- Contenido para el Estudio de Patrones Chartistas -->
             <div id="chartist-patterns-study" class="study-content hidden">
                 <div class="flex flex-wrap justify-center mb-8 gap-4">
                     <button id="show-symmetric-triangle" class="btn active">Triángulo Simétrico</button>
@@ -399,7 +412,9 @@
                     <button id="show-cup-handle" class="btn">Taza con Asa</button>
                 </div>
 
+                <!-- Contenido del Triángulo Simétrico -->
                 <div id="symmetric-triangle-study-content">
+                    <!-- Sección 1: Anatomía del Patrón -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Anatomía del Patrón: Triángulo Simétrico</h2>
                         <p class="mb-6 text-gray-400">Esta sección desglosa los componentes clave de un triángulo simétrico. Haz clic en cada botón para resaltar y entender las diferentes partes del patrón en el gráfico interactivo.</p>
@@ -421,6 +436,7 @@
                         </div>
                     </div>
 
+                    <!-- Sección 2: Psicología del Mercado -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">La Psicología del Mercado</h2>
                         <p class="mb-6 text-gray-400">El triángulo simétrico es más que una simple forma en un gráfico; representa una batalla temporalmente equilibrada entre las fuerzas de la oferta y la demanda.</p>
@@ -440,6 +456,7 @@
                         <p class="mt-6 text-center max-w-2xl mx-auto text-gray-300">Esta indecisión comprime el precio hasta que un lado cede, resultando en una ruptura impulsiva. El volumen decreciente durante la formación confirma esta calma antes de la tormenta.</p>
                     </div>
 
+                    <!-- Ejemplos del mundo real para Triángulo Simétrico -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo del Índice S&P IPSA</h2>
                         <p class="mb-6 text-gray-400">El gráfico del índice S&P IPSA muestra una consolidación perfecta. Puedes ver cómo el precio se comprime entre las dos líneas de tendencia hasta que finalmente rompe al alza con fuerza.</p>
@@ -482,6 +499,7 @@
                         </div>
                     </div>
 
+                    <!-- Sección 4: Simulador de Trading -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Opera el Patrón</h2>
                         <p class="mb-6 text-gray-400">Ahora, pongamos la teoría en práctica. Sigue los pasos para simular una operación completa de un triángulo simétrico, desde la identificación hasta la toma de ganancias.</p>
@@ -521,6 +539,7 @@
                     </div>
                 </div>
 
+                <!-- Contenido de los Canales de Tendencia -->
                 <div id="trend-channels-study-content" class="hidden">
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Canales de Tendencia</h2>
@@ -564,6 +583,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Nuevo simulador de trading para Canales de Tendencia -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Canales</h2>
                         <p class="mb-6 text-gray-400">Practica a identificar y operar canales de tendencia alcistas y bajistas.</p>
@@ -586,6 +606,7 @@
                     </div>
                 </div>
 
+                <!-- Contenido de los Patrones de Reversión -->
                 <div id="reversal-patterns-study-content" class="hidden">
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Patrones de Reversión</h2>
@@ -605,6 +626,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Ejemplos del mundo real para Patrones de Reversión -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Suelo: Salfacorp</h2>
                         <p class="mb-6 text-gray-400">En este gráfico de Salfacorp, se puede observar una clara formación de **doble suelo** después de una consolidación lateral. El precio encontró soporte dos veces en un nivel similar, creando dos mínimos ("suelos") antes de romper la resistencia del "cuello" (neckline). Esta ruptura con volumen creciente señaló el cambio de tendencia, llevando al precio a un nuevo impulso alcista.</p>
@@ -617,6 +639,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Nuevo ejemplo del mundo real para Doble Techo: SQM_B -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Techo: SQM_B</h2>
                         <p class="mb-6 text-gray-400">Este gráfico de SQM_B es un claro ejemplo de un patrón de **doble techo**. El precio intentó superar un nivel de resistencia dos veces, formando dos máximos ("techos") en un nivel similar. Tras no poder superarlo, el precio retrocedió y finalmente rompió el nivel de soporte del "cuello" (neckline), confirmando la reversión de la tendencia de alcista a bajista.</p>
@@ -629,6 +652,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Nuevo simulador de trading para Patrones de Reversión -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Patrones de Reversión</h2>
                         <p class="mb-6 text-gray-400">Practica a identificar un cambio de tendencia y a colocar una operación.</p>
@@ -665,7 +689,9 @@
                     </div>
                 </div>
 
+                <!-- Contenido de Taza con Asa -->
                 <div id="cup-handle-study-content" class="hidden">
+                    <!-- Sección 1: Anatomía del Patrón -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Anatomía del Patrón: Taza con Asa (Cup and Handle)</h2>
                         <p class="mb-6 text-gray-400">Este patrón de continuación alcista se asemeja a una taza de té vista de perfil. Haz clic en los botones para explorar sus componentes clave.</p>
@@ -686,6 +712,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Sección 2: Psicología del Mercado -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">La Psicología del Mercado</h2>
                         <p class="mb-6 text-gray-400">El patrón "Taza con Asa" representa un período de consolidación seguido de una continuación alcista, mostrando un cambio gradual en el sentimiento del mercado.</p>
@@ -700,6 +727,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Sección 3: Ejemplo Real -->
                     <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo Real: NVDA</h2>
                         <p class="mb-6 text-gray-400">El gráfico de NVIDIA (NVDA) muestra una formación clásica de "Taza con Asa". Después de una fuerte tendencia alcista, el precio formó un fondo redondeado (la taza), seguido de una breve y superficial consolidación a la baja (el asa). La ruptura de la línea de resistencia del asa confirmó la continuación de la tendencia alcista con un fuerte aumento de volumen, llevando al precio a nuevos máximos históricos.</p>
@@ -721,7 +749,8 @@
                             <img src="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/0c82b9251ad3ca10bac171bab36cf1a0963e8cd8/SPX%20.png" alt="Gráfico de Taza con Asa en S&P 500" class="rounded-md w-full h-full object-contain">
                         </div>
                     </div>
-                      <div class="card">
+                      <!-- Sección 4: Simulador de Trading para Taza con Asa -->
+                    <div class="card">
                         <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Taza con Asa</h2>
                         <p class="mb-6 text-gray-400">Aprende a operar el patrón "Taza con Asa" paso a paso. Sigue las instrucciones para identificar el patrón y simular una operación completa.</p>
                         <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -761,6 +790,7 @@
                 </div>
             </div>
 
+            <!-- Contenido para el Estudio del Retroceso de Fibonacci -->
             <div id="fibonacci-study" class="study-content hidden">
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Retroceso de Fibonacci: Entendiendo los Niveles de Soporte</h2>
@@ -783,6 +813,7 @@
                     </div>
                 </div>
 
+                <!-- Ejemplos del mundo real para ENELCHILE -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: ENELCHILE</h2>
                     <p class="mb-6 text-gray-400">El gráfico de la acción ENELCHILE muestra un rally alcista. Después de este impulso, el precio retrocedió y probó el nivel de **61.8% de Fibonacci**. Es notable cómo el precio bajó sutilmente por debajo de este nivel clave, lo que se conoce como una "caza de stop-loss" o un movimiento para liquidar órdenes, antes de rebotar con fuerza y continuar su tendencia alcista original.</p>
@@ -796,6 +827,7 @@
                     </div>
                 </div>
 
+                <!-- Ejemplos del mundo real para SQM-B -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: SQM-B</h2>
                     <p class="mb-6 text-gray-400">En este gráfico de SQM-B, la acción experimentó un fuerte movimiento alcista. Posteriormente, el precio retrocedió y encontró soporte en el nivel de **50% de Fibonacci** antes de reanudar su tendencia principal. Este nivel clave actuó como una zona de acumulación donde los compradores volvieron a tomar el control.</p>
@@ -810,6 +842,7 @@
                 </div>
             </div>
 
+            <!-- Contenido para el Estudio de Soportes y Resistencias -->
             <div id="sr-study" class="study-content hidden">
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Soportes y Resistencias Horizontales</h2>
@@ -849,6 +882,7 @@
                     </div>
                 </div>
 
+                <!-- Ejemplos del mundo real para SR -->
                 <div class="card">
                     <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Soportes y Resistencias: ITAÚ</h2>
                     <p class="mb-6 text-gray-400">En este ejemplo con la acción de ITAÚ, se puede observar cómo el precio ha respetado en múltiples ocasiones un nivel de **soporte** horizontal. Sin embargo, en la parte superior del gráfico, el precio también ha sido frenado por un nivel de **resistencia** claro, lo que ha mantenido al activo en un rango de negociación horizontal, conocido como consolidación. Esto demuestra que los soportes y resistencias son igualmente importantes para definir los límites del movimiento del precio.</p>
@@ -889,6 +923,7 @@
                 </div>
             </div>
 
+            <!-- Descargo de Responsabilidad -->
             <div class="text-center text-xs text-gray-500 py-8">
                 <p><strong>Disclaimer:</strong> Este contenido es únicamente para fines educativos e informativos. No constituye asesoramiento financiero, de inversión ni de ningún otro tipo. El trading y la inversión en los mercados financieros conllevan un riesgo significativo. Realice siempre su propia investigación y consulte a un profesional financiero calificado antes de tomar cualquier decisión de inversión.</p>
             </div>
@@ -903,8 +938,11 @@
             </div>
             <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
                 <form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
+                    <!-- Asunto para el correo -->
                     <input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
+                    <!-- Página de agradecimiento personalizada -->
                     <input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
+                    <!-- Deshabilitar reCAPTCHA (opcional, pero simplifica para el usuario) -->
                     <input type="hidden" name="_captcha" value="false">
                     <div class="space-y-6">
                         <div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
@@ -928,7 +966,8 @@
              </div>
          </div>
     </template>
-    
+
+    <!-- Modal para mensajes de Alerta -->
     <div id="alert-modal" class="modal">
         <div class="modal-content">
             <h3 id="modal-title" class="text-xl font-semibold text-white mb-2"></h3>
@@ -938,7 +977,8 @@
             </div>
         </div>
     </div>
-    
+
+    <!-- Pie de página -->
     <footer class="bg-gray-900 border-t border-gray-700 mt-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
             <p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
@@ -1206,13 +1246,13 @@
             priceDoubleTop: [90, 95, 100, 97, 101, 98, 100.5, 96, 95, 96, 95.5],
             priceDoubleBottom: [110, 105, 100, 103, 99, 102, 99.5, 104, 105, 104, 104.5]
         };
-        
+
         const cupHandleAnatomyData = {
             labels: Array.from({ length: 22 }, (_, i) => i + 1),
             price: [100, 95, 91, 88, 86, 85, 85, 86, 88, 91, 95, 100, 98, 96, 97, 95, 98, 105, 108, 110, 109, 112],
             volume: [150, 120, 110, 100, 90, 80, 85, 90, 100, 110, 130, 160, 100, 80, 85, 75, 90, 250, 220, 200, 180, 190]
         };
-        
+
         const initialCupSimData = {
             labels: Array.from({ length: 17 }, (_, i) => i + 1),
             price: [100, 95, 91, 88, 86, 85, 85, 86, 88, 91, 95, 100, 98, 96, 97, 95, 98],
@@ -1302,7 +1342,7 @@
                 }
             });
         }
-        
+
         function createAnatomyChart() {
             const anatomyCtx = document.getElementById('anatomyChart');
             if (!anatomyCtx) return;
@@ -1489,9 +1529,963 @@
                 }
             });
         }
-        
+
         function createChannelSimulatorChart() {
             const ctx = document.getElementById('channelSimulatorChart');
             if (!ctx) return;
             if (channelSimulatorChartInstance) channelSimulatorChartInstance.destroy();
-            channelSimulatorChartInstance = new Chart(ctx.getContext('2
+            channelSimulatorChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: [...channelSimulatorData.labels],
+                    datasets: [{
+                        label: 'Precio',
+                        data: [...channelSimulatorData.priceUp],
+                        borderColor: '#60a5fa',
+                        tension: 0.1,
+                    }]
+                },
+                options: {
+                    ...chartDefaultOptions,
+                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 90, max: 130 } },
+                }
+            });
+        }
+
+        function createReversalSimulatorChart() {
+            const ctx = document.getElementById('reversalSimulatorChart');
+            if (!ctx) return;
+            if (reversalSimulatorChartInstance) reversalSimulatorChartInstance.destroy();
+            reversalSimulatorChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: [...initialReversalSimData.labels],
+                    datasets: [{
+                        label: 'Precio',
+                        data: [...initialReversalSimData.priceDoubleTop],
+                        borderColor: '#60a5fa',
+                        tension: 0.4,
+                    }]
+                },
+                options: {
+                    ...chartDefaultOptions,
+                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 85, max: 115 } },
+                }
+            });
+        }
+
+        function createCupHandleSimulatorChart() {
+            const ctx = document.getElementById('cupHandleSimulatorChart');
+            if (!ctx) return;
+            if (cupHandleSimulatorChartInstance) cupHandleSimulatorChartInstance.destroy();
+            cupHandleSimulatorChartInstance = new Chart(ctx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels: [...initialCupSimData.labels],
+                    datasets: [
+                        { label: 'Precio', data: [...initialCupSimData.price], borderColor: '#60a5fa', tension: 0.4, yAxisID: 'y' },
+                        { label: 'Volumen', data: [...initialCupSimData.volume], type: 'bar', backgroundColor: '#4b5563', yAxisID: 'y1' }
+                    ]
+                },
+                options: {
+                    ...chartDefaultOptions,
+                    scales: { ...chartDefaultOptions.scales, y: { ...chartDefaultOptions.scales.y, min: 80, max: 120 } },
+                    plugins: { ...chartDefaultOptions.plugins, annotation: { annotations: {
+                        neckline: { type: 'line', yMin: 100, yMax: 100, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
+                    }}}
+                }
+            });
+        }
+
+        // --- Funciones de configuración para cada estudio ---
+
+        function destroyAllCharts() {
+            if (anatomyChartInstance) { anatomyChartInstance.destroy(); anatomyChartInstance = null; }
+            if (simulatorChartInstance) { simulatorChartInstance.destroy(); simulatorChartInstance = null; }
+            if (fibonacciChartInstance) { fibonacciChartInstance.destroy(); fibonacciChartInstance = null; }
+            if (srChartHorizontalInstance) { srChartHorizontalInstance.destroy(); srChartHorizontalInstance = null; }
+            if (srChartTrendInstance) { srChartTrendInstance.destroy(); srChartTrendInstance = null; }
+            if (trendChannelChartInstance) { trendChannelChartInstance.destroy(); trendChannelChartInstance = null; }
+            if (reversalChartInstance) { reversalChartInstance.destroy(); reversalChartInstance = null; }
+            if (channelSimulatorChartInstance) { channelSimulatorChartInstance.destroy(); channelSimulatorChartInstance = null; }
+            if (reversalSimulatorChartInstance) { reversalSimulatorChartInstance.destroy(); reversalSimulatorChartInstance = null; }
+            if (cupHandleAnatomyChartInstance) { cupHandleAnatomyChartInstance.destroy(); cupHandleAnatomyChartInstance = null; }
+            if (cupHandleSimulatorChartInstance) { cupHandleSimulatorChartInstance.destroy(); cupHandleSimulatorChartInstance = null; }
+        }
+
+        function destroyChartistCharts() {
+            if (anatomyChartInstance) { anatomyChartInstance.destroy(); anatomyChartInstance = null; }
+            if (simulatorChartInstance) { simulatorChartInstance.destroy(); simulatorChartInstance = null; }
+            if (trendChannelChartInstance) { trendChannelChartInstance.destroy(); trendChannelChartInstance = null; }
+            if (channelSimulatorChartInstance) { channelSimulatorChartInstance.destroy(); channelSimulatorChartInstance = null; }
+            if (reversalChartInstance) { reversalChartInstance.destroy(); reversalChartInstance = null; }
+            if (reversalSimulatorChartInstance) { reversalSimulatorChartInstance.destroy(); reversalSimulatorChartInstance = null; }
+            if (cupHandleAnatomyChartInstance) { cupHandleAnatomyChartInstance.destroy(); cupHandleAnatomyChartInstance = null; }
+            if (cupHandleSimulatorChartInstance) { cupHandleSimulatorChartInstance.destroy(); cupHandleSimulatorChartInstance = null; }
+        }
+
+        function updateDescription(el, desc) {
+            el.classList.add('fade-out');
+            setTimeout(() => {
+                el.innerHTML = `<h3 class="font-bold text-white mb-2">${desc.title}</h3><p class="text-gray-300 text-sm">${desc.text}</p>`;
+                el.classList.remove('fade-out');
+            }, 300);
+        }
+
+        function setupInteractiveChart(chartInstance, buttonsElId, descriptionElId, descriptions) {
+            const buttonsEl = document.getElementById(buttonsElId);
+            const descriptionEl = document.getElementById(descriptionElId);
+            if (!buttonsEl || !descriptionEl) return;
+
+            const clickHandler = (e) => {
+                const target = e.target.closest('button');
+                if (target && !target.classList.contains('active')) {
+                    const component = target.dataset.component;
+                    buttonsEl.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                    target.classList.add('active');
+                    const desc = descriptions[component];
+                    updateDescription(descriptionEl, desc);
+                    if (chartInstance) {
+                        if (desc.data) {
+                           chartInstance.data.datasets[0].data = desc.data;
+                        }
+                        chartInstance.options.plugins.annotation.annotations = desc.annotations || {};
+                        chartInstance.update();
+                    }
+                }
+            };
+            buttonsEl.addEventListener('click', clickHandler);
+
+            // Wait a moment for canvas to be ready before the initial click
+            setTimeout(() => buttonsEl.querySelector('button')?.click(), 50);
+        }
+
+
+        function setupCupHandleStudy() {
+            if (!document.getElementById('cupHandleAnatomyChart')) return;
+            createCupHandleAnatomyChart();
+            setupInteractiveChart(
+                cupHandleAnatomyChartInstance,
+                'cup-handle-anatomy-buttons',
+                'cup-handle-anatomy-description',
+                cupHandleDescriptions
+            );
+            setupCupHandleSimulator();
+        }
+
+        function setupSymmetricTriangleStudy() {
+             if (!document.getElementById('anatomyChart')) return;
+            createAnatomyChart();
+            setupInteractiveChart(
+                anatomyChartInstance,
+                'anatomy-buttons',
+                'anatomy-description',
+                anatomyDescriptions
+            );
+            setupTriangleSimulator();
+        }
+
+        function setupTrendChannelStudy() {
+            if (!document.getElementById('trendChannelChart')) return;
+            createTrendChannelChart();
+            setupInteractiveChart(
+                trendChannelChartInstance,
+                'trend-channel-buttons',
+                'trend-channel-description',
+                trendChannelDescriptions
+            );
+            setupChannelSimulator();
+        }
+
+        function setupReversalStudy() {
+             if (!document.getElementById('reversalChart')) return;
+            createReversalChart();
+             setupInteractiveChart(
+                reversalChartInstance,
+                'reversal-buttons',
+                'reversal-description',
+                reversalDescriptions
+            );
+            setupReversalSimulator();
+        }
+
+        function setupFibonacciRetracementStudy() {
+             if (!document.getElementById('fibonacciChart')) return;
+            createFibonacciChart();
+            setupInteractiveChart(
+                fibonacciChartInstance,
+                'fibonacci-buttons',
+                'fibonacci-description',
+                fibonacciDescriptions
+            );
+        }
+
+        function setupSRStudy() {
+            if (!document.getElementById('srChartHorizontal')) return;
+            createSRChartHorizontal();
+            createSRChartTrend();
+            setupInteractiveChart(
+                srChartHorizontalInstance,
+                'sr-horizontal-buttons',
+                'sr-horizontal-description',
+                srHorizontalDescriptions
+            );
+            setupInteractiveChart(
+                srChartTrendInstance,
+                'sr-trend-buttons',
+                'sr-trend-description',
+                srTrendDescriptions
+            );
+        }
+
+        // --- Implementaciones de Simuladores ---
+
+        function setupTriangleSimulator() {
+            createSimulatorChart();
+            const steps = Array.from({length: 5}, (_, i) => document.getElementById(`step-${i + 1}`));
+            const buttons = {
+                breakout: document.getElementById('simulate-breakout'),
+                stoploss: document.getElementById('show-stoploss'),
+                target: document.getElementById('calculate-target'),
+                reset: document.getElementById('reset-simulation'),
+            };
+
+            const updateUI = () => {
+                steps[1].classList.toggle('opacity-50', simState.breakout);
+                steps[2].classList.toggle('opacity-50', !simState.breakout);
+                steps[3].classList.toggle('opacity-50', !simState.breakout || simState.stoploss);
+                steps[4].classList.toggle('opacity-50', !simState.stoploss || simState.target);
+
+                buttons.breakout.disabled = simState.breakout;
+                buttons.stoploss.disabled = !simState.breakout || simState.stoploss;
+                buttons.target.disabled = !simState.stoploss || simState.target;
+            };
+
+            const reset = () => {
+                simState = { breakout: false, stoploss: false, target: false };
+                createSimulatorChart();
+                updateUI();
+            };
+
+            buttons.reset.addEventListener('click', reset);
+
+            buttons.breakout.addEventListener('click', () => {
+                if (simState.breakout) return;
+                simState.breakout = true;
+                const chart = simulatorChartInstance;
+                chart.data.labels.push(16, 17, 18, 19);
+                chart.data.datasets[0].data.push(52, 53.5, 54, 55); // Modificado para una ruptura tendencial
+                chart.data.datasets[1].data.push(150, 180, 200, 190); // Aumento de volumen en la ruptura
+                chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 15, yValue: 52, backgroundColor: 'rgba(34, 197, 94, 0.8)', radius: 6 };
+                chart.update();
+                updateUI();
+            });
+
+            buttons.stoploss.addEventListener('click', () => {
+                if (!simState.breakout || simState.stoploss) return;
+                simState.stoploss = true;
+                const chart = simulatorChartInstance;
+                chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 48.8, yMax: 48.8, borderColor: 'rgb(239, 68, 68)', borderWidth: 2, borderDash: [6, 6] };
+                chart.update();
+                updateUI();
+            });
+
+            buttons.target.addEventListener('click', () => {
+                if (!simState.stoploss || simState.target) return;
+                simState.target = true;
+                const chart = simulatorChartInstance;
+                const annotations = chart.options.plugins.annotation.annotations;
+
+                const breakoutPrice = 50.45;
+                const triangleHigh = 52;
+                const triangleLow = 49;
+                const triangleHeight = triangleHigh - triangleLow;
+                const targetPrice = breakoutPrice + triangleHeight;
+
+                // Añadir la línea que mide la altura en la base del triángulo
+                annotations.heightMeasure = {
+                    type: 'line',
+                    xMin: 2,
+                    xMax: 2,
+                    yMin: triangleLow,
+                    yMax: triangleHigh,
+                    borderColor: '#a78bfa', // light purple
+                    borderWidth: 2,
+                    borderDash: [6, 6],
+                    label: { content: 'Altura', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0.5)', color: '#a78bfa', font: {size: 10}}
+                };
+
+                // Añadir la proyección de la altura desde el punto de ruptura
+                annotations.heightProjection = {
+                    type: 'line',
+                    xMin: 16,
+                    xMax: 16,
+                    yMin: breakoutPrice,
+                    yMax: targetPrice,
+                    borderColor: '#a78bfa',
+                    borderWidth: 2,
+                    borderDash: [6, 6]
+                };
+
+                annotations.target = { 
+                    type: 'line', 
+                    yMin: targetPrice, 
+                    yMax: targetPrice, 
+                    borderColor: 'rgb(34, 197, 94)', 
+                    borderWidth: 2, 
+                    borderDash: [6, 6]
+                };
+
+                chart.options.scales.y.max = targetPrice + 2;
+                chart.update();
+                updateUI();
+            });
+
+            reset();
+        }
+
+        function setupChannelSimulator() {
+            createChannelSimulatorChart();
+            const buttons = {
+                toggle: document.getElementById('toggle-channel-type'),
+                trade: document.getElementById('simulate-channel-trade'),
+                reset: document.getElementById('reset-channel-simulation'),
+            };
+
+            const reset = () => {
+                channelSimState = { type: 'up', traded: false };
+                createChannelSimulatorChart();
+                channelSimulatorChartInstance.data.datasets[0].data = [...channelSimulatorData.priceUp];
+                channelSimulatorChartInstance.options.plugins.annotation.annotations = {
+                     support: { type: 'line', xMin: 0, xMax: 24, yMin: 100, yMax: 123, borderColor: 'rgb(34, 197, 94)' },
+                     resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 102, yMax: 125, borderColor: 'rgb(239, 68, 68)' }
+                };
+                channelSimulatorChartInstance.update();
+                buttons.toggle.textContent = 'Alternar a Canal Bajista';
+                buttons.trade.disabled = false;
+            };
+
+            buttons.reset.addEventListener('click', reset);
+
+            buttons.toggle.addEventListener('click', () => {
+                channelSimState.type = (channelSimState.type === 'up') ? 'down' : 'up';
+                const isUp = channelSimState.type === 'up';
+                buttons.toggle.textContent = isUp ? 'Alternar a Canal Bajista' : 'Alternar a Canal Alcista';
+                const chart = channelSimulatorChartInstance;
+                chart.data.datasets[0].data = isUp ? [...channelSimulatorData.priceUp] : [...channelSimulatorData.priceDown];
+                chart.options.plugins.annotation.annotations = isUp ? {
+                     support: { type: 'line', xMin: 0, xMax: 24, yMin: 100, yMax: 123, borderColor: 'rgb(34, 197, 94)' },
+                     resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 102, yMax: 125, borderColor: 'rgb(239, 68, 68)' }
+                } : {
+                     support: { type: 'line', xMin: 0, xMax: 24, yMin: 118, yMax: 95, borderColor: 'rgb(34, 197, 94)' },
+                     resistance: { type: 'line', xMin: 0, xMax: 24, yMin: 120, yMax: 97, borderColor: 'rgb(239, 68, 68)' }
+                };
+                chart.update();
+            });
+
+            buttons.trade.addEventListener('click', () => {
+                if (channelSimState.traded) return;
+                channelSimState.traded = true;
+                const chart = channelSimulatorChartInstance;
+                const annotations = chart.options.plugins.annotation.annotations;
+                if (channelSimState.type === 'up') {
+                    annotations.buy = {type: 'point', xValue: 24, yValue: 123, backgroundColor: 'green', radius: 6};
+                    annotations.profit = {type: 'point', xValue: 28, yValue: 129, backgroundColor: 'blue', radius: 6};
+                    chart.data.labels.push(26,27,28,29);
+                    chart.data.datasets[0].data.push(125,127,128,129);
+                } else {
+                    annotations.sell = {type: 'point', xValue: 24, yValue: 97, backgroundColor: 'red', radius: 6};
+                    annotations.profit = {type: 'point', xValue: 28, yValue: 91, backgroundColor: 'blue', radius: 6};
+                    chart.data.labels.push(26,27,28,29);
+                    chart.data.datasets[0].data.push(95,93,92,91);
+                }
+                chart.update();
+                buttons.trade.disabled = true;
+            });
+
+            reset();
+        }
+
+        function setupReversalSimulator() {
+            createReversalSimulatorChart();
+            const steps = Array.from({length: 4}, (_, i) => document.getElementById(`reversal-step-${i + 1}`));
+            const step1Text = document.querySelector('#reversal-step-1 p.text-sm');
+            const buttons = {
+                toggle: document.getElementById('toggle-reversal-type'),
+                breakout: document.getElementById('simulate-reversal-breakout'),
+                stoploss: document.getElementById('show-reversal-stoploss'),
+                target: document.getElementById('calculate-reversal-target'),
+                reset: document.getElementById('reset-reversal-simulation'),
+            };
+
+            const updateUI = () => {
+                 steps[1].classList.toggle('opacity-50', reversalSimState.breakout);
+                 steps[2].classList.toggle('opacity-50', !reversalSimState.breakout);
+                 steps[3].classList.toggle('opacity-50', !reversalSimState.breakout || reversalSimState.stoploss);
+
+                 buttons.breakout.disabled = reversalSimState.breakout;
+                 buttons.stoploss.disabled = !reversalSimState.breakout || reversalSimState.stoploss;
+                 buttons.target.disabled = !reversalSimState.stoploss || reversalSimState.target;
+            };
+
+            const reset = () => {
+                reversalSimState = { type: 'top', breakout: false, stoploss: false, target: false };
+                createReversalSimulatorChart();
+                reversalSimulatorChartInstance.data.datasets[0].data = [...initialReversalSimData.priceDoubleTop];
+                reversalSimulatorChartInstance.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 96, yMax: 96, borderColor: '#60a5fa' } };
+                reversalSimulatorChartInstance.update();
+                updateUI();
+            };
+
+            buttons.reset.addEventListener('click', reset);
+
+            buttons.toggle.addEventListener('click', () => {
+                if (reversalSimState.breakout) return;
+                reversalSimState.type = reversalSimState.type === 'top' ? 'bottom' : 'top';
+                const isTop = reversalSimState.type === 'top';
+                buttons.toggle.textContent = isTop ? 'Alternar a Doble Suelo' : 'Alternar a Doble Techo';
+                if(step1Text) {
+                    step1Text.textContent = isTop 
+                        ? 'El precio ha formado un posible doble techo. Identifica el "cuello" (neckline).'
+                        : 'El precio ha formado un posible doble suelo. Identifica el "cuello" (neckline).';
+                }
+                const chart = reversalSimulatorChartInstance;
+                chart.data.datasets[0].data = isTop ? [...initialReversalSimData.priceDoubleTop] : [...initialReversalSimData.priceDoubleBottom];
+                chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: isTop ? 96 : 104, yMax: isTop ? 96 : 104, borderColor: '#60a5fa' } };
+                chart.update();
+            });
+
+            buttons.breakout.addEventListener('click', () => {
+                if (reversalSimState.breakout) return;
+                reversalSimState.breakout = true;
+                const chart = reversalSimulatorChartInstance;
+                const isTop = reversalSimState.type === 'top';
+                chart.data.labels.push(12, 13);
+                chart.data.datasets[0].data.push(isTop ? 94 : 106, isTop ? 92 : 108);
+                chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 11, yValue: isTop ? 94 : 106, backgroundColor: isTop ? 'red' : 'green', radius: 6 };
+                chart.update();
+                updateUI();
+            });
+
+            buttons.stoploss.addEventListener('click', () => {
+                if (!reversalSimState.breakout || reversalSimState.stoploss) return;
+                reversalSimState.stoploss = true;
+                const chart = reversalSimulatorChartInstance;
+                const isTop = reversalSimState.type === 'top';
+                chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: isTop ? 101.5 : 98.5, yMax: isTop ? 101.5 : 98.5, borderColor: 'orange', borderDash: [6,6] };
+                chart.update();
+                updateUI();
+            });
+
+            buttons.target.addEventListener('click', () => {
+                if (!reversalSimState.stoploss || reversalSimState.target) return;
+                reversalSimState.target = true;
+                const chart = reversalSimulatorChartInstance;
+                const annotations = chart.options.plugins.annotation.annotations;
+                const isTop = reversalSimState.type === 'top';
+
+                const necklinePrice = isTop ? 96 : 104;
+                const peakOrTroughPrice = isTop ? 101 : 99;
+                const height = Math.abs(necklinePrice - peakOrTroughPrice);
+                const targetPrice = isTop ? necklinePrice - height : necklinePrice + height;
+
+                // Medir la altura del patrón
+                annotations.heightMeasure = {
+                    type: 'line',
+                    xMin: 4, // Posición del primer pico/suelo
+                    xMax: 4,
+                    yMin: necklinePrice,
+                    yMax: peakOrTroughPrice,
+                    borderColor: '#a78bfa',
+                    borderWidth: 2,
+                    borderDash: [6, 6],
+                    label: { content: 'Altura', enabled: true, position: 'center', backgroundColor: 'rgba(0,0,0,0.5)', color: '#a78bfa', font: {size: 10}}
+                };
+
+                // Proyectar la altura desde el punto de ruptura
+                annotations.heightProjection = {
+                    type: 'line',
+                    xMin: 11, // Punto de ruptura
+                    xMax: 11,
+                    yMin: necklinePrice,
+                    yMax: targetPrice,
+                    borderColor: '#a78bfa',
+                    borderWidth: 2,
+                    borderDash: [6, 6]
+                };
+
+                annotations.target = { 
+                    type: 'line', 
+                    yMin: targetPrice, 
+                    yMax: targetPrice, 
+                    borderColor: 'rgb(34, 197, 94)', 
+                    borderWidth: 2, 
+                    borderDash: [6, 6] 
+                };
+
+                chart.options.scales.y.min = isTop ? targetPrice - 5 : chart.options.scales.y.min;
+                chart.options.scales.y.max = isTop ? chart.options.scales.y.max : targetPrice + 5;
+                chart.update();
+                updateUI();
+            });
+
+            reset();
+        }
+
+        function setupCupHandleSimulator() {
+            createCupHandleSimulatorChart();
+            const steps = Array.from({length: 5}, (_, i) => document.getElementById(`cup-handle-step-${i + 1}`));
+            const buttons = {
+                breakout: document.getElementById('simulate-cup-breakout'),
+                stoploss: document.getElementById('show-cup-stoploss'),
+                target: document.getElementById('calculate-cup-target'),
+                reset: document.getElementById('reset-cup-simulation'),
+            };
+
+            const updateUI = () => {
+                steps[1].classList.toggle('opacity-50', cupHandleSimState.breakout);
+                steps[2].classList.toggle('opacity-50', !cupHandleSimState.breakout);
+                steps[3].classList.toggle('opacity-50', !cupHandleSimState.breakout || cupHandleSimState.stoploss);
+                steps[4].classList.toggle('opacity-50', !cupHandleSimState.stoploss || cupHandleSimState.target);
+
+                buttons.breakout.disabled = cupHandleSimState.breakout;
+                buttons.stoploss.disabled = !cupHandleSimState.breakout || cupHandleSimState.stoploss;
+                buttons.target.disabled = !cupHandleSimState.stoploss || cupHandleSimState.target;
+            };
+
+             const reset = () => {
+                cupHandleSimState = { breakout: false, stoploss: false, target: false };
+                createCupHandleSimulatorChart();
+                updateUI();
+            };
+
+            buttons.reset.addEventListener('click', reset);
+
+            buttons.breakout.addEventListener('click', () => {
+                if (cupHandleSimState.breakout) return;
+                cupHandleSimState.breakout = true;
+                const chart = cupHandleSimulatorChartInstance;
+                chart.data.labels.push(18, 19);
+                chart.data.datasets[0].data.push(105, 108);
+                chart.data.datasets[1].data.push(280, 250);
+                chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 18, yValue: 105, backgroundColor: 'rgba(34, 197, 94, 0.8)', radius: 6 };
+                chart.update();
+                updateUI();
+            });
+
+            buttons.stoploss.addEventListener('click', () => {
+                if (!cupHandleSimState.breakout || cupHandleSimState.stoploss) return;
+                cupHandleSimState.stoploss = true;
+                const chart = cupHandleSimulatorChartInstance;
+                const handleLow = Math.min(...initialCupSimData.price.slice(11));
+                chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: handleLow - 1, yMax: handleLow - 1, borderColor: 'rgb(239, 68, 68)', borderDash: [6,6]};
+                chart.update();
+                updateUI();
+            });
+
+            buttons.target.addEventListener('click', () => {
+                if (!cupHandleSimState.stoploss || cupHandleSimState.target) return;
+                cupHandleSimState.target = true;
+                const chart = cupHandleSimulatorChartInstance;
+                const annotations = chart.options.plugins.annotation.annotations;
+                const cupHigh = 100;
+                const cupLow = 85;
+                const cupDepth = cupHigh - cupLow;
+                const breakoutPrice = 100;
+                const targetPrice = breakoutPrice + cupDepth;
+
+                annotations.depthMeasure = {
+                    type: 'line',
+                    xMin: 6,
+                    xMax: 6,
+                    yMin: cupLow,
+                    yMax: cupHigh,
+                    borderColor: '#a78bfa',
+                    borderWidth: 2,
+                    borderDash: [6, 6],
+                     label: { content: 'Profundidad', enabled: true, position: 'center', backgroundColor: 'rgba(0,0,0,0.5)', color: '#a78bfa', font: {size: 10}}
+                };
+
+                annotations.depthProjection = {
+                    type: 'line',
+                    xMin: 17,
+                    xMax: 17,
+                    yMin: breakoutPrice,
+                    yMax: targetPrice,
+                    borderColor: '#a78bfa',
+                    borderWidth: 2,
+                    borderDash: [6, 6]
+                };
+
+                annotations.target = { 
+                    type: 'line', 
+                    yMin: targetPrice, 
+                    yMax: targetPrice, 
+                    borderColor: 'rgb(34, 197, 94)', 
+                    borderWidth: 2, 
+                    borderDash: [6, 6]
+                };
+
+                chart.options.scales.y.max = targetPrice + 5;
+                chart.update();
+                updateUI();
+            });
+
+            reset();
+        }
+
+        // --- Navegación Principal de Educación ---
+        function setupEducationNavigation() {
+            const studies = {
+                'what-is-ta': { btn: document.getElementById('show-what-is-ta'), content: document.getElementById('what-is-ta-study'), init: () => {} },
+                'chartist-patterns': { btn: document.getElementById('show-chartist-patterns'), content: document.getElementById('chartist-patterns-study'), init: setupChartistPatternNavigation },
+                'sr': { btn: document.getElementById('show-sr-study'), content: document.getElementById('sr-study'), init: setupSRStudy },
+                'fibonacci': { btn: document.getElementById('show-fibonacci-study'), content: document.getElementById('fibonacci-study'), init: setupFibonacciRetracementStudy }
+            };
+
+            let currentStudyKey = null;
+
+            const switchStudy = (newKey) => {
+                if (!studies[newKey] || newKey === currentStudyKey) return; 
+
+                if (currentStudyKey && studies[currentStudyKey]) {
+                    destroyAllCharts(); // Clean up before switching
+                    studies[currentStudyKey].btn?.classList.remove('active');
+                    studies[currentStudyKey].content?.classList.add('hidden');
+                }
+
+                studies[newKey].btn?.classList.add('active');
+                studies[newKey].content?.classList.remove('hidden');
+
+                // Use requestAnimationFrame to ensure the DOM is ready for the canvas to be found.
+                requestAnimationFrame(() => {
+                    studies[newKey].init();
+                });
+
+                currentStudyKey = newKey;
+            };
+
+            Object.keys(studies).forEach(key => {
+                studies[key].btn?.addEventListener('click', () => switchStudy(key));
+            });
+
+            switchStudy('what-is-ta'); 
+        }
+
+        function setupChartistPatternNavigation() {
+            const patterns = {
+                'symmetric-triangle': { btn: document.getElementById('show-symmetric-triangle'), content: document.getElementById('symmetric-triangle-study-content'), init: setupSymmetricTriangleStudy },
+                'trend-channels': { btn: document.getElementById('show-trend-channels'), content: document.getElementById('trend-channels-study-content'), init: setupTrendChannelStudy },
+                'reversal-patterns': { btn: document.getElementById('show-reversal-patterns'), content: document.getElementById('reversal-patterns-study-content'), init: setupReversalStudy },
+                'cup-handle': { btn: document.getElementById('show-cup-handle'), content: document.getElementById('cup-handle-study-content'), init: setupCupHandleStudy },
+            };
+            let currentPatternKey = null;
+
+            const switchPattern = (newKey) => {
+                 if (!patterns[newKey] || currentPatternKey === newKey) return;
+
+                 if(currentPatternKey && patterns[currentPatternKey]){
+                    destroyChartistCharts(); // Destroy only the charts in this section
+                    patterns[currentPatternKey].btn?.classList.remove('active');
+                    patterns[currentPatternKey].content?.classList.add('hidden');
+                 }
+                 patterns[newKey].btn?.classList.add('active');
+                 patterns[newKey].content?.classList.remove('hidden');
+
+                 requestAnimationFrame(() => {
+                    patterns[newKey].init();
+                 });
+
+                 currentPatternKey = newKey;
+            };
+
+            Object.keys(patterns).forEach(key => {
+                 patterns[key].btn?.addEventListener('click', () => switchPattern(key));
+            });
+
+            // Initialize the first pattern
+            if (document.getElementById('symmetric-triangle-study-content')) {
+                 switchPattern('symmetric-triangle');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const homePage = document.getElementById('home-page');
+            const toolsPageContainer = document.getElementById('tools-page-container');
+            const toolsContentContainer = document.getElementById('tools-content-container');
+            const homeCardsGrid = document.getElementById('home-cards-grid');
+            const homeIconBar = document.getElementById('home-icon-bar');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const closeMobileMenuButton = document.getElementById('close-mobile-menu');
+            const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+
+            const tools = [
+                { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Panorama del Mercado" class="w-full h-full object-cover">` },
+                { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Análisis Técnico" class="w-full h-full object-cover">` },
+                { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" alt="Bandera de Chile" class="w-full h-full object-contain p-2">` },
+                { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" alt="Bandera de EE.UU." class="w-full h-full object-contain p-2">` },
+                { id: 'crypto-page', title: 'Criptomonedas', description: 'Explora el mercado de criptomonedas con nuestro mapa de calor.', icon: `<img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Criptomonedas" class="w-full h-full object-cover">` },
+                { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Noticias" class="w-full h-full object-cover">` },
+                { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Calendario" class="w-full h-full object-cover">` },
+                { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Educación" class="w-full h-full object-cover">` },
+                { id: 'contacto-page', title: 'Contacto', description: '¿Tienes dudas o sugerencias? Háznoslo saber.', icon: `<img src="https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80&w=200&h=200" alt="Icono de Contacto" class="w-full h-full object-cover">` },
+            ];
+
+            const loadedWidgets = new Set();
+
+            function createInitialUI() {
+                tools.forEach((tool) => {
+                    const card = document.createElement('div');
+                    card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10';
+                    card.innerHTML = `<div class="h-16 w-16 mb-6 rounded-full overflow-hidden transition-all duration-300 group-hover:scale-110 bg-gray-800 flex items-center justify-center">${tool.icon}</div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
+                    homeCardsGrid.appendChild(card);
+
+                    const mobileLink = document.createElement('a');
+                    mobileLink.href = '#';
+                    mobileLink.className = 'mobile-nav-link text-gray-300 hover:text-white transition-colors py-2';
+                    mobileLink.textContent = tool.title;
+                    mobileLink.dataset.page = tool.id;
+                    mobileNavLinksContainer.appendChild(mobileLink);
+                });
+
+                const createTickerIcon = (tool) => {
+                    const iconLink = document.createElement('a');
+                    iconLink.href = '#';
+                    iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
+                    iconLink.dataset.page = tool.id;
+                    iconLink.innerHTML = `
+                        <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
+                           ${tool.icon}
+                        </div>
+                        <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
+                    `;
+                    return iconLink;
+                };
+
+                tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
+                tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
+            }
+
+            function showToolsPage(pageId) {
+                homePage.style.display = 'none';
+                toolsPageContainer.style.display = 'block';
+                showToolContent(pageId);
+            }
+
+            function showToolContent(pageId) {
+                const template = document.getElementById(`template-${pageId}`);
+                if (!template) return;
+
+                toolsContentContainer.innerHTML = `<div class="flex justify-center items-center h-64"><span class="loader"></span></div>`;
+
+                setTimeout(() => {
+                    if (document.querySelector(`#template-${pageId}`)) {
+                        toolsContentContainer.innerHTML = template.innerHTML;
+                        loadWidgetsForContent(pageId);
+                        if (pageId === 'gracias-page') {
+                            document.getElementById('back-to-home-from-thanks').addEventListener('click', (e) => {
+                                e.preventDefault();
+                                window.location.hash = ''; // Clear the hash
+                                // Use replaceState to clean the URL without reloading
+                                history.replaceState(null, null, window.location.pathname);
+                                returnToHome(false); // Return home without fade
+                            });
+                        }
+                    }
+                }, 500); 
+
+                document.querySelectorAll('.home-icon-link').forEach(link => {
+                    link.classList.toggle('active', link.dataset.page === pageId);
+                });
+
+                window.scrollTo(0, 0);
+            }
+
+            function openMobileMenu() { mobileMenu.classList.remove('translate-x-full'); }
+            function closeMobileMenu() { mobileMenu.classList.add('translate-x-full'); }
+
+            function loadWidgetsForContent(pageId) {
+                if (pageId === 'educacion-page') {
+                    setupEducationNavigation();
+                }
+
+                const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
+                widgetContainers.forEach(container => {
+                    const widgetType = container.dataset.widgetType;
+                    const widgetKey = `${pageId}-${widgetType}`;
+
+                    if (loadedWidgets.has(widgetKey)) return;
+
+                    let config = {};
+                    let scriptSrc = '';
+
+                    switch(widgetType) {
+                        case 'market-overview':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+                            config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRIPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
+                            break;
+                        case 'advanced-chart':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
+                            config = { "autosize": true, "symbol": "BCS:SP_IPSA", "interval": "D", "timezone": "America/Santiago", "theme": "dark", "style": "1", "locale": "es", "allow_symbol_change": true, "calendar": true, "details": true, "hotlist": true, "hide_side_toolbar": false, "studies": ["Volume@tv-basicstudies", "RSI@tv-basicstudies"] };
+                            break;
+                        case 'heatmap-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "BCSSPIPSA", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-cl':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "BCS", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'heatmap-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
+                            config = { "dataSource": "SPX500", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            break;
+                        case 'hotlists-us':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
+                            config = { "exchange": "US", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
+                            break;
+                        case 'timeline':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
+                            config = { "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "locale": "es" };
+                            break;
+                        case 'economic-calendar':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
+                            config = { "colorTheme": "dark", "isTransparent": false, "locale": "es", "countryFilter": "", "importanceFilter": "0,1", "width": "100%", "height": "100%" };
+                            break;
+                        case 'crypto-coins-heatmap':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js';
+                            config = { "dataSource": "Crypto", "blockSize": "market_cap_calc", "blockColor": "24h_close_change|5", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
+                            break;
+                        case 'crypto-screener':
+                            scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js';
+                            config = { "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "isTransparent": false, "locale": "es", "width": "100%", "height": "100%" };
+                            break;
+                    }
+
+                    if (scriptSrc) {
+                        const script = document.createElement('script');
+                        script.src = scriptSrc;
+                        script.async = true;
+                        script.innerHTML = JSON.stringify(config);
+                        container.innerHTML = ''; 
+                        container.appendChild(script);
+                        loadedWidgets.add(widgetKey);
+                    }
+                });
+            }
+
+            createInitialUI();
+
+            function returnToHome(useFade = true) {
+                if (useFade) {
+                    toolsPageContainer.classList.add('fade-out');
+                    setTimeout(() => {
+                        toolsPageContainer.style.display = 'none';
+                        toolsPageContainer.classList.remove('fade-out');
+                        homePage.style.display = 'block';
+                        homePage.classList.add('fade-in');
+                        document.querySelectorAll('.home-icon-link').forEach(link => {
+                            link.classList.remove('active');
+                        });
+                    }, 300);
+                } else {
+                    toolsPageContainer.style.display = 'none';
+                    homePage.style.display = 'block';
+                    document.querySelectorAll('.home-icon-link').forEach(link => {
+                        link.classList.remove('active');
+                    });
+                }
+                window.scrollTo(0, 0);
+            }
+
+            document.body.addEventListener('click', (e) => {
+                const target = e.target.closest('.home-card-btn, .mobile-nav-link, .home-icon-link');
+                if (target) {
+                    e.preventDefault();
+                    const pageId = target.dataset.page;
+                    showToolsPage(pageId);
+                    closeMobileMenu();
+                }
+            });
+
+            document.getElementById('logo-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                returnToHome();
+            });
+            document.getElementById('back-to-home-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                returnToHome();
+            });
+
+             // Check for form success on page load
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('form') === 'success') {
+                showToolsPage('gracias-page');
+            }
+
+            mobileMenuButton.addEventListener('click', openMobileMenu);
+            closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+
+            const canvas = document.getElementById('particle-canvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function createParticles() {
+                particles = [];
+                let numberOfParticles = (canvas.height * canvas.width) / 9000;
+                for(let i = 0; i < numberOfParticles; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: Math.random() * 0.5 - 0.25,
+                        vy: Math.random() * 0.5 - 0.25,
+                        radius: Math.random() * 1.5
+                    });
+                }
+            }
+
+            function drawParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                particles.forEach(p => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+            }
+
+            function updateParticles() {
+                particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                });
+            }
+
+            function animate() {
+                drawParticles();
+                updateParticles();
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                createParticles();
+            });
+
+            resizeCanvas();
+            createParticles();
+            animate();
+
+        });
+    </script>
+</body>
+</html>
