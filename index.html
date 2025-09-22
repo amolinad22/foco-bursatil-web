@@ -257,6 +257,51 @@ margin-top: 1rem;
 </div>
 </div>
 <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"></div>
+
+<!-- Sección de Suscripción al Boletín Mejorada -->
+<div class="mt-24">
+    <div class="card max-w-4xl mx-auto p-8">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <!-- Columna de texto -->
+            <div class="text-center md:text-left">
+                <div class="inline-flex items-center gap-3 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                    <h2 class="text-3xl font-bold text-white">Mantente Actualizado</h2>
+                </div>
+                <p class="text-gray-400">
+                    Suscríbete a nuestro boletín y sé el primero en recibir las últimas guías de estudio, análisis de mercado y nuevas herramientas directamente en tu correo.
+                </p>
+            </div>
+            <!-- Columna del formulario -->
+            <div>
+                <form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST" class="flex flex-col sm:flex-row gap-3">
+                    <input type="hidden" name="_subject" value="¡Nueva Suscripción al Boletín!">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
+                    
+                    <label for="newsletter-email" class="sr-only">Correo electrónico</label>
+                    <input 
+                        id="newsletter-email"
+                        type="email" 
+                        name="email" 
+                        placeholder="Tu correo electrónico" 
+                        class="flex-grow block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+                        required
+                    >
+                    <button 
+                        type="submit" 
+                        class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex-shrink-0"
+                    >
+                        Suscribirme
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-3 text-center sm:text-left">Respetamos tu privacidad. No spam.</p>
+            </div>
+        </div>
+    </div>
+</div>
 </main>
 
     <!-- Contenedor de Herramientas -->
@@ -2496,8 +2541,4 @@ function createChannelSimulatorChart() {
     </script>
 </body>
 </html>
-
-
-
-
 
