@@ -1048,11 +1048,7 @@ Volver al Inicio
     
 
     <!-- Pie de página -->
-<footer class="bg-gray-900 border-t border-gray-700 mt-16">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
-<p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
-</div>
-</footer>
+<?php include 'footer.html'; ?>
 
 <script type="module">
 // --- Módulo de Gráficos y Educación ---
