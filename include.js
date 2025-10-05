@@ -15,4 +15,5 @@ document.addEventListener('DOMContentLoaded', () => {
     // Le decimos: Busca el elemento con ID 'footer-placeholder' y pega el contenido de 'footer.html'
    loadHTML('footer-placeholder', 'includes/footer.html');
   loadHTML('header-placeholder', 'includes/header.html');
+  loadHTML('content-placeholder', 'includes/content.html');
 });
