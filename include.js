@@ -6,7 +6,7 @@ function loadHTML(id, filename, callback) {
         // 2. Pega el contenido dentro del elemento que tenga el 'id'
         document.getElementById(id).innerHTML = data;
         
-        if (callback) { // Ejecuta la función de lógica, si existe
+        if (callback) { 
             callback();
         }
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHTML('footer-placeholder', 'includes/footer.html');
     loadHTML('header-placeholder', 'includes/header.html');
     
-    // CARGA DE CONTENIDO PRINCIPAL: SOLUCIÓN FINAL AL PROBLEMA DE LOS CLICS
+    // CARGA DE CONTENIDO PRINCIPAL: SOLUCIÓN FINAL
     loadHTML('content-placeholder', 'includes/content.html', () => { 
         // Despues de pegar content.html, cargamos y ejecutamos app.js
         import('./js/app.js')
