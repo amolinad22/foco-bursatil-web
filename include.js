@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadHTML('footer-placeholder', 'includes/footer.html');
     loadHTML('header-placeholder', 'includes/header.html');
     
-    // CARGA DE CONTENIDO PRINCIPAL: SOLUCIÓN AL PROBLEMA DE LOS CLICS
+    // CARGA DE CONTENIDO PRINCIPAL: SOLUCIÓN FINAL AL PROBLEMA DE LOS CLICS
     loadHTML('content-placeholder', 'includes/content.html', () => { 
         // Despues de pegar content.html, cargamos y ejecutamos app.js
         import('./js/app.js')
