@@ -13,5 +13,5 @@ function loadHTML(id, filename) {
 // Cuando la página está lista, llama a la función para cargar el 'footer.html'
 document.addEventListener('DOMContentLoaded', () => {
     // Le decimos: Busca el elemento con ID 'footer-placeholder' y pega el contenido de 'footer.html'
-    loadHTML('footer-placeholder', 'footer.html'); 
+   loadHTML('footer-placeholder', 'includes/footer.html');
 });
