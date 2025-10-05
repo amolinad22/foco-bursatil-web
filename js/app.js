@@ -1,4 +1,4 @@
-// --- Módulo de Gráficos y Educación ---
+export function initApp() {
 let anatomyChartInstance = null;
 let simulatorChartInstance = null;
 let fibonacciChartInstance = null;
@@ -1502,3 +1502,4 @@ function createChannelSimulatorChart() {
             animate();
 
         });
+}
