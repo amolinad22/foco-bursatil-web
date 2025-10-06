@@ -1,4 +1,75 @@
- <!-- Plantillas de Contenido para Herramientas -->
+<div class="text-center mb-16">
+<div class="flex justify-center items-center gap-4 sm:gap-8">
+<div class="text-right">
+<h1 class="text-4xl sm:text-5xl font-bold text-white tracking-tight">El Pulso del Mercado</h1>
+<p class="mt-2 text-base sm:text-lg text-gray-400">Todas las herramientas que necesitas, en un solo lugar.</p>
+</div>
+<img src="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/main/logo%20redondo%202.png" alt="Logo de Foco Bursátil" class="h-36 sm:h-56 w-auto flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x50/0D1117/FFFFFF?text=Logo';">
+</div>
+</div>
+<div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10"></div>
+
+<!-- Sección de Suscripción al Boletín Mejorada -->
+<div class="mt-24">
+<div class="card max-w-4xl mx-auto p-8">
+<div class="grid md:grid-cols-2 gap-8 items-center">
+<!-- Columna de texto -->
+<div class="text-center md:text-left">
+<div class="inline-flex items-center gap-3 mb-4">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+<path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+</svg>
+<h2 class="text-3xl font-bold text-white">Mantente Actualizado</h2>
+</div>
+<p class="text-gray-400">
+Suscríbete a nuestro boletín y sé el primero en recibir las últimas guías de estudio, análisis de mercado y nuevas herramientas directamente en tu correo.
+</p>
+</div>
+<!-- Columna del formulario -->
+<div>
+<form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST" class="flex flex-col sm:flex-row gap-3">
+<input type="hidden" name="_subject" value="¡Nueva Suscripción al Boletín!">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
+
+<label for="newsletter-email" class="sr-only">Correo electrónico</label>
+<input 
+id="newsletter-email"
+type="email" 
+name="email" 
+placeholder="Tu correo electrónico" 
+class="flex-grow block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+required
+>
+<button 
+type="submit" 
+class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex-shrink-0"
+>
+Suscribirme
+</button>
+</form>
+<p class="text-xs text-gray-500 mt-3 text-center sm:text-left">Respetamos tu privacidad. No spam.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Contenedor de Herramientas -->
+<main id="tools-page-container" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-12" style="display: none;">
+<!-- Nuevo botón "Volver al Inicio" para una mejor navegación -->
+<div class="mb-8">
+<button id="back-to-home-btn" class="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+</svg>
+Volver al Inicio
+</button>
+</div>
+<div id="tools-content-container"></div>
+</main>
+
+<!-- Plantillas de Contenido para Herramientas -->
 <template id="template-panorama-market-page">
 <div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Panorama del Mercado</h1><p class="mt-2 text-lg text-gray-400">Un vistazo general a los principales mercados.</p></div>
 <div class="bg-[#161B22] border border-gray-700 rounded-xl p-6 md:p-8"><div class="w-full h-[650px]"><div class="tradingview-widget-container__widget" data-widget-type="market-overview"></div></div></div>
@@ -45,7 +116,7 @@
 <p class="text-lg text-gray-400 max-w-3xl mx-auto">Explora guías interactivas para entender y operar los patrones de consolidación y niveles de retroceso más comunes.</p>
 </div>
 
-                <!-- Subnavegación de Educación -->
+<!-- Subnavegación de Educación -->
 <div class="flex flex-wrap justify-center mb-8 gap-4">
 <button id="show-what-is-ta" class="btn active">¿Qué es el Análisis Técnico?</button>
 <button id="show-chartist-patterns" class="btn">Patrones Chartistas</button>
@@ -53,7 +124,7 @@
 <button id="show-fibonacci-study" class="btn">Retroceso de Fibonacci</button>
 </div>
 
-                <!-- Contenido: ¿Qué es el Análisis Técnico? -->
+<!-- Contenido: ¿Qué es el Análisis Técnico? -->
 <div id="what-is-ta-study" class="study-content">
 <div class="card">
 <h2 class="text-3xl font-bold mb-4 text-white">¿Qué es el Análisis Técnico?</h2>
@@ -129,7 +200,7 @@
 </div>
 </div>
 
-                <!-- Contenido para el Estudio de Patrones Chartistas -->
+<!-- Contenido para el Estudio de Patrones Chartistas -->
 <div id="chartist-patterns-study" class="study-content hidden">
 <div class="flex flex-wrap justify-center mb-8 gap-4">
 <button id="show-symmetric-triangle" class="btn active">Triángulo Simétrico</button>
@@ -138,9 +209,9 @@
 <button id="show-cup-handle" class="btn">Taza con Asa</button>
 </div>
 
-                        <!-- Contenido del Triángulo Simétrico -->
+<!-- Contenido del Triángulo Simétrico -->
 <div id="symmetric-triangle-study-content">
-                                <!-- Sección 1: Anatomía del Patrón -->
+<!-- Sección 1: Anatomía del Patrón -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Anatomía del Patrón: Triángulo Simétrico</h2>
 <p class="mb-6 text-gray-400">Esta sección desglosa los componentes clave de un triángulo simétrico. Haz clic en cada botón para resaltar y entender las diferentes partes del patrón en el gráfico interactivo.</p>
@@ -162,7 +233,7 @@
 </div>
 </div>
 
-                                <!-- Sección 2: Psicología del Mercado -->
+<!-- Sección 2: Psicología del Mercado -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">La Psicología del Mercado</h2>
 <p class="mb-6 text-gray-400">El triángulo simétrico es más que una simple forma en un gráfico; representa una batalla temporalmente equilibrada entre las fuerzas de la oferta y la demanda.</p>
@@ -182,7 +253,7 @@
 <p class="mt-6 text-center max-w-2xl mx-auto text-gray-300">Esta indecisión comprime el precio hasta que un lado cede, resultando en una ruptura impulsiva. El volumen decreciente durante la formación confirma esta calma antes de la tormenta.</p>
 </div>
 
-                                <!-- Ejemplos del mundo real para Triángulo Simétrico -->
+<!-- Ejemplos del mundo real para Triángulo Simétrico -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo del Índice S&P IPSA</h2>
 <p class="mb-6 text-gray-400">El gráfico del índice S&P IPSA muestra una consolidación perfecta. Puedes ver cómo el precio se comprime entre las dos líneas de tendencia hasta que finalmente rompe al alza con fuerza.</p>
@@ -225,7 +296,7 @@
 </div>
 </div>
 
-                                <!-- Sección 4: Simulador de Trading -->
+<!-- Sección 4: Simulador de Trading -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Opera el Patrón</h2>
 <p class="mb-6 text-gray-400">Ahora, pongamos la teoría en práctica. Sigue los pasos para simular una operación completa de un triángulo simétrico, desde la identificación hasta la toma de ganancias.</p>
@@ -265,7 +336,7 @@
 </div>
 </div>
 
-                        <!-- Contenido de los Canales de Tendencia -->
+<!-- Contenido de los Canales de Tendencia -->
 <div id="trend-channels-study-content" class="hidden">
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Canales de Tendencia</h2>
@@ -309,7 +380,7 @@
 </div>
 </div>
 </div>
-                                <!-- Nuevo simulador de trading para Canales de Tendencia -->
+<!-- Nuevo simulador de trading para Canales de Tendencia -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Canales</h2>
 <p class="mb-6 text-gray-400">Practica a identificar y operar canales de tendencia alcistas y bajistas.</p>
@@ -332,7 +403,7 @@
 </div>
 </div>
 
-                        <!-- Contenido de los Patrones de Reversión -->
+<!-- Contenido de los Patrones de Reversión -->
 <div id="reversal-patterns-study-content" class="hidden">
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Patrones de Reversión</h2>
@@ -352,7 +423,7 @@
 </div>
 </div>
 </div>
-                                <!-- Ejemplos del mundo real para Patrones de Reversión -->
+<!-- Ejemplos del mundo real para Patrones de Reversión -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Suelo: Salfacorp</h2>
 <p class="mb-6 text-gray-400">En este gráfico de Salfacorp, se puede observar una clara formación de **doble suelo** después de una consolidación lateral. El precio encontró soporte dos veces en un nivel similar, creando dos mínimos ("suelos") antes de romper la resistencia del "cuello" (neckline). Esta ruptura con volumen creciente señaló el cambio de tendencia, llevando al precio a un nuevo impulso alcista.</p>
@@ -365,7 +436,7 @@
 </div>
 </div>
 </div>
-                                <!-- Nuevo ejemplo del mundo real para Doble Techo: SQM_B -->
+<!-- Nuevo ejemplo del mundo real para Doble Techo: SQM_B -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Doble Techo: SQM_B</h2>
 <p class="mb-6 text-gray-400">Este gráfico de SQM_B es un claro ejemplo de un patrón de **doble techo**. El precio intentó superar un nivel de resistencia dos veces, formando dos máximos ("techos") en un nivel similar. Tras no poder superarlo, el precio retrocedió y finalmente rompió el nivel de soporte del "cuello" (neckline), confirmando la reversión de la tendencia de alcista a bajista.</p>
@@ -378,7 +449,7 @@
 </div>
 </div>
 </div>
-                                <!-- Nuevo simulador de trading para Patrones de Reversión -->
+<!-- Nuevo simulador de trading para Patrones de Reversión -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Patrones de Reversión</h2>
 <p class="mb-6 text-gray-400">Practica a identificar un cambio de tendencia y a colocar una operación.</p>
@@ -415,9 +486,9 @@
 </div>
 </div>
 
-                        <!-- Contenido de Taza con Asa -->
+<!-- Contenido de Taza con Asa -->
 <div id="cup-handle-study-content" class="hidden">
-                                <!-- Sección 1: Anatomía del Patrón -->
+<!-- Sección 1: Anatomía del Patrón -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Anatomía del Patrón: Taza con Asa (Cup and Handle)</h2>
 <p class="mb-6 text-gray-400">Este patrón de continuación alcista se asemeja a una taza de té vista de perfil. Haz clic en los botones para explorar sus componentes clave.</p>
@@ -438,7 +509,7 @@
 </div>
 </div>
 </div>
-                                <!-- Sección 2: Psicología del Mercado -->
+<!-- Sección 2: Psicología del Mercado -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">La Psicología del Mercado</h2>
 <p class="mb-6 text-gray-400">El patrón "Taza con Asa" representa un período de consolidación seguido de una continuación alcista, mostrando un cambio gradual en el sentimiento del mercado.</p>
@@ -453,7 +524,7 @@
 </div>
 </div>
 </div>
-                                <!-- Sección 3: Ejemplo Real -->
+<!-- Sección 3: Ejemplo Real -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo Real: NVDA</h2>
 <p class="mb-6 text-gray-400">El gráfico de NVIDIA (NVDA) muestra una formación clásica de "Taza con Asa". Después de una fuerte tendencia alcista, el precio formó un fondo redondeado (la taza), seguido de una breve y superficial consolidación a la baja (el asa). La ruptura de la línea de resistencia del asa confirmó la continuación de la tendencia alcista con un fuerte aumento de volumen, llevando al precio a nuevos máximos históricos.</p>
@@ -475,8 +546,8 @@
 <img src="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/0c82b9251ad3ca10bac171bab36cf1a0963e8cd8/SPX%20.png" alt="Gráfico de Taza con Asa en S&P 500" class="rounded-md w-full h-full object-contain">
 </div>
 </div>
-                                  <!-- Sección 4: Simulador de Trading para Taza con Asa -->
-                                <div class="card">
+<!-- Sección 4: Simulador de Trading para Taza con Asa -->
+<div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Taza con Asa</h2>
 <p class="mb-6 text-gray-400">Aprende a operar el patrón "Taza con Asa" paso a paso. Sigue las instrucciones para identificar el patrón y simular una operación completa.</p>
 <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
@@ -516,7 +587,7 @@
 </div>
 </div>
 
-                <!-- Contenido para el Estudio del Retroceso de Fibonacci -->
+<!-- Contenido para el Estudio del Retroceso de Fibonacci -->
 <div id="fibonacci-study" class="study-content hidden">
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Retroceso de Fibonacci: Entendiendo los Niveles de Soporte</h2>
@@ -539,7 +610,7 @@
 </div>
 </div>
 
-                        <!-- Ejemplos del mundo real para ENELCHILE -->
+<!-- Ejemplos del mundo real para ENELCHILE -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: ENELCHILE</h2>
 <p class="mb-6 text-gray-400">El gráfico de la acción ENELCHILE muestra un rally alcista. Después de este impulso, el precio retrocedió y probó el nivel de **61.8% de Fibonacci**. Es notable cómo el precio bajó sutilmente por debajo de este nivel clave, lo que se conoce como una "caza de stop-loss" o un movimiento para liquidar órdenes, antes de rebotar con fuerza y continuar su tendencia alcista original.</p>
@@ -553,7 +624,7 @@
 </div>
 </div>
 
-                        <!-- Ejemplos del mundo real para SQM-B -->
+<!-- Ejemplos del mundo real para SQM-B -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Caso Real: SQM-B</h2>
 <p class="mb-6 text-gray-400">En este gráfico de SQM-B, la acción experimentó un fuerte movimiento alcista. Posteriormente, el precio retrocedió y encontró soporte en el nivel de **50% de Fibonacci** antes de reanudar su tendencia principal. Este nivel clave actuó como una zona de acumulación donde los compradores volvieron a tomar el control.</p>
@@ -568,7 +639,7 @@
 </div>
 </div>
 
-                <!-- Contenido para el Estudio de Soportes y Resistencias -->
+<!-- Contenido para el Estudio de Soportes y Resistencias -->
 <div id="sr-study" class="study-content hidden">
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Soportes y Resistencias Horizontales</h2>
@@ -608,7 +679,7 @@
 </div>
 </div>
 
-                        <!-- Ejemplos del mundo real para SR -->
+<!-- Ejemplos del mundo real para SR -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de Soportes y Resistencias: ITAÚ</h2>
 <p class="mb-6 text-gray-400">En este ejemplo con la acción de ITAÚ, se puede observar cómo el precio ha respetado en múltiples ocasiones un nivel de **soporte** horizontal. Sin embargo, en la parte superior del gráfico, el precio también ha sido frenado por un nivel de **resistencia** claro, lo que ha mantenido al activo en un rango de negociación horizontal, conocido como consolidación. Esto demuestra que los soportes y resistencias son igualmente importantes para definir los límites del movimiento del precio.</p>
@@ -649,7 +720,7 @@
 </div>
 </div>
 
-                <!-- Descargo de Responsabilidad -->
+<!-- Descargo de Responsabilidad -->
 <div class="text-center text-xs text-gray-500 py-8">
 <p><strong>Disclaimer:</strong> Este contenido es únicamente para fines educativos e informativos. No constituye asesoramiento financiero, de inversión ni de ningún otro tipo. El trading y la inversión en los mercados financieros conllevan un riesgo significativo. Realice siempre su propia investigación y consulte a un profesional financiero calificado antes de tomar cualquier decisión de inversión.</p>
 </div>
@@ -664,11 +735,11 @@
 </div>
 <div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
 <form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
-                        <!-- Asunto para el correo -->
+<!-- Asunto para el correo -->
 <input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
-                        <!-- Página de agradecimiento personalizada -->
+<!-- Página de agradecimiento personalizada -->
 <input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
-                        <!-- Deshabilitar reCAPTCHA (opcional, pero simplifica para el usuario) -->
+<!-- Deshabilitar reCAPTCHA (opcional, pero simplifica para el usuario) -->
 <input type="hidden" name="_captcha" value="false">
 <div class="space-y-6">
 <div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
@@ -692,9 +763,9 @@
 </div>
 </div>
 </template>
-    
 
-    <!-- Modal para mensajes de Alerta -->
+
+<!-- Modal para mensajes de Alerta -->
 <div id="alert-modal" class="modal">
 <div class="modal-content">
 <h3 id="modal-title" class="text-xl font-semibold text-white mb-2"></h3>
@@ -704,4 +775,4 @@
 </div>
 </div>
 </div>
-    
+
