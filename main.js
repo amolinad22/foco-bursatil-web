@@ -1,47 +1,53 @@
-// main.js - Lógica principal y orquestación
+// main.js
 
-// --- IMPORTS: Importamos funciones y datos de los módulos ---
-// Las rutas asumen que los archivos .js están dentro de la carpeta 'particles/'
-import { initializeCanvas, drawParticles } from './particles/renderer.js';
+// Importa todas las funciones y variables necesarias de los módulos
 import { initializeParticles, updateAllParticles, handleMouseMove, particles } from './particles/particle.js';
+import { drawParticles, setupCanvas, resizeCanvas } from './particles/renderer.js';
 import { PARTICLE_COUNT, BASE_SPEED } from './particles/config.js';
 
-// --- BUUCLE DE ANIMACIÓN ---
+let animationFrameId;
 
 /**
- * @description Función principal del bucle de animación (60 FPS).
+ * @description Inicia el bucle de animación que dibuja y actualiza las partículas.
  */
 function animate() {
-    // 1. Dibuja las partículas (limpia el canvas y dibuja)
+    // 1. Limpia el canvas y dibuja las partículas y las líneas.
     drawParticles();
-
-    // 2. Actualiza la posición y velocidad de las partículas
+    
+    // 2. Actualiza la posición y la física de todas las partículas.
     updateAllParticles();
 
-    // 3. Solicita el siguiente fotograma para el loop
-    requestAnimationFrame(animate);
+    // 3. Solicita el siguiente fotograma para crear un bucle continuo.
+    animationFrameId = requestAnimationFrame(animate);
 }
 
-// --- INICIALIZACIÓN ---
-
 /**
- * @description Inicializa la aplicación después de que el DOM está completamente cargado.
+ * @description Función principal que inicializa el sistema.
  */
-function initializeApp() {
-    // 1. Inicializa el canvas y establece listeners de redimensionamiento
-    initializeCanvas();
+function init() {
+    // 1. Configura el canvas (obtiene el contexto y establece el tamaño inicial)
+    const setupSuccessful = setupCanvas();
 
-    // 2. Inicializa las partículas (crea el array de objetos Particle)
+    if (!setupSuccessful) {
+        // Si el setup falla (ej. no encuentra el canvas), detenemos la inicialización.
+        return;
+    }
+
+    // 2. Inicializa las partículas con las constantes de configuración.
     initializeParticles(PARTICLE_COUNT, BASE_SPEED);
-    
-    // 3. Inicia el bucle de animación
+
+    // 3. Añade el listener para el movimiento del ratón
+    window.addEventListener('mousemove', handleMouseMove);
+
+    // 4. Asegura que el canvas se redimensione y las partículas se creen de nuevo al cambiar el tamaño de la ventana
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        initializeParticles(PARTICLE_COUNT, BASE_SPEED);
+    });
+
+    // 5. Inicia el bucle de animación.
     animate();
 }
 
-// --- LISTENERS ---
-
-// Escucha el evento de movimiento del ratón para actualizar la posición
-window.addEventListener('mousemove', handleMouseMove);
-
-// Inicia la aplicación al cargar la ventana
-window.onload = initializeApp;
+// Inicia el sistema una vez que la ventana y todos los scripts estén cargados.
+window.onload = init;
