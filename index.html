@@ -38,7 +38,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
 
-<link rel="stylesheet" href="css/style.css">
 <style>
 /* Estilos personalizados para la aplicación */
 body {
@@ -225,7 +224,6 @@ margin-top: 1rem;
 
 <canvas id="particle-canvas"></canvas>
 
-<div id="header-placeholder"></div>
 <!-- Ticker de Acciones -->
 <div class="tradingview-widget-container">
 <div class="tradingview-widget-container__widget"></div>
@@ -270,8 +268,6 @@ margin-top: 1rem;
 
 <!-- Página de Inicio con Tarjetas -->
 <main id="home-page" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-<main id="content-placeholder"></main>
-<div id="footer-placeholder"></div>
 <div class="text-center mb-16">
 <div class="flex justify-center items-center gap-4 sm:gap-8">
 <div class="text-right">
@@ -2332,16 +2328,11 @@ iconLink.href = '#';
 iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
 iconLink.dataset.page = tool.id;
 iconLink.innerHTML = `
-                      <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
-                         ${tool.icon}
-                      </div>
-                      <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
-                  `;
-<div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
-${tool.icon}
-</div>
-<span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
-`;
+                       <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
+                          ${tool.icon}
+                       </div>
+                       <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
+                   `;
 return iconLink;
 };
 
@@ -2571,5 +2562,3 @@ animate();
 </script>
 </body>
 </html>
-
-~
