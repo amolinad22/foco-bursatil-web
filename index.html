@@ -57,6 +57,16 @@
 <body>
 
     <!--
+        DIV para mostrar errores en la interfaz si la carga modular falla.
+    -->
+    <div id="error-message" class="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50 hidden max-w-lg text-center">
+        <strong class="block mb-1">¡Error Crítico de Carga!</strong>
+        <p id="error-details" class="text-sm"></p>
+        <p class="text-xs mt-2">Revisa la Consola (F12) o las rutas de tus archivos JavaScript (main.js, particles/).</p>
+    </div>
+
+
+    <!--
         Paso 1: Este canvas será el fondo interactivo.
     -->
     <canvas id="particle-canvas"></canvas>
@@ -100,5 +110,34 @@
         Esta ruta asume que main.js está en la raíz de tu proyecto.
     -->
     <script type="module" src="./main.js"></script>
+
+    <script>
+        function displayError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const detailsP = document.getElementById('error-details');
+            if (errorDiv && detailsP) {
+                detailsP.textContent = message;
+                errorDiv.classList.remove('hidden');
+                console.error("Critical Runtime Error Displayed:", message);
+            }
+        }
+
+        // 1. Capturar errores de sintaxis o ejecución
+        window.onerror = function(message, source, lineno, colno, error) {
+            displayError(`Error en la línea ${lineno}: ${message}`);
+            return true; // Evita la acción por defecto del navegador
+        };
+
+        // 2. Capturar errores de promesas no manejadas (común en importaciones modulares fallidas)
+        window.addEventListener('unhandledrejection', function(event) {
+            let reason = event.reason.message || event.reason;
+            // Específicamente, buscar errores de importación/módulos
+            if (reason.includes("Failed to fetch dynamically imported module") || reason.includes("module source")) {
+                 displayError(`Error de Módulo: No se encontró uno de los archivos JavaScript (revisa rutas en main.js).`);
+            } else {
+                 displayError(`Rechazo de Promesa: ${reason}`);
+            }
+        });
+    </script>
 </body>
 </html>
