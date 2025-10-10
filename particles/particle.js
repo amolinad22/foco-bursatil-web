@@ -87,7 +87,7 @@ export function updateAllParticles() {
  * @description Listener de movimiento del ratón que actualiza la posición global.
  * @param {MouseEvent} event - Evento del ratón.
  */
-export function handleMouseMove(event) { // <--- ESTA FUNCIÓN ESTABA AUSENTE O NO EXPORTADA
+export function handleMouseMove(event) { // <--- ESTA FUNCIÓN DEBE TENER 'export'
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 }
