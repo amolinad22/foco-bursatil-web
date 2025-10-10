@@ -1,0 +1,107 @@
+/* Estilos generados por Tailwind CSS (asumo que se usó un CDN o la CLI) */
+
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Estilos extraídos de las líneas 23 a 972 */
+
+/* Base Styles */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Custom Components */
+.nav-btn, .secondary-nav-btn, .anatomy-btn, .simulator-btn, .step-badge {
+    @apply transition-all duration-200 ease-in-out;
+}
+
+.nav-btn {
+    @apply text-left px-4 py-2 rounded-lg text-gray-400 hover:bg-gray-700 hover:text-white font-medium;
+}
+
+.nav-btn.active {
+    @apply bg-blue-600 text-white font-semibold shadow-lg shadow-blue-500/30;
+}
+
+.secondary-nav-btn {
+    @apply px-4 py-2 rounded-full text-sm font-medium text-gray-300 bg-gray-700 hover:bg-gray-600;
+}
+
+.secondary-nav-btn.active {
+    @apply bg-blue-600 text-white shadow-md shadow-blue-500/30;
+}
+
+.anatomy-btn {
+    @apply px-3 py-1 rounded-md text-xs font-semibold text-gray-300 bg-gray-700 hover:bg-gray-600;
+}
+
+.anatomy-btn.active {
+    @apply bg-blue-600 text-white;
+}
+
+.simulator-btn {
+    @apply bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-600 disabled:opacity-70 disabled:cursor-not-allowed;
+}
+
+.simulator-btn-secondary {
+    @apply bg-gray-700 hover:bg-gray-600;
+}
+
+.step-badge {
+    @apply flex items-center justify-center w-6 h-6 bg-blue-600 text-white rounded-full text-xs font-bold flex-shrink-0;
+}
+
+/* Page Transitions */
+.study-content, .pattern-content {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Ticker Animation */
+.ticker-wrap {
+    width: 100%;
+    height: 100px;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: content-box;
+}
+
+.ticker-move {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.home-icon-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1rem;
+}
+
+.home-icon-link.active .w-8, .home-icon-link.active span {
+    border-color: #3B82F6;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+@keyframes ticker {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Utility classes for widgets */
+.tradingview-widget-container__widget {
+    min-height: 400px;
+    height: 100%;
+    width: 100%;
+}
