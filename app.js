@@ -1,388 +1,619 @@
-import {
-    destroyAllCharts,
-    destroyChartistCharts,
-    setupSRStudy,
-    setupFibonacciRetracementStudy,
-    setupSymmetricTriangleStudy,
-    setupTrendChannelStudy,
-    setupReversalStudy,
-    setupCupHandleStudy
-} from './chartistPatterns.js'; // Importa las funciones del módulo de gráficos
+// --- CONFIGURACIÓN DE DATOS GLOBALES ---
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Definiciones de elementos del DOM
-    const homePage = document.getElementById('home-page');
-    const toolsPageContainer = document.getElementById('tools-page-container');
-    const toolsContentContainer = document.getElementById('tools-content-container');
-    const homeCardsGrid = document.getElementById('home-cards-grid');
-    const homeIconBar = document.getElementById('home-icon-bar');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    const closeMobileMenuButton = document.getElementById('close-mobile-menu');
-    const mobileNavLinksContainer = document.getElementById('mobile-nav-links');
+// Mapeo de herramientas de la aplicación
+const TOOLS = {
+    // Widgets de TradingView
+    'panorama-market': { title: 'Panorama de Mercado', icon: 'zap', templateId: 'template-panorama-market-page', widgetType: 'market-overview', description: 'Visión general de índices, divisas y commodities globales.' },
+    'analisis-tecnico': { title: 'Análisis Técnico', icon: 'bar-chart-3', templateId: 'template-analisis-tecnico-page', widgetType: 'advanced-chart', description: 'Gráficos avanzados para aplicar estrategias e indicadores.' },
+    'chile-market': { title: 'Mercado Chileno (IPSA)', icon: 'flag', templateId: 'template-chile-market-page', widgetType: ['heatmap-cl', 'hotlists-cl'], description: 'Mapa de calor y análisis de las principales acciones IPSA.' },
+    'usa-market': { title: 'Mercado USA (S&P 500)', icon: 'globe', templateId: 'template-usa-market-page', widgetType: ['heatmap-us', 'hotlists-us'], description: 'Seguimiento del S&P 500 y las acciones de mayor movimiento.' },
+    'crypto': { title: 'Criptomonedas', icon: 'bitcoin', templateId: 'template-crypto-page', widgetType: ['crypto-coins-heatmap', 'crypto-screener'], description: 'Capitalización, rendimiento y screener del universo crypto.' },
+    'noticias': { title: 'Noticias Globales', icon: 'newspaper', templateId: 'template-noticias-page', widgetType: 'timeline', description: 'Noticias económicas y financieras que impactan los mercados.' },
+    'calendario': { title: 'Calendario Económico', icon: 'calendar', templateId: 'template-calendario-page', widgetType: 'economic-calendar', description: 'Eventos clave, anuncios y datos macroeconómicos.' },
+    // Módulos de Contenido
+    'educacion': { title: 'Educación y Estudios', icon: 'book-open', templateId: 'template-educacion-page', description: 'Módulos interactivos para aprender conceptos de AT.', module: './chartistPatterns.js' },
+    'contacto': { title: 'Contacto', icon: 'mail', templateId: 'template-contacto-page', description: 'Envíanos tus dudas y sugerencias.' },
+};
+
+// --- IMPORTACIÓN DEL MÓDULO DE GRÁFICOS INTERACTIVOS (EDUCACIÓN) ---
+
+let chartPatternsModule = null;
+const loadChartPatternsModule = async () => {
+    if (!chartPatternsModule) {
+        try {
+            // Importa dinámicamente el módulo para la página de educación
+            chartPatternsModule = await import('./chartistPatterns.js');
+        } catch (error) {
+            console.error("Error al cargar el módulo chartistPatterns.js:", error);
+        }
+    }
+};
+
+// --- ESTADO Y UTILERÍAS ---
+
+// Función de utilidad para crear elementos con clases
+const createElement = (tag, classes = [], content = '') => {
+    const el = document.createElement(tag);
+    if (classes.length) el.className = classes.join(' ');
+    if (content) el.innerHTML = content;
+    return el;
+};
+
+// Mapa para almacenar instancias de TradingView para evitar recarga
+const tradingViewInstances = new Map();
+
+// --- LÓGICA DE TRADINGVIEW WIDGETS ---
+
+// Función que inicializa los widgets de TradingView en un contenedor específico
+const initializeTradingViewWidgets = (container) => {
+    // Script de TradingView (solo se necesita importar una vez, pero lo inyectamos si no existe)
+    if (!document.getElementById('tradingview-script')) {
+        const script = document.createElement('script');
+        script.id = 'tradingview-script';
+        script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-constructor.js?v=2024-10-10';
+        script.async = true;
+        document.body.appendChild(script);
+    }
     
-    // Configuración de las herramientas disponibles
-    const tools = [
-        { id: 'panorama-market-page', title: 'Panorama', description: 'Un vistazo general a los principales mercados y activos.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/panorama.jpeg?raw=true" alt="Icono de Panorama del Mercado" class="w-full h-full object-cover">` },
-        { id: 'analisis-tecnico-page', title: 'Análisis Técnico', description: 'Herramientas visuales para analizar la acción del precio.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/analisis-tecnico.jpeg?raw=true" alt="Icono de Análisis Técnico" class="w-full h-full object-cover">` },
-        { id: 'chile-market-page', title: 'Chile', description: 'Sigue de cerca el S&P IPSA y las acciones locales.', icon: `<img src="https://flagcdn.com/cl.svg" alt="Bandera de Chile" class="w-full h-full object-contain p-2">` },
-        { id: 'usa-market-page', title: 'USA', description: 'Analiza los gigantes de Wall Street con nuestro mapa de calor.', icon: `<img src="https://flagcdn.com/us.svg" alt="Bandera de EE.UU." class="w-full h-full object-contain p-2">` },
-        { id: 'crypto-page', title: 'Criptomonedas', description: 'Explora el mercado de criptomonedas con nuestro mapa de calor.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/criptomonedas.jpeg?raw=true" alt="Icono de Criptomonedas" class="w-full h-full object-cover">` },
-        { id: 'noticias-page', title: 'Noticias', description: 'Las últimas noticias que mueven los mercados.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/noticias.jpeg?raw=true" alt="Icono de Noticias" class="w-full h-full object-cover">` },
-        { id: 'calendario-page', title: 'Calendario', description: 'Anticípate a los eventos económicos clave.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/calendario.jpeg?raw=true" alt="Icono de Calendario" class="w-full h-full object-cover">` },
-        { id: 'educacion-page', title: 'Educación', description: 'Aprende los conceptos clave para invertir con confianza.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/educacion.jpeg?raw=true" alt="Icono de Educación" class="w-full h-full object-cover">` },
-        { id: 'contacto-page', title: 'Contacto', description: '¿Tienes dudas o sugerencias? Háznoslo saber.', icon: `<img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/images/contacto.jpeg?raw=true" alt="Icono de Contacto" class="w-full h-full object-cover">` },
-    ];
-
-    const loadedWidgets = new Set();
-
-    // --- Funciones de Navegación de Educación (Usa funciones importadas) ---
-
-    function setupEducationNavigation() {
-        const studies = {
-            'what-is-ta': { btn: document.getElementById('show-what-is-ta'), content: document.getElementById('what-is-ta-study'), init: () => {} },
-            'chartist-patterns': { btn: document.getElementById('show-chartist-patterns'), content: document.getElementById('chartist-patterns-study'), init: setupChartistPatternNavigation },
-            'sr': { btn: document.getElementById('show-sr-study'), content: document.getElementById('sr-study'), init: setupSRStudy },
-            'fibonacci': { btn: document.getElementById('show-fibonacci-study'), content: document.getElementById('fibonacci-study'), init: setupFibonacciRetracementStudy }
-        };
-
-        let currentStudyKey = null;
-
-        const switchStudy = (newKey) => {
-            if (!studies[newKey] || newKey === currentStudyKey) return;
-
-            if (currentStudyKey && studies[currentStudyKey]) {
-                destroyAllCharts(); // Limpieza de todos los gráficos antes de cambiar de sección
-                studies[currentStudyKey].btn?.classList.remove('active');
-                studies[currentStudyKey].content?.classList.add('hidden');
-            }
-
-            studies[newKey].btn?.classList.add('active');
-            studies[newKey].content?.classList.remove('hidden');
-
-            // Asegurar que el DOM esté listo para inicializar los gráficos
-            requestAnimationFrame(() => {
-                studies[newKey].init();
-            });
-
-            currentStudyKey = newKey;
-        };
-
-        Object.keys(studies).forEach(key => {
-            studies[key].btn?.addEventListener('click', () => switchStudy(key));
-        });
-
-        switchStudy('what-is-ta'); 
-    }
-
-    function setupChartistPatternNavigation() {
-        const patterns = {
-            'symmetric-triangle': { btn: document.getElementById('show-symmetric-triangle'), content: document.getElementById('symmetric-triangle-study-content'), init: setupSymmetricTriangleStudy },
-            'trend-channels': { btn: document.getElementById('show-trend-channels'), content: document.getElementById('trend-channels-study-content'), init: setupTrendChannelStudy },
-            'reversal-patterns': { btn: document.getElementById('show-reversal-patterns'), content: document.getElementById('reversal-patterns-study-content'), init: setupReversalStudy },
-            'cup-handle': { btn: document.getElementById('show-cup-handle'), content: document.getElementById('cup-handle-study-content'), init: setupCupHandleStudy },
-        };
-        let currentPatternKey = null;
-
-        const switchPattern = (newKey) => {
-            if (!patterns[newKey] || currentPatternKey === newKey) return;
-
-            if(currentPatternKey && patterns[currentPatternKey]){
-                destroyChartistCharts(); // Limpieza solo de gráficos de patrones
-                patterns[currentPatternKey].btn?.classList.remove('active');
-                patterns[currentPatternKey].content?.classList.add('hidden');
-            }
-            patterns[newKey].btn?.classList.add('active');
-            patterns[newKey].content?.classList.remove('hidden');
-
-            requestAnimationFrame(() => {
-                patterns[newKey].init();
-            });
-
-            currentPatternKey = newKey;
-        };
-
-        Object.keys(patterns).forEach(key => {
-            patterns[key].btn?.addEventListener('click', () => switchPattern(key));
-        });
-
-        // Inicializar el primer patrón
-        if (document.getElementById('symmetric-triangle-study-content')) {
-            switchPattern('symmetric-triangle');
-        }
-    }
-
-    // --- Funciones de UI y Carga de Widgets ---
-
-    function createInitialUI() {
-        // Crear tarjetas de inicio y enlaces móviles
-        tools.forEach((tool) => {
-            const card = document.createElement('div');
-            card.className = 'group bg-[#161B22] border border-gray-700 rounded-xl p-8 flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300 hover:border-blue-500 hover:shadow-2xl hover:shadow-blue-500/10';
-            card.innerHTML = `<div class="h-16 w-16 mb-6 rounded-full overflow-hidden transition-all duration-300 group-hover:scale-110 bg-gray-800 flex items-center justify-center">${tool.icon}</div><h3 class="text-xl font-semibold text-white mb-2">${tool.title}</h3><p class="text-gray-400 mb-6 flex-grow">${tool.description}</p><button data-page="${tool.id}" class="home-card-btn w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Ver Sección</button>`;
-            homeCardsGrid.appendChild(card);
-
-            const mobileLink = document.createElement('a');
-            mobileLink.href = '#';
-            mobileLink.className = 'mobile-nav-link text-gray-300 hover:text-white transition-colors py-2';
-            mobileLink.textContent = tool.title;
-            mobileLink.dataset.page = tool.id;
-            mobileNavLinksContainer.appendChild(mobileLink);
-        });
-
-        // Crear iconos del ticker (barra horizontal)
-        const createTickerIcon = (tool) => {
-            const iconLink = document.createElement('a');
-            iconLink.href = '#';
-            iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
-            iconLink.dataset.page = tool.id;
-            iconLink.innerHTML = `
-                <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
-                    ${tool.icon}
-                </div>
-                <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
-            `;
-            return iconLink;
-        };
-
-        // Duplicar iconos para el efecto de scroll infinito
-        tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
-        tools.forEach(tool => homeIconBar.appendChild(createTickerIcon(tool)));
-    }
-
-    function showToolsPage(pageId) {
-        homePage.style.display = 'none';
-        toolsPageContainer.style.display = 'block';
-        showToolContent(pageId);
-    }
-
-    function showToolContent(pageId) {
-        const template = document.getElementById(`template-${pageId}`);
-        if (!template) return;
-
-        // Mostrar loader
-        toolsContentContainer.innerHTML = `<div class="flex justify-center items-center h-64"><span class="loader"></span></div>`;
-
-        // Simular carga de contenido
-        setTimeout(() => {
-            if (document.querySelector(`#template-${pageId}`)) {
-                toolsContentContainer.innerHTML = template.innerHTML;
-                loadWidgetsForContent(pageId);
-                
-                // Configurar botón de 'volver' específico de la página de agradecimiento
-                if (pageId === 'gracias-page') {
-                    document.getElementById('back-to-home-from-thanks').addEventListener('click', (e) => {
-                        e.preventDefault();
-                        window.location.hash = ''; 
-                        history.replaceState(null, null, window.location.pathname);
-                        returnToHome(false); 
-                    });
-                }
-            }
-        }, 500);
-
-        // Activar el icono de la herramienta en el ticker
-        document.querySelectorAll('.home-icon-link').forEach(link => {
-            link.classList.toggle('active', link.dataset.page === pageId);
-        });
-
-        window.scrollTo(0, 0);
-    }
-
-    function openMobileMenu() { mobileMenu.classList.remove('translate-x-full'); }
-    function closeMobileMenu() { mobileMenu.classList.add('translate-x-full'); }
-
-    // Función para cargar los widgets de TradingView
-    function loadWidgetsForContent(pageId) {
-        if (pageId === 'educacion-page') {
-            setupEducationNavigation();
+    // Encuentra todos los contenedores de widgets de TradingView en el DOM del contenido cargado
+    const widgetContainers = container.querySelectorAll('.tradingview-widget-container__widget');
+    
+    widgetContainers.forEach((widgetElement) => {
+        const widgetType = widgetElement.dataset.widgetType;
+        if (tradingViewInstances.has(widgetType)) {
+             // Si el widget ya fue cargado, no hacemos nada o limpiamos si es necesario.
+             return; 
         }
 
-        const widgetContainers = toolsContentContainer.querySelectorAll('.tradingview-widget-container__widget');
-        widgetContainers.forEach(container => {
-            const widgetType = container.dataset.widgetType;
-            const widgetKey = `${pageId}-${widgetType}`;
+        const containerId = `tv-container-${widgetType}-${Date.now()}`;
+        widgetElement.id = containerId;
+        
+        let widgetConfig = {};
 
-            if (loadedWidgets.has(widgetKey)) return; // Evitar recarga
+        // 1. Configuración general
+        const baseConfig = {
+            "width": "100%",
+            "height": "100%",
+            "locale": "es_LA",
+            "is*/darkMode": true, // Asumimos modo oscuro
+            "colorTheme": "dark",
+            "autosize": true,
+            "container_id": containerId,
+        };
 
-            let config = {};
-            let scriptSrc = '';
+        // 2. Configuración específica por tipo de widget
+        switch (widgetType) {
+            case 'market-overview':
+                widgetConfig = {
+                    ...baseConfig,
+                    "symbols": [
+                        ["S&P 500", "SPX"],
+                        ["NASDAQ 100", "NDX"],
+                        ["Índice Dólar", "DXY"],
+                        ["Oro", "GOLD"],
+                        ["Petróleo WTI", "WTI"],
+                        ["S&P IPSA", "IPSA"]
+                    ],
+                    "showFloatingToolbar": false,
+                    "tabs": [{
+                        "title": "Índices",
+                        "symbols": [["S&P 500", "SPX"], ["NASDAQ 100", "NDX"], ["DAX", "DAX"], ["NIKKEI 225", "NKY"]],
+                        "originalTitle": "Indices"
+                    }, {
+                        "title": "Divisas",
+                        "symbols": [["EUR/USD", "EURUSD"], ["USD/CLP", "USDCLP"], ["USD/JPY", "USDJPY"]],
+                        "originalTitle": "Forex"
+                    }, {
+                        "title": "Commodities",
+                        "symbols": [["Oro", "GOLD"], ["Petróleo WTI", "WTI"], ["Cobre", "HG1!"]],
+                        "originalTitle": "Commodities"
+                    }]
+                };
+                break;
+            case 'advanced-chart':
+                widgetConfig = {
+                    ...baseConfig,
+                    "symbol": "NASDAQ:AAPL",
+                    "interval": "D",
+                    "range": "1Y",
+                    "hide_side_toolbar": false,
+                    "allow_symbol_change": true,
+                    "studies": ["STD;MovAvgExponential"],
+                    "show_popup_button": true,
+                    "calendar": false,
+                    "support_host": "https://www.tradingview.com"
+                };
+                break;
+            case 'heatmap-cl': // Mapa de calor IPSA
+                widgetConfig = {
+                    ...baseConfig,
+                    "dataSource": "IPSA",
+                    "rowsPerColumn": "30",
+                    "columns": ["basic", "performance"],
+                    "performance": "1D",
+                    "size": "big",
+                    "header_color": "#161B22",
+                };
+                break;
+            case 'hotlists-cl': // Hotlists IPSA
+                widgetConfig = {
+                    ...baseConfig,
+                    "width": "100%",
+                    "height": "100%",
+                    "locale": "es_LA",
+                    "largeChartUrl": "",
+                    "plotLineColorGrowing": "rgba(41, 98, 255, 1)",
+                    "plotLineColorFalling": "rgba(41, 98, 255, 1)",
+                    "gridLineColor": "rgba(240, 243, 250, 0)",
+                    "scaleFontColor": "rgba(106, 109, 120, 1)",
+                    "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)",
+                    "belowLineFillColorBottom": "rgba(41, 98, 255, 0)",
+                    "symbolActiveColor": "rgba(41, 98, 255, 0.15)",
+                    "tabs": [
+                        {
+                            "title": "IPSA",
+                            "symbols": [
+                                { "s": "BCS:ENELCHILE", "d": "Enel Chile S.A." },
+                                { "s": "BCS:SQM_B", "d": "Sociedad Química y Minera de Chile S.A." },
+                                { "s": "BCS:COPEC", "d": "Empresas Copec S.A." },
+                                { "s": "BCS:FALABELLA", "d": "S.A.C.I. Falabella" },
+                                { "s": "BCS:SANTANDER", "d": "Banco Santander Chile" }
+                            ],
+                            "originalTitle": "IPSA"
+                        }
+                    ],
+                    "hotlist": "TOP_GAINERS_AND_LOSERS",
+                    "dateRange": "12M",
+                    "is*largeChart": true,
+                };
+                break;
+            case 'heatmap-us': // Mapa de calor S&P 500
+                widgetConfig = {
+                    ...baseConfig,
+                    "dataSource": "SP:SPX",
+                    "rowsPerColumn": "30",
+                    "columns": ["basic", "performance"],
+                    "performance": "1D",
+                    "size": "big",
+                    "header_color": "#161B22",
+                };
+                break;
+            case 'hotlists-us': // Hotlists USA
+                widgetConfig = {
+                    ...baseConfig,
+                    "hotlist": "MostActive",
+                    "dateRange": "1M",
+                    "is*largeChart": true,
+                };
+                break;
+            case 'crypto-coins-heatmap':
+                widgetConfig = {
+                    ...baseConfig,
+                    "dataSource": "crypto",
+                    "rowsPerColumn": "30",
+                    "columns": ["basic", "performance"],
+                    "performance": "1D",
+                    "size": "big",
+                    "header_color": "#161B22",
+                };
+                break;
+            case 'crypto-screener':
+                widgetConfig = {
+                    ...baseConfig,
+                    "width": "100%",
+                    "height": "100%",
+                    "defaultColumn": "market_cap",
+                    "defaultScreen": "all_crypto_mcap",
+                    "market": "crypto",
+                    "showToolbar": true,
+                    "is*desktop": true,
+                    "is*popup": false,
+                    "is*showFloatingToolbar": false,
+                    "is*chartOnly": false,
+                };
+                break;
+            case 'timeline':
+                widgetConfig = {
+                    ...baseConfig,
+                    "feedMode": "all_symbols",
+                    "is*symbolSearch": true,
+                    "colorTheme": "dark",
+                    "displayMode": "regular",
+                    "is*pageView": true,
+                    "utm_source": "yourwebsite.com",
+                    "utm_medium": "widget",
+                    "utm_campaign": "timeline",
+                };
+                break;
+            case 'economic-calendar':
+                widgetConfig = {
+                    ...baseConfig,
+                    "locale": "es_LA",
+                    "width": "100%",
+                    "height": "100%",
+                    "is*defaultTimeZone": "exchange",
+                    "is*colorTheme": "dark",
+                    "is*importanceFilter": "0,1",
+                    "is*countryFilter": "CL,US,MX,BR,AR,CO,ES",
+                };
+                break;
+            default:
+                console.warn(`Tipo de widget no configurado: ${widgetType}`);
+                return;
+        }
 
-            switch(widgetType) {
-                case 'market-overview':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
-                    config = { "colorTheme": "dark", "dateRange": "12M", "locale": "es", "largeChartUrl": "", "isTransparent": false, "showFloatingTooltip": true, "plotLineColorGrowing": "rgba(41, 98, 255, 1)", "plotLineColorFalling": "rgba(41, 98, 255, 1)", "gridLineColor": "rgba(240, 243, 250, 0)", "scaleFontColor": "#DBDBDB", "belowLineFillColorGrowing": "rgba(41, 98, 255, 0.12)", "belowLineFillColorFalling": "rgba(41, 98, 255, 0.12)", "belowLineFillColorGrowingBottom": "rgba(41, 98, 255, 0)", "belowLineFillColorFallingBottom": "rgba(41, 98, 255, 0)", "symbolActiveColor": "rgba(41, 98, 255, 0.12)", "tabs": [ { "title": "INDICES", "symbols": [ {"s": "CAPITALCOM:US500", "d": "S&P 500"}, {"s": "CAPITALCOM:US100", "d": "NASDAQ 100"}, {"s": "CAPITALCOM:US30", "d": "DOW JONES 30"}, {"s": "XETR:DAX", "d": "DAX"}, {"s": "BCS:SP_IPSA", "d": "IPSA"}, {"s": "BMFBOVESPA:IBOV", "d": "BOVESPA"}, {"s": "BCBA:IMV", "d": "MERVAL"} ], "originalTitle": "Indices" }, { "title": "COMMODITIES", "symbols": [ {"s": "CMCMARKETS:GOLD", "d": "ORO"}, {"s": "PYTH:WTI3!", "d": "PETROLEO"}, {"s": "CAPITALCOM:COPPER", "d": "COBRE"}, {"s": "CAPITALCOM:SILVER", "d": "PLATA"}, {"s": "CAPITALCOM:NATURALGAS", "d": "GAS NATURAL"} ], "originalTitle": "Futures" }, { "title": "DIVISAS", "symbols": [ {"s": "FX_IDC:USDCLP", "d": "USDCLP"}, {"s": "FX:EURUSD", "d": "EURUSD"}, {"s": "FX:USDJPY", "d": "USDJPY"}, {"s": "FX:GBPUSD", "d": "GBPUSD"}, {"s": "FX:USDCHF", "d": "USDCHF"} ], "originalTitle": "Forex" }, { "title": "CRIPTOMONEDAS", "symbols": [ {"s": "COINBASE:BTCUSD", "d": "BTCUSD"}, {"s": "COINBASE:ETHUSD", "d": "ETHUSD"}, {"s": "COINBASE:XRPUSD", "d": "XRPUSD"}, {"s": "CRYPTOCAP:TOTAL", "d": "Crypto Total Market Cap"} ] } ], "width": "100%", "height": "100%", "showSymbolLogo": true, "showChart": true };
-                    break;
-                case 'advanced-chart':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js';
-                    config = { "autosize": true, "symbol": "BCS:SP_IPSA", "interval": "D", "timezone": "America/Santiago", "theme": "dark", "style": "1", "locale": "es", "allow_symbol_change": true, "calendar": true, "details": true, "hotlist": true, "hide_side_toolbar": false, "studies": ["Volume@tv-basicstudies", "RSI@tv-basicstudies"] };
-                    break;
-                case 'heatmap-cl':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
-                    config = { "dataSource": "BCSSPIPSA", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
-                    break;
-                case 'hotlists-cl':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
-                    config = { "exchange": "BCS", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
-                    break;
-                case 'heatmap-us':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js';
-                    config = { "dataSource": "SPX500", "blockSize": "market_cap_basic", "blockColor": "change", "grouping": "sector", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "exchanges": [], "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
-                    break;
-                case 'hotlists-us':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js';
-                    config = { "exchange": "US", "colorTheme": "dark", "dateRange": "12M", "showChart": true, "locale": "es", "isTransparent": true, "width": "100%", "height": "100%" };
-                    break;
-                case 'timeline':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-timeline.js';
-                    config = { "feedMode": "all_symbols", "colorTheme": "dark", "isTransparent": true, "displayMode": "regular", "width": "100%", "height": "100%", "locale": "es" };
-                    break;
-                case 'economic-calendar':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-events.js';
-                    config = { "colorTheme": "dark", "isTransparent": false, "locale": "es", "countryFilter": "", "importanceFilter": "0,1", "width": "100%", "height": "100%" };
-                    break;
-                case 'crypto-coins-heatmap':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-crypto-coins-heatmap.js';
-                    config = { "dataSource": "Crypto", "blockSize": "market_cap_calc", "blockColor": "24h_close_change|5", "locale": "es", "symbolUrl": "", "colorTheme": "dark", "hasTopBar": true, "isDataSetEnabled": true, "isZoomEnabled": true, "hasSymbolTooltip": true, "isMonoSize": false, "width": "100%", "height": "100%" };
-                    break;
-                case 'crypto-screener':
-                    scriptSrc = 'https://s3.tradingview.com/external-embedding/embed-widget-screener.js';
-                    config = { "defaultColumn": "overview", "screener_type": "crypto_mkt", "displayCurrency": "USD", "colorTheme": "dark", "isTransparent": false, "locale": "es", "width": "100%", "height": "100%" };
-                    break;
-            }
+        // Crea el script y lo inyecta para cargar el widget
+        const widgetScript = document.createElement('script');
+        widgetScript.type = 'text/javascript';
+        widgetScript.innerHTML = `
+            new TradingView.widget(${JSON.stringify(widgetConfig)});
+        `;
+        widgetElement.appendChild(widgetScript);
+        
+        // Almacena la instancia
+        tradingViewInstances.set(widgetType, widgetScript);
+    });
+};
 
-            if (scriptSrc) {
-                const script = document.createElement('script');
-                script.src = scriptSrc;
-                script.async = true;
-                // TradingView usa innerHTML para incrustar la configuración JSON
-                script.innerHTML = JSON.stringify(config);
-                container.innerHTML = '';
-                container.appendChild(script);
-                loadedWidgets.add(widgetKey);
-            }
-        });
-    }
+// --- RENDERIZADO DE LA INTERFAZ ---
 
-    // --- Funciones de Transición de Página ---
+// 1. Dibuja las tarjetas de inicio
+const renderHomeCards = () => {
+    const grid = document.getElementById('home-cards-grid');
+    if (!grid) return;
+    grid.innerHTML = ''; // Limpia el contenedor
 
-    function returnToHome(useFade = true) {
-        if (useFade) {
-            toolsPageContainer.classList.add('fade-out');
-            setTimeout(() => {
-                toolsPageContainer.style.display = 'none';
-                toolsPageContainer.classList.remove('fade-out');
-                homePage.style.display = 'block';
-                homePage.classList.add('fade-in');
-                document.querySelectorAll('.home-icon-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-            }, 300);
+    Object.entries(TOOLS).forEach(([key, tool]) => {
+        const card = createElement('div', ['bg-secondary-dark', 'p-6', 'rounded-xl', 'shadow-2xl', 'hover:shadow-accent-blue/30', 'hover:ring-2', 'hover:ring-accent-blue/50', 'transition-all', 'duration-300', 'cursor-pointer', 'border', 'border-gray-700']);
+        card.dataset.toolKey = key; // Usamos el key para la navegación
+        card.innerHTML = `
+            <div class="flex items-center space-x-4 mb-4">
+                <i data-lucide="${tool.icon}" class="w-8 h-8 text-accent-blue"></i>
+                <h3 class="text-xl font-bold text-white">${tool.title}</h3>
+            </div>
+            <p class="text-gray-400 text-sm">${tool.description}</p>
+        `;
+        grid.appendChild(card);
+    });
+    // Vuelve a inicializar los iconos de lucide
+    lucide.createIcons();
+};
+
+// 2. Dibuja la barra de iconos y el menú móvil
+const renderNavElements = () => {
+    const iconBar = document.getElementById('home-icon-bar');
+    const mobileNavLinks = document.getElementById('mobile-nav-links');
+    if (!iconBar || !mobileNavLinks) return;
+
+    // Limpia
+    iconBar.innerHTML = '';
+    mobileNavLinks.innerHTML = '';
+
+    const createLinkElement = (toolKey, tool, isMobile = false) => {
+        if (isMobile) {
+             const link = createElement('a', ['w-full', 'block', 'py-2', 'px-3', 'rounded-lg', 'text-gray-300', 'hover:bg-gray-700', 'transition-colors', 'home-icon-link']);
+             link.href = `#${toolKey}`;
+             link.innerHTML = `<i data-lucide="${tool.icon}" class="inline-block w-5 h-5 mr-3"></i>${tool.title}`;
+             return link;
         } else {
-            toolsPageContainer.style.display = 'none';
-            homePage.style.display = 'block';
-            document.querySelectorAll('.home-icon-link').forEach(link => {
-                link.classList.remove('active');
-            });
+            // Versión de barra de iconos (solo las primeras 8 herramientas)
+            const div = createElement('div', ['home-icon-link', 'cursor-pointer']);
+            div.dataset.toolKey = toolKey;
+            div.innerHTML = `
+                <div class="flex items-center space-x-2 p-1.5 border border-transparent rounded-full hover:border-accent-blue/50 transition-colors">
+                    <i data-lucide="${tool.icon}" class="w-5 h-5 text-text-light"></i>
+                    <span class="text-sm text-gray-400 font-medium">${tool.title}</span>
+                </div>
+            `;
+            return div;
         }
-        window.scrollTo(0, 0);
-    }
+    };
 
-    // --- Listeners Globales ---
-
-    // Listener para los botones de navegación (tarjetas, enlaces móviles, iconos del ticker)
-    document.body.addEventListener('click', (e) => {
-        const target = e.target.closest('.home-card-btn, .mobile-nav-link, .home-icon-link');
-        if (target) {
-            e.preventDefault();
-            const pageId = target.dataset.page;
-            showToolsPage(pageId);
-            closeMobileMenu();
-        }
+    // Renderiza la barra de iconos (versión Desktop)
+    const iconKeys = Object.keys(TOOLS).slice(0, 8); // Solo las 8 principales para el ticker
+    iconKeys.forEach(key => {
+        iconBar.appendChild(createLinkElement(key, TOOLS[key], false));
     });
-
-    // Listener para volver a la home desde el logo o el botón 'Volver'
-    document.getElementById('logo-link').addEventListener('click', (e) => {
-        e.preventDefault();
-        returnToHome();
+    // Duplicamos para el efecto de scroll infinito
+    iconKeys.forEach(key => {
+        iconBar.appendChild(createLinkElement(key, TOOLS[key], false));
     });
-    document.getElementById('back-to-home-btn').addEventListener('click', (e) => {
-        e.preventDefault();
-        returnToHome();
-    });
-
-    // Manejo del hash de la URL (si viene de un formulario exitoso)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('form') === 'success') {
-        showToolsPage('gracias-page');
-    }
-
-    // Manejo del menú móvil
-    mobileMenuButton.addEventListener('click', openMobileMenu);
-    closeMobileMenuButton.addEventListener('click', closeMobileMenu);
     
-    // --- Inicialización de la UI ---
-    createInitialUI();
+    // Renderiza los enlaces del menú móvil
+    Object.entries(TOOLS).forEach(([key, tool]) => {
+        mobileNavLinks.appendChild(createLinkElement(key, tool, true));
+    });
 
-    // --- Animación de Partículas de Fondo ---
+    // Vuelve a inicializar los iconos de lucide
+    lucide.createIcons();
+};
+
+// --- LÓGICA DE NAVEGACIÓN Y CARGA DE PÁGINAS ---
+
+// Carga el contenido de una herramienta desde su plantilla
+const loadToolContent = async (toolKey) => {
+    const tool = TOOLS[toolKey];
+    if (!tool) return;
+
+    const container = document.getElementById('tools-content-container');
+    const template = document.getElementById(tool.templateId);
+    if (!container || !template) {
+        console.error(`Plantilla no encontrada para la clave: ${toolKey}`);
+        return;
+    }
+    
+    // 1. Transición de salida
+    container.classList.add('fade-out');
+    
+    // 2. Espera que termine la animación (300ms)
+    await new Promise(resolve => setTimeout(resolve, 300));
+    container.innerHTML = ''; // Limpia el contenido
+
+    // 3. Clona la plantilla y la inserta
+    const content = document.importNode(template.content, true);
+    container.appendChild(content);
+
+    // 4. Inicializa los iconos de Lucide dentro del nuevo contenido
+    lucide.createIcons();
+
+    // 5. Inicializa TradingView o Módulos JS si es necesario
+    if (tool.widgetType) {
+        initializeTradingViewWidgets(container);
+    }
+    if (tool.module) {
+        await loadChartPatternsModule();
+        // Llama a la función de inicialización del módulo de patrones chartistas (educación)
+        if (chartPatternsModule && chartPatternsModule.initializeEducationPage) {
+            chartPatternsModule.initializeEducationPage();
+        }
+    }
+
+    // 6. Transición de entrada y elimina la clase fade-out
+    container.classList.remove('fade-out');
+    container.classList.add('fade-in');
+    
+    // Asegura que se muestren los contenedores correctos
+    document.getElementById('home-page').style.display = 'none';
+    document.getElementById('tools-page-container').style.display = 'block';
+    
+    // Ajusta la barra de navegación para mostrar el botón "Volver a Home"
+    document.getElementById('back-to-home-btn').style.display = 'block';
+
+    // Oculta el menú móvil si estaba abierto
+    closeMobileMenu();
+};
+
+// Vuelve a la página de inicio
+const goHome = async () => {
+    const container = document.getElementById('tools-content-container');
+    
+    // Transición de salida del contenido de herramientas
+    container.classList.add('fade-out');
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Oculta y limpia el contenedor de herramientas
+    document.getElementById('tools-page-container').style.display = 'none';
+    container.innerHTML = '';
+
+    // Muestra la página de inicio con transición de entrada
+    const homePage = document.getElementById('home-page');
+    homePage.classList.remove('fade-out');
+    homePage.classList.add('fade-in');
+    homePage.style.display = 'block';
+    
+    // Oculta el botón "Volver a Home"
+    document.getElementById('back-to-home-btn').style.display = 'none';
+    
+    // Restablece el hash de la URL
+    window.location.hash = '';
+
+    // Resetea clases activas
+    document.querySelectorAll('.home-icon-link').forEach(link => link.classList.remove('active'));
+};
+
+
+// --- GESTIÓN DEL MENÚ MÓVIL ---
+
+const openMobileMenu = () => {
+    document.getElementById('mobile-menu').classList.remove('translate-x-full');
+};
+
+const closeMobileMenu = () => {
+    document.getElementById('mobile-menu').classList.add('translate-x-full');
+};
+
+// --- GESTIÓN DE EVENTOS ---
+
+const handleNavigation = (event, toolKey) => {
+    // Si la navegación viene de un formulario (ej. Contacto), no hagas nada aquí.
+    if (event && event.target.tagName === 'BUTTON' && event.target.closest('form')) {
+        return;
+    }
+    
+    const key = toolKey || event.currentTarget.dataset.toolKey;
+    if (key) {
+        // Actualiza el hash de la URL para permitir la navegación hacia atrás/adelante
+        window.location.hash = key;
+        
+        // Resetea clases activas y establece la clase en el link de la barra de iconos
+        document.querySelectorAll('.home-icon-link').forEach(link => link.classList.remove('active'));
+        const activeLinks = document.querySelectorAll(`.home-icon-link[data-tool-key="${key}"]`);
+        activeLinks.forEach(link => link.classList.add('active'));
+        
+        loadToolContent(key);
+    }
+};
+
+const setupEventListeners = () => {
+    // Escuchar clics en las tarjetas de la página principal
+    document.getElementById('home-cards-grid').addEventListener('click', (event) => {
+        const card = event.target.closest('[data-tool-key]');
+        if (card) {
+            handleNavigation(event, card.dataset.toolKey);
+        }
+    });
+
+    // Escuchar clics en la barra de iconos del encabezado
+    document.getElementById('home-icon-bar').addEventListener('click', (event) => {
+        const link = event.target.closest('.home-icon-link');
+        if (link) {
+            handleNavigation(event, link.dataset.toolKey);
+        }
+    });
+    
+    // Escuchar clics en los enlaces del menú móvil
+    document.getElementById('mobile-nav-links').addEventListener('click', (event) => {
+        const link = event.target.closest('a');
+        if (link && link.href) {
+            const key = link.href.split('#')[1];
+            if (key) handleNavigation(event, key);
+        }
+    });
+
+    // Botones de navegación
+    document.getElementById('logo-link').addEventListener('click', goHome);
+    document.getElementById('back-to-home-btn').addEventListener('click', goHome);
+    
+    // Botones del menú móvil
+    document.getElementById('mobile-menu-button').addEventListener('click', openMobileMenu);
+    document.getElementById('close-mobile-menu').addEventListener('click', closeMobileMenu);
+    
+    // Manejo de la URL para navegación con historial
+    window.addEventListener('hashchange', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && TOOLS[hash]) {
+            loadToolContent(hash);
+        } else {
+            goHome();
+        }
+    });
+
+    // Manejo del formulario de contacto (ejemplo básico)
+    document.getElementById('tools-page-container').addEventListener('submit', (event) => {
+        if (event.target.tagName === 'FORM' && event.target.action.includes('?form=success')) {
+            event.preventDefault();
+            // Simular envío y mostrar la página de agradecimiento
+            loadToolContent('gracias');
+        }
+    });
+    
+    // Manejo del botón "Volver a Home" de la página de agradecimiento
+    document.getElementById('tools-page-container').addEventListener('click', (event) => {
+        if (event.target.id === 'back-to-home-from-thanks') {
+            goHome();
+        }
+    });
+};
+
+// --- ANIMACIÓN DE FONDO (CANVAS) ---
+
+const initializeParticles = () => {
     const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
     const ctx = canvas.getContext('2d');
     let particles = [];
 
-    function resizeCanvas() {
+    const resizeCanvas = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-    }
+    };
 
-    function createParticles() {
-        particles = [];
-        let numberOfParticles = (canvas.height * canvas.width) / 9000;
-        for(let i = 0; i < numberOfParticles; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: Math.random() * 0.5 - 0.25,
-                vy: Math.random() * 0.5 - 0.25,
-                radius: Math.random() * 1.5
-            });
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 0.8 + 0.1;
+            this.speedX = Math.random() * 0.1 - 0.05;
+            this.speedY = Math.random() * 0.1 - 0.05;
+            this.color = 'rgba(96, 165, 250, ' + (Math.random() * 0.5 + 0.2) + ')'; // Accent Blue
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            if (this.size > 0.1) this.size -= 0.0005;
+
+            // Mantener partículas dentro de los límites
+            if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+            if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+        }
+        draw() {
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
         }
     }
 
-    function drawParticles() {
+    // Inicializa un número fijo de partículas
+    const init = () => {
+        particles = [];
+        const numberOfParticles = Math.floor((canvas.width * canvas.height) / 10000); // Densidad basada en el tamaño
+        for (let i = 0; i < numberOfParticles; i++) {
+            particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+        }
+    };
+
+    const animate = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.1)'; // Partículas blancas muy tenues
-        particles.forEach(p => {
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-            ctx.fill();
-        });
-    }
+        for (let i = 0; i < particles.length; i++) {
+            particles[i].update();
+            particles[i].draw();
+        }
+        // Conectar partículas cercanas con líneas sutiles
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a; b < particles.length; b++) {
+                const dx = particles[a].x - particles[b].x;
+                const dy = particles[a].y - particles[b].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
 
-    function updateParticles() {
-        particles.forEach(p => {
-            p.x += p.vx;
-            p.y += p.vy;
-
-            // Rebotar en los bordes
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-        });
-    }
-
-    function animate() {
-        drawParticles();
-        updateParticles();
+                if (distance < 100) {
+                    ctx.strokeStyle = `rgba(96, 165, 250, ${1 - (distance / 100)})`;
+                    ctx.lineWidth = 0.2;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
         requestAnimationFrame(animate);
-    }
+    };
 
     window.addEventListener('resize', () => {
         resizeCanvas();
-        createParticles();
+        init(); // Reinicia las partículas al redimensionar
     });
 
-    // Iniciar la animación
     resizeCanvas();
-    createParticles();
+    init();
     animate();
+};
 
-}); // Fin de DOMContentLoaded
+
+// --- FUNCIÓN DE INICIO ---
+const initializeApp = () => {
+    // 1. Dibuja la UI estática (tarjetas y barra de iconos)
+    renderHomeCards();
+    renderNavElements();
+    
+    // 2. Configura los listeners de eventos para la navegación
+    setupEventListeners();
+
+    // 3. Inicializa la animación de fondo
+    initializeParticles();
+    
+    // 4. Comprueba la URL inicial para cargar la página correcta
+    const initialHash = window.location.hash.substring(1);
+    if (initialHash && TOOLS[initialHash]) {
+        loadToolContent(initialHash);
+    } else {
+        goHome();
+    }
+};
+
+// Inicia la aplicación cuando el DOM esté completamente cargado
+document.addEventListener('DOMContentLoaded', initializeApp);
+
+// Exportar funciones para ser usadas en otros módulos (como chartistPatterns.js)
+export { initializeTradingViewWidgets, loadChartPatternsModule };
