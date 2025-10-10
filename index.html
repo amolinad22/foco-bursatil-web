@@ -9,14 +9,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
     <style>
-        /* Estilos CSS mínimos necesarios para la carga inicial */
+        /* CORRECCIÓN: Quitamos el 'display: none;' inicial para evitar la pantalla en blanco si falla JS. */
+        /* Ahora el 'display' lo maneja la clase 'hidden' de Tailwind para las otras páginas. */
         .page-container {
-            display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
         .page-container.visible {
-            display: block;
             opacity: 1;
         }
         .fade-out {
@@ -27,6 +26,7 @@
             opacity: 1;
             transition: opacity 0.3s ease;
         }
+        /* Loader styles kept for a better loading experience */
         .loader {
             border: 4px solid rgba(255, 255, 255, 0.2);
             border-top: 4px solid #3B82F6;
@@ -44,7 +44,6 @@
 <body class="bg-gray-900 text-gray-300">
 
 <canvas id="particle-canvas" class="fixed top-0 left-0 w-full h-full -z-10 opacity-50"></canvas>
-
 <nav class="sticky top-0 z-50 bg-gray-900 border-b border-gray-700 backdrop-blur-sm bg-opacity-90">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
         <a id="logo-link" href="#" class="flex-shrink-0 flex items-center">
@@ -68,11 +67,10 @@
         </button>
     </div>
     <div id="mobile-nav-links" class="flex flex-col p-4 space-y-2">
-        </div>
+    </div>
 </div>
 
 <main class="relative z-10">
-
     <section id="home-page" class="page-container visible">
         <div class="py-12 bg-gray-800 border-b border-gray-700">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,19 +82,17 @@
                         Herramientas, análisis y educación para dominar el <span class="font-semibold text-white">Análisis Técnico.</span>
                     </p>
                 </div>
-
                 <div class="mt-8 overflow-hidden relative">
                     <div class="ticker-wrap">
                         <div id="home-icon-bar" class="ticker-move flex space-x-8 sm:space-x-12">
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div id="home-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                </div>
+            </div>
         </div>
     </section>
 
@@ -106,438 +102,15 @@
                 <svg class="h-5 w-5 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 Volver al Inicio
             </button>
-
             <div id="tools-content-container" class="bg-[#0D1117] border border-gray-700 rounded-2xl p-6 md:p-10 min-h-screen">
-                </div>
+            </div>
         </div>
     </section>
 </main>
 
 <div class="hidden">
-    
-<template id="template-panorama-market-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Panorama del Mercado Global</h1>
-        <p class="mt-2 text-lg text-gray-400">Una visión general de los principales índices, divisas y commodities.</p>
-    </div>
-    <div class="tradingview-widget-container__widget" data-widget-type="market-overview" style="height: 600px;">
-        </div>
-    <div class="mt-12">
-        <h2 class="text-3xl font-bold text-white mb-4">Noticias Relevantes</h2>
-        <div class="tradingview-widget-container__widget" data-widget-type="timeline" style="height: 400px;">
-            </div>
-    </div>
-</template>
-
-<template id="template-analisis-tecnico-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Análisis Técnico</h1>
-        <p class="mt-2 text-lg text-gray-400">Gráfico avanzado para análisis de precios e indicadores.</p>
-    </div>
-    <div class="tradingview-widget-container__widget" data-widget-type="advanced-chart" style="height: 70vh; min-height: 500px;">
-        </div>
-</template>
-
-<template id="template-chile-market-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Mercado Chileno (IPSA)</h1>
-        <p class="mt-2 text-lg text-gray-400">Mapa de calor y principales acciones del S&P IPSA.</p>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Mapa de Calor (Heatmap) IPSA</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="heatmap-cl" style="height: 600px;">
-                </div>
-        </div>
-        <div class="lg:col-span-1 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Acciones más Activas (BCS)</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="hotlists-cl" style="height: 600px;">
-                </div>
-        </div>
-    </div>
-</template>
-
-<template id="template-usa-market-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Mercado de EE.UU. (S&P 500)</h1>
-        <p class="mt-2 text-lg text-gray-400">Mapa de calor y principales acciones del S&P 500.</p>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Mapa de Calor (Heatmap) S&P 500</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="heatmap-us" style="height: 600px;">
-                </div>
-        </div>
-        <div class="lg:col-span-1 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Acciones más Activas (EE.UU.)</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="hotlists-us" style="height: 600px;">
-                </div>
-        </div>
-    </div>
-</template>
-
-<template id="template-crypto-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Criptomonedas</h1>
-        <p class="mt-2 text-lg text-gray-400">Explora el mercado de activos digitales.</p>
-    </div>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Mapa de Calor Crypto</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="crypto-coins-heatmap" style="height: 600px;">
-                </div>
-        </div>
-        <div class="lg:col-span-1 bg-[#161B22] p-4 rounded-xl shadow-lg border border-gray-700">
-            <h2 class="text-2xl font-semibold text-white mb-4">Screener de Criptomonedas</h2>
-            <div class="tradingview-widget-container__widget" data-widget-type="crypto-screener" style="height: 600px;">
-                </div>
-        </div>
-    </div>
-</template>
-
-<template id="template-noticias-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Noticias del Mercado</h1>
-        <p class="mt-2 text-lg text-gray-400">Las últimas noticias que mueven los precios.</p>
-    </div>
-    <div class="tradingview-widget-container__widget" data-widget-type="timeline" style="height: 80vh; min-height: 600px;">
-        </div>
-</template>
-
-<template id="template-calendario-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Calendario Económico</h1>
-        <p class="mt-2 text-lg text-gray-400">Anticípate a los eventos macroeconómicos clave.</p>
-    </div>
-    <div class="tradingview-widget-container__widget" data-widget-type="economic-calendar" style="height: 80vh; min-height: 600px;">
-        </div>
-</template>
-
-<template id="template-educacion-page">
-    <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold text-white">Academia de Análisis Técnico</h1>
-        <p class="mt-2 text-lg text-gray-400">Aprende los conceptos fundamentales y patrones esenciales.</p>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-8">
-        <aside class="lg:w-1/4 bg-[#161B22] border border-gray-700 rounded-xl p-4 lg:sticky lg:top-20 h-fit">
-            <h3 class="text-xl font-semibold text-white mb-4">Conceptos Clave</h3>
-            <nav class="flex flex-col space-y-2">
-                <button id="show-what-is-ta" class="nav-btn active">Introducción al AT</button>
-                <button id="show-sr-study" class="nav-btn">Soporte y Resistencia</button>
-                <button id="show-fibonacci-study" class="nav-btn">Retroceso de Fibonacci</button>
-                <button id="show-chartist-patterns" class="nav-btn">Patrones Chartistas</button>
-            </nav>
-        </aside>
-
-        <div class="lg:w-3/4">
-            
-            <div id="what-is-ta-study" class="study-content">
-                <h2 class="text-3xl font-bold text-white mb-4">¿Qué es el Análisis Técnico?</h2>
-                <p class="text-gray-400 mb-6">El Análisis Técnico (AT) es el estudio de la acción del precio en los mercados financieros, principalmente mediante el uso de gráficos, con el propósito de predecir futuras tendencias de precios. Se basa en tres premisas clave:</p>
-                
-                <ul class="list-disc list-inside space-y-3 text-gray-400 ml-4 mb-8">
-                    <li><strong class="text-white">El precio lo descuenta todo:</strong> Toda la información conocida sobre un activo ya está reflejada en su precio actual.</li>
-                    <li><strong class="text-white">El precio se mueve en tendencias:</strong> Los precios tienen una inercia y tienden a seguir una dirección definida (alcista, bajista o lateral).</li>
-                    <li><strong class="text-white">La historia se repite:</strong> Los patrones de comportamiento de los inversores se repiten a lo largo del tiempo, lo que da lugar a patrones gráficos predecibles.</li>
-                </ul>
-                <div class="bg-blue-900/20 border-l-4 border-blue-500 p-4 text-sm text-gray-300">
-                    <p class="font-semibold text-white">Nota:</p>
-                    <p>El AT se utiliza para determinar el <strong class="text-white">"cuándo"</strong> comprar o vender, mientras que el análisis fundamental se centra en el <strong class="text-white">"qué"</strong> comprar o vender.</p>
-                </div>
-            </div>
-
-            <div id="sr-study" class="study-content hidden">
-                <h2 class="text-3xl font-bold text-white mb-6">Soporte y Resistencia (S/R)</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-                    <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white mb-4">S/R Horizontal</h3>
-                        <div class="flex space-x-2 mb-4" id="sr-horizontal-buttons">
-                            <button data-component="support-horizontal" class="anatomy-btn active">Soporte</button>
-                            <button data-component="resistance-horizontal" class="anatomy-btn">Resistencia</button>
-                        </div>
-                        <div class="h-64 mb-4">
-                            <canvas id="srChartHorizontal"></canvas>
-                        </div>
-                        <div id="sr-horizontal-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                            </div>
-                    </div>
-                    <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                        <h3 class="text-xl font-semibold text-white mb-4">S/R por Tendencia</h3>
-                        <div class="flex space-x-2 mb-4" id="sr-trend-buttons">
-                            <button data-component="trend-up-sr" class="anatomy-btn active">Alcista</button>
-                            <button data-component="trend-down-sr" class="anatomy-btn">Bajista</button>
-                        </div>
-                        <div class="h-64 mb-4">
-                            <canvas id="srChartTrend"></canvas>
-                        </div>
-                        <div id="sr-trend-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                            </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="fibonacci-study" class="study-content hidden">
-                <h2 class="text-3xl font-bold text-white mb-6">Retroceso de Fibonacci</h2>
-                <p class="text-gray-400 mb-6">La herramienta de retroceso de Fibonacci se utiliza para identificar posibles niveles de soporte y resistencia en los que el precio podría revertirse después de un movimiento impulsivo.</p>
-                
-                <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                    <h3 class="text-xl font-semibold text-white mb-4">Anatomía Interactiva</h3>
-                    <div class="flex space-x-2 mb-4" id="fibonacci-buttons">
-                        <button data-component="levels" class="anatomy-btn active">Niveles</button>
-                        <button data-component="trend" class="anatomy-btn">Tendencia Inicial</button>
-                        <button data-component="retrace" class="anatomy-btn">Retroceso Clave</button>
-                    </div>
-                    <div class="h-80 mb-4">
-                        <canvas id="fibonacciChart"></canvas>
-                    </div>
-                    <div id="fibonacci-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                        </div>
-                </div>
-            </div>
-
-            <div id="chartist-patterns-study" class="study-content hidden">
-                <h2 class="text-3xl font-bold text-white mb-6">Patrones Chartistas Esenciales</h2>
-                
-                <nav class="flex flex-wrap gap-2 mb-8">
-                    <button id="show-symmetric-triangle" class="secondary-nav-btn active">Triángulo Simétrico</button>
-                    <button id="show-trend-channels" class="secondary-nav-btn">Canales de Tendencia</button>
-                    <button id="show-reversal-patterns" class="secondary-nav-btn">Doble Techo/Suelo</button>
-                    <button id="show-cup-handle" class="secondary-nav-btn">Taza con Asa</button>
-                </nav>
-
-                <div id="symmetric-triangle-study-content" class="pattern-content">
-                    <h3 class="text-2xl font-bold text-white mb-4">1. Triángulo Simétrico (Continuación)</h3>
-                    <p class="text-gray-400 mb-6">Este patrón de consolidación indica que la presión de compra y venta se están equilibrando antes de una continuación de la tendencia previa.</p>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Anatomía del Patrón</h4>
-                            <div class="flex flex-wrap gap-2 mb-4" id="anatomy-buttons">
-                                <button data-component="lines" class="anatomy-btn active">Líneas</button>
-                                <button data-component="points" class="anatomy-btn">Puntos</button>
-                                <button data-component="volume" class="anatomy-btn">Volumen</button>
-                                <button data-component="breakout" class="anatomy-btn">Ruptura</button>
-                            </div>
-                            <div class="h-64 mb-4">
-                                <canvas id="anatomyChart"></canvas>
-                            </div>
-                            <div id="anatomy-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                                </div>
-                        </div>
-
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Simulador de Trade</h4>
-                            <div class="h-64 mb-4">
-                                <canvas id="simulatorChart"></canvas>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-2" id="step-1">
-                                    <span class="step-badge">1</span>
-                                    <p class="text-sm text-gray-300">El precio consolida dentro del triángulo.</p>
-                                </div>
-                                <button id="simulate-breakout" class="simulator-btn w-full">Simular Ruptura y Entrada</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="step-2">
-                                    <span class="step-badge">2</span>
-                                    <p class="text-sm text-gray-300">El patrón se confirma con el breakout.</p>
-                                </div>
-                                <button id="show-stoploss" class="simulator-btn w-full disabled:opacity-50">Establecer Stop Loss</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="step-3">
-                                    <span class="step-badge">3</span>
-                                    <p class="text-sm text-gray-300">El Stop Loss se coloca por debajo del punto más bajo de la consolidación.</p>
-                                </div>
-                                <button id="calculate-target" class="simulator-btn w-full disabled:opacity-50">Calcular Objetivo de Ganancia</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="step-4">
-                                    <span class="step-badge">4</span>
-                                    <p class="text-sm text-gray-300">El objetivo se proyecta midiendo la altura máxima del triángulo.</p>
-                                </div>
-                                <button id="reset-simulation" class="simulator-btn simulator-btn-secondary w-full">Reiniciar Simulación</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="trend-channels-study-content" class="pattern-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-4">2. Canales de Tendencia (Continuación)</h3>
-                    <p class="text-gray-400 mb-6">Los canales delimitan el movimiento del precio entre dos líneas paralelas, ofreciendo un marco claro para identificar zonas de alta y baja probabilidad de continuación.</p>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Anatomía del Canal</h4>
-                            <div class="flex space-x-2 mb-4" id="trend-channel-buttons">
-                                <button data-component="channel-up" class="anatomy-btn active">Canal Alcista</button>
-                                <button data-component="channel-down" class="anatomy-btn">Canal Bajista</button>
-                            </div>
-                            <div class="h-64 mb-4">
-                                <canvas id="trendChannelChart"></canvas>
-                            </div>
-                            <div id="trend-channel-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                                </div>
-                        </div>
-
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Simulador de Trade</h4>
-                            <div class="h-64 mb-4">
-                                <canvas id="channelSimulatorChart"></canvas>
-                            </div>
-                            <div class="space-y-4">
-                                <button id="toggle-channel-type" class="simulator-btn simulator-btn-secondary w-full">Alternar a Canal Bajista</button>
-                                <p class="text-sm text-gray-300">El trade dentro de un canal implica comprar en el soporte y vender en la resistencia.</p>
-                                <button id="simulate-channel-trade" class="simulator-btn w-full">Simular Trade en la Ruptura</button>
-                                <button id="reset-channel-simulation" class="simulator-btn simulator-btn-secondary w-full">Reiniciar Simulación</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="reversal-patterns-study-content" class="pattern-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-4">3. Patrones de Reversión (Doble Techo/Suelo)</h3>
-                    <p class="text-gray-400 mb-6">Estos patrones señalan un posible agotamiento de la tendencia actual y la alta probabilidad de un cambio de dirección.</p>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Anatomía del Patrón</h4>
-                            <div class="flex space-x-2 mb-4" id="reversal-buttons">
-                                <button data-component="double-top" class="anatomy-btn active">Doble Techo</button>
-                                <button data-component="double-bottom" class="anatomy-btn">Doble Suelo</button>
-                            </div>
-                            <div class="h-64 mb-4">
-                                <canvas id="reversalChart"></canvas>
-                            </div>
-                            <div id="reversal-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                                </div>
-                        </div>
-
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Simulador de Reversión</h4>
-                            <div class="h-64 mb-4">
-                                <canvas id="reversalSimulatorChart"></canvas>
-                            </div>
-                            <div class="space-y-4">
-                                <button id="toggle-reversal-type" class="simulator-btn simulator-btn-secondary w-full">Alternar a Doble Suelo</button>
-                                <div class="flex items-center space-x-2" id="reversal-step-1">
-                                    <span class="step-badge">1</span>
-                                    <p class="text-sm text-gray-300">El precio ha formado un posible doble techo. Identifica el "cuello" (neckline).</p>
-                                </div>
-                                <button id="simulate-reversal-breakout" class="simulator-btn w-full">Simular Ruptura y Entrada</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="reversal-step-2">
-                                    <span class="step-badge">2</span>
-                                    <p class="text-sm text-gray-300">El patrón se confirma con la ruptura del neckline.</p>
-                                </div>
-                                <button id="show-reversal-stoploss" class="simulator-btn w-full disabled:opacity-50">Establecer Stop Loss</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="reversal-step-3">
-                                    <span class="step-badge">3</span>
-                                    <p class="text-sm text-gray-300">El Stop Loss se coloca en el pico (techo) o valle (suelo) reciente.</p>
-                                </div>
-                                <button id="calculate-reversal-target" class="simulator-btn w-full disabled:opacity-50">Calcular Objetivo de Ganancia</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="reversal-step-4">
-                                    <span class="step-badge">4</span>
-                                    <p class="text-sm text-gray-300">El objetivo se proyecta midiendo la distancia del patrón al neckline.</p>
-                                </div>
-                                <button id="reset-reversal-simulation" class="simulator-btn simulator-btn-secondary w-full">Reiniciar Simulación</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="cup-handle-study-content" class="pattern-content hidden">
-                    <h3 class="text-2xl font-bold text-white mb-4">4. Taza con Asa (Cup and Handle)</h3>
-                    <p class="text-gray-400 mb-6">Un patrón de continuación alcista fuerte, idealmente formado después de una tendencia alcista significativa.</p>
-                    
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Anatomía y Volumen</h4>
-                            <div class="flex flex-wrap gap-2 mb-4" id="cup-handle-anatomy-buttons">
-                                <button data-component="cup" class="anatomy-btn active">La Taza</button>
-                                <button data-component="handle" class="anatomy-btn">El Asa</button>
-                                <button data-component="neckline" class="anatomy-btn">Resistencia</button>
-                                <button data-component="breakout" class="anatomy-btn">Ruptura</button>
-                            </div>
-                            <div class="h-64 mb-4">
-                                <canvas id="cupHandleAnatomyChart"></canvas>
-                            </div>
-                            <div id="cup-handle-anatomy-description" class="p-3 bg-gray-800 rounded text-sm min-h-[70px]">
-                                </div>
-                        </div>
-
-                        <div class="bg-[#161B22] p-6 rounded-xl border border-gray-700">
-                            <h4 class="text-xl font-semibold text-white mb-4">Simulador de Trade</h4>
-                            <div class="h-64 mb-4">
-                                <canvas id="cupHandleSimulatorChart"></canvas>
-                            </div>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-2" id="cup-handle-step-1">
-                                    <span class="step-badge">1</span>
-                                    <p class="text-sm text-gray-300">El patrón Taza con Asa está completando la fase del asa.</p>
-                                </div>
-                                <button id="simulate-cup-breakout" class="simulator-btn w-full">Simular Ruptura y Entrada</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="cup-handle-step-2">
-                                    <span class="step-badge">2</span>
-                                    <p class="text-sm text-gray-300">La ruptura por encima del neckline se realiza con aumento de volumen.</p>
-                                </div>
-                                <button id="show-cup-stoploss" class="simulator-btn w-full disabled:opacity-50">Establecer Stop Loss</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="cup-handle-step-3">
-                                    <span class="step-badge">3</span>
-                                    <p class="text-sm text-gray-300">El Stop Loss se coloca por debajo del punto más bajo del asa.</p>
-                                </div>
-                                <button id="calculate-cup-target" class="simulator-btn w-full disabled:opacity-50">Calcular Objetivo de Ganancia</button>
-                                <div class="flex items-center space-x-2 opacity-50" id="cup-handle-step-4">
-                                    <span class="step-badge">4</span>
-                                    <p class="text-sm text-gray-300">El objetivo se proyecta midiendo la profundidad máxima de la taza.</p>
-                                </div>
-                                <button id="reset-cup-simulation" class="simulator-btn simulator-btn-secondary w-full">Reiniciar Simulación</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</template>
-
-<template id="template-contacto-page">
-<div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Contacto</h1><p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Contáctanos!</p></div>
-<div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-start">
-<div>
-<h2 class="text-3xl font-bold text-white mb-4">Nuestra Misión</h2>
-<p class="text-gray-400 mb-6">En Foco Bursátil, nuestra misión es ofrecer información educativa y herramientas prácticas para el análisis financiero, respaldadas por ejemplos y experiencia real en el mercado. Creemos que el conocimiento es la mejor herramienta para tomar decisiones informadas, y nuestro objetivo es guiarte en cada paso de tu camino.</p>
-</div>
-<div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
-<form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
-<input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
-<input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
-<input type="hidden" name="_captcha" value="false">
-<div class="space-y-6">
-<div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
-<div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
-<div><label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label><div class="mt-1"><textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></textarea></div></div>
-<div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div>
-</div>
-</form>
-</div>
-</div>
-</template>
-
-<template id="template-gracias-page">
-<div class="text-center py-20">
-<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-</svg>
-<h1 class="mt-4 text-4xl font-bold text-white">¡Mensaje Enviado!</h1>
-<p class="mt-2 text-lg text-gray-400">Gracias por contactarnos. Te responderemos a la brevedad.</p>
-<div class="mt-8">
-<button id="back-to-home-from-thanks" class="btn btn-primary">Volver al Inicio</button>
-</div>
-</div>
-</template>
-
-</div>
-<footer class="bg-gray-900 border-t border-gray-700 mt-16">
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 text-center text-gray-400">
-<p>&copy; 2025 Foco Bursátil. Todos los derechos reservados.</p>
-</div>
-</footer>
-
-<script type="module" src="main.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
