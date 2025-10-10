@@ -2515,24 +2515,8 @@ if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
 });
 }
 
-function animate() {
-drawParticles();
-updateParticles();
-requestAnimationFrame(animate);
-}
 
-window.addEventListener('resize', () => {
-resizeCanvas();
-createParticles();
-});
-
-resizeCanvas();
-createParticles();
-animate();
-
-});
-</script>
 </body>
   <script type="module" src="./js/app.js"></script>
 </html>
-~
+
