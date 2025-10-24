@@ -38,7 +38,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
 
-<link rel="stylesheet" href="css/style.css">
 <style>
 /* Estilos personalizados para la aplicación */
 body {
@@ -225,7 +224,6 @@ margin-top: 1rem;
 
 <canvas id="particle-canvas"></canvas>
 
-<div id="header-placeholder"></div>
 <!-- Ticker de Acciones -->
 <div class="tradingview-widget-container">
 <div class="tradingview-widget-container__widget"></div>
@@ -270,8 +268,6 @@ margin-top: 1rem;
 
 <!-- Página de Inicio con Tarjetas -->
 <main id="home-page" class="page container mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-<main id="content-placeholder"></main>
-<div id="footer-placeholder"></div>
 <div class="text-center mb-16">
 <div class="flex justify-center items-center gap-4 sm:gap-8">
 <div class="text-right">
@@ -307,16 +303,16 @@ Suscríbete a nuestro boletín y sé el primero en recibir las últimas guías d
 <input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
 
 <label for="newsletter-email" class="sr-only">Correo electrónico</label>
-<input 
+<input
 id="newsletter-email"
-type="email" 
-name="email" 
-placeholder="Tu correo electrónico" 
-class="flex-grow block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500 transition-colors" 
+type="email"
+name="email"
+placeholder="Tu correo electrónico"
+class="flex-grow block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500 transition-colors"
 required
 >
-<button 
-type="submit" 
+<button
+type="submit"
 class="bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300 flex-shrink-0"
 >
 Suscribirme
@@ -1066,7 +1062,7 @@ let fibonacciChartInstance = null;
 let srChartHorizontalInstance = null;
 let srChartTrendInstance = null;
 let trendChannelChartInstance = null;
-let reversalChartInstance = null; 
+let reversalChartInstance = null;
 let channelSimulatorChartInstance = null;
 let reversalSimulatorChartInstance = null;
 let cupHandleAnatomyChartInstance = null;
@@ -1904,12 +1900,12 @@ borderWidth: 2,
 borderDash: [6, 6]
 };
 
-annotations.target = { 
-type: 'line', 
-yMin: targetPrice, 
-yMax: targetPrice, 
-borderColor: 'rgb(34, 197, 94)', 
-borderWidth: 2, 
+annotations.target = {
+type: 'line',
+yMin: targetPrice,
+yMax: targetPrice,
+borderColor: 'rgb(34, 197, 94)',
+borderWidth: 2,
 borderDash: [6, 6]
 };
 
@@ -2022,7 +2018,7 @@ reversalSimState.type = reversalSimState.type === 'top' ? 'bottom' : 'top';
 const isTop = reversalSimState.type === 'top';
 buttons.toggle.textContent = isTop ? 'Alternar a Doble Suelo' : 'Alternar a Doble Techo';
 if(step1Text) {
-step1Text.textContent = isTop 
+step1Text.textContent = isTop
 ? 'El precio ha formado un posible doble techo. Identifica el "cuello" (neckline).'
 : 'El precio ha formado un posible doble suelo. Identifica el "cuello" (neckline).';
 }
@@ -2091,13 +2087,13 @@ borderWidth: 2,
 borderDash: [6, 6]
 };
 
-annotations.target = { 
-type: 'line', 
-yMin: targetPrice, 
-yMax: targetPrice, 
-borderColor: 'rgb(34, 197, 94)', 
-borderWidth: 2, 
-borderDash: [6, 6] 
+annotations.target = {
+type: 'line',
+yMin: targetPrice,
+yMax: targetPrice,
+borderColor: 'rgb(34, 197, 94)',
+borderWidth: 2,
+borderDash: [6, 6]
 };
 
 chart.options.scales.y.min = isTop ? targetPrice - 5 : chart.options.scales.y.min;
@@ -2194,12 +2190,12 @@ borderWidth: 2,
 borderDash: [6, 6]
 };
 
-annotations.target = { 
-type: 'line', 
-yMin: targetPrice, 
-yMax: targetPrice, 
-borderColor: 'rgb(34, 197, 94)', 
-borderWidth: 2, 
+annotations.target = {
+type: 'line',
+yMin: targetPrice,
+yMax: targetPrice,
+borderColor: 'rgb(34, 197, 94)',
+borderWidth: 2,
 borderDash: [6, 6]
 };
 
@@ -2223,7 +2219,7 @@ const studies = {
 let currentStudyKey = null;
 
 const switchStudy = (newKey) => {
-if (!studies[newKey] || newKey === currentStudyKey) return; 
+if (!studies[newKey] || newKey === currentStudyKey) return;
 
 if (currentStudyKey && studies[currentStudyKey]) {
 destroyAllCharts(); // Clean up before switching
@@ -2246,7 +2242,7 @@ Object.keys(studies).forEach(key => {
 studies[key].btn?.addEventListener('click', () => switchStudy(key));
 });
 
-switchStudy('what-is-ta'); 
+switchStudy('what-is-ta');
 }
 
 function setupChartistPatternNavigation() {
@@ -2332,16 +2328,11 @@ iconLink.href = '#';
 iconLink.className = 'home-icon-link flex flex-row items-center gap-2 group';
 iconLink.dataset.page = tool.id;
 iconLink.innerHTML = `
-                       <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
-                          ${tool.icon}
-                       </div>
-                       <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
-                   `;
-                      <div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
-                         ${tool.icon}
-                      </div>
-                      <span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
-                  `;
+<div class="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center transform group-hover:scale-110 transition-all duration-300 flex-shrink-0 bg-gray-800 border-2 border-transparent group-hover:border-blue-500">
+${tool.icon}
+</div>
+<span class="text-xs text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">${tool.title}</span>
+`;
 return iconLink;
 };
 
@@ -2375,7 +2366,7 @@ returnToHome(false); // Return home without fade
 });
 }
 }
-}, 500); 
+}, 500);
 
 document.querySelectorAll('.home-icon-link').forEach(link => {
 link.classList.toggle('active', link.dataset.page === pageId);
@@ -2450,7 +2441,7 @@ const script = document.createElement('script');
 script.src = scriptSrc;
 script.async = true;
 script.innerHTML = JSON.stringify(config);
-container.innerHTML = ''; 
+container.innerHTML = '';
 container.appendChild(script);
 loadedWidgets.add(widgetKey);
 }
