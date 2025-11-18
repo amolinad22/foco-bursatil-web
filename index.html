@@ -779,6 +779,502 @@ Volver al Inicio
 </div>
 </div>
 </div>
+  <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía del Patrón Hombro Cabeza Hombro Invertido (HCHi)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.4.0/dist/chartjs-plugin-annotation.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827;
+            color: #d1d5db;
+        }
+        .card {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            background-color: #374151;
+            color: #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #4b5563;
+        }
+        .btn:hover, .btn.active {
+            background-color: #4f46e5;
+            color: #ffffff;
+            border-color: #4f46e5;
+        }
+        .btn-primary {
+            background-color: #4f46e5;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .btn-primary:hover {
+            background-color: #4338ca;
+        }
+        h1, h2, h3 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+        /* Style for description box transition */
+        #anatomy-description {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        #anatomy-description.fade-out {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">El Patrón Hombro Cabeza Hombro Invertido (HCHi)</h1>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto">Una guía interactiva para identificar, entender y operar uno de los patrones de reversión alcista más fiables del análisis técnico.</p>
+        </div>
+
+        <!-- Section 1: Anatomy of the Pattern -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">Anatomía del Patrón</h2>
+            <p class="mb-6 text-gray-400">Esta sección desglosa los componentes clave de un Hombro Cabeza Hombro Invertido. Haz clic en cada botón para resaltar y entender las diferentes partes del patrón en el gráfico interactivo.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="md:col-span-2">
+                    <canvas id="anatomyChart"></canvas>
+                </div>
+                <div>
+                    <div id="anatomy-buttons" class="flex flex-wrap gap-2 mb-4">
+                        <button class="btn" data-component="l-shoulder">Hombro Izquierdo</button>
+                        <button class="btn" data-component="head">Cabeza</button>
+                        <button class="btn" data-component="r-shoulder">Hombro Derecho</button>
+                        <button class="btn" data-component="neckline">Línea de Cuello</button>
+                        <button class="btn" data-component="breakout">Ruptura y Volumen</button>
+                    </div>
+                    <div id="anatomy-description" class="p-4 bg-gray-800 rounded-lg min-h-[150px] border border-gray-700">
+                        <p class="text-gray-300">Selecciona un componente para ver su descripción aquí.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Market Psychology -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">La Psicología del Mercado</h2>
+            <p class="mb-6 text-gray-400">El HCHi es más que una simple forma en un gráfico; representa un cambio de poder fundamental de los vendedores (osos) a los compradores (toros) al final de una tendencia bajista.</p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                <div class="text-center p-6 bg-gray-800 rounded-lg w-full md:w-1/3 border border-red-500/30">
+                    <span class="text-5xl">🐻</span>
+                    <h3 class="text-xl font-semibold mt-2 text-red-400">Vendedores (Osos) se Agotan</h3>
+                    <p class="mt-2 text-gray-300">Pierden fuerza. No logran crear un nuevo mínimo más bajo (el Hombro Derecho queda por encima de la Cabeza) y el volumen en sus intentos de venta disminuye.</p>
+                </div>
+                <div class="text-3xl font-bold text-gray-500">VS</div>
+                <div class="text-center p-6 bg-gray-800 rounded-lg w-full md:w-1/3 border border-green-500/30">
+                    <span class="text-5xl">🐂</span>
+                    <h3 class="text-xl font-semibold mt-2 text-green-400">Compradores (Toros) Toman Control</h3>
+                    <p class="mt-2 text-gray-300">Ganan confianza, establecen mínimos más altos y defienden los precios. Finalmente, rompen la resistencia (línea de cuello) para iniciar una nueva tendencia alcista.</p>
+                </div>
+            </div>
+            <p class="mt-6 text-center max-w-2xl mx-auto text-gray-300">Esta transición de poder se confirma cuando el precio rompe la línea de cuello, usualmente con un aumento de volumen, señalando que la tendencia bajista ha terminado y una nueva tendencia alcista ha comenzado.</p>
+        </div>
+        
+        <!-- Section 3: Real Example - Chart is now the ONLY focus (full width) -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">Ejemplo Real de HCHi (CHILE)</h2>
+            <p class="mb-6 text-gray-400">Observa este ejemplo real de un patrón HCHi. Identifica la formación de los dos hombros, la cabeza y cómo el precio alcanzó el objetivo proyectado tras la ruptura.</p>
+            
+            <!-- Image, now full width -->
+            <div class="w-full">
+                <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center aspect-[4/3] md:aspect-video">
+                     <!-- Real image for an Inverted H&S chart (CHILE example) -->
+                    <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/CHILE%20HCHI.png?raw=true" alt="Gráfico de ejemplo de un HCHi en CHILE" class="rounded-md w-full h-full object-contain">
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Trading Simulator - Chart is wider (60%) -->
+        <div class="card">
+            <h2 class="text-2xl font-bold mb-4">Simulador de Trading: Opera el Patrón</h2>
+            <p class="mb-6 text-gray-400">Ahora, pongamos la teoría en práctica. Sigue los pasos para simular una operación completa de un HCHi, desde la identificación hasta la toma de ganancias.</p>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                 <!-- Chart now takes 3/5 columns (60%) and has a fixed height for better rendering -->
+                 <div class="md:col-span-3 h-[400px]">
+                    <canvas id="simulatorChart"></canvas>
+                </div>
+                <!-- Steps now take 2/5 columns (40%) -->
+                <div class="md:col-span-2">
+                    <div id="sim-steps" class="space-y-4">
+                        <div class="p-3 bg-gray-800 rounded-lg border border-gray-700">
+                            <p><strong>Paso 1: Identificación y Dibujo</strong></p>
+                            <p class="text-sm text-gray-400">El patrón está formado. Observa la formación de los dos hombros, la cabeza y la línea de cuello (resistencia).</p>
+                        </div>
+                        <div id="step-2" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                            <p><strong>Paso 2: Esperar la Ruptura</strong></p>
+                            <p class="text-sm text-gray-400 mb-2">La paciencia es clave. Espera a que el precio rompa y cierre por encima de la línea de cuello.</p>
+                            <button id="simulate-breakout" class="btn btn-primary w-full text-sm">Simular Ruptura</button>
+                        </div>
+                         <div id="step-3" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                            <p><strong>Paso 3: Estrategia de Entrada</strong></p>
+                            <p class="text-sm text-gray-400">La entrada se realiza al cierre de la vela de ruptura. El punto de entrada está marcado en verde.</p>
+                        </div>
+                        <div id="step-4" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                            <p><strong>Paso 4: Colocación del Stop-Loss</strong></p>
+                             <p class="text-sm text-gray-400 mb-2">Gestiona el riesgo. Coloca el stop-loss por debajo del mínimo del Hombro Derecho.</p>
+                            <button id="show-stoploss" class="btn w-full text-sm">Mostrar Stop-Loss</button>
+                        </div>
+                        <div id="step-5" class="p-3 bg-gray-800 rounded-lg border border-gray-700 opacity-50">
+                            <p><strong>Paso 5: Objetivo de Ganancias</strong></p>
+                            <p class="text-sm text-gray-400 mb-2">Proyecta la altura desde la Cabeza hasta la línea de cuello, desde el punto de ruptura, para establecer el objetivo.</p>
+                            <button id="calculate-target" class="btn w-full text-sm">Calcular Objetivo</button>
+                        </div>
+                    </div>
+                    <button id="reset-simulation" class="mt-4 btn w-full">Reiniciar Simulación</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="text-center text-xs text-gray-500 py-8">
+            <p><strong>Disclaimer:</strong> Este contenido es únicamente para fines educativos e informativos. No constituye asesoramiento financiero, de inversión ni de ningún otro tipo. El trading y la inversión en los mercados financieros conllevan un riesgo significativo. Realice siempre su propia investigación y consulte a un profesional financiero calificado antes de tomar cualquier decisión de inversión.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- Global Chart Config ---
+        const chartDefaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false }
+            },
+            scales: {
+                x: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#9ca3af' }
+                },
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                    ticks: { color: '#9ca3af' }
+                }
+            }
+        };
+
+        // --- Section 1: Anatomy Chart ---
+        const anatomyCtx = document.getElementById('anatomyChart').getContext('2d');
+        const anatomyLabels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
+        // Data: LS@idx 1(102), Head@idx 3(100), RS@idx 5(102.5). Neckline@idx 2(104) & 4(104). Breakout@idx 9(108)
+        const anatomyPriceData = [105, 102, 104, 100, 104, 102.5, 105, 104.5, 105.5, 108, 107, 110, 111, 110, 112];
+        const anatomyVolumeData = [150, 120, 130, 100, 110, 80, 90, 70, 60, 250, 220, 280, 260, 240, 300];
+
+        const anatomyChart = new Chart(anatomyCtx, {
+            type: 'line',
+            data: {
+                labels: anatomyLabels,
+                datasets: [
+                    {
+                        label: 'Precio',
+                        data: anatomyPriceData,
+                        borderColor: '#60a5fa',
+                        backgroundColor: 'rgba(96, 165, 250, 0.1)',
+                        fill: true,
+                        tension: 0.1,
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: 'Volumen',
+                        data: anatomyVolumeData,
+                        type: 'bar',
+                        backgroundColor: '#4b5563',
+                        yAxisID: 'y1',
+                    }
+                ]
+            },
+            options: {
+                ...chartDefaultOptions,
+                scales: {
+                    x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9ca3af', display: false } },
+                    y: { 
+                        position: 'left', 
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' }, 
+                        ticks: { color: '#9ca3af' },
+                        min: 98, // Set a minimum value to give more vertical space
+                        max: 116  // Set a maximum value
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: { drawOnChartArea: false },
+                        ticks: { display: false }
+                    }
+                },
+                plugins: {
+                    ...chartDefaultOptions.plugins,
+                    annotation: { annotations: {} }
+                }
+            }
+        });
+
+        const anatomyDescriptions = {
+            'l-shoulder': {
+                title: 'Hombro Izquierdo',
+                text: 'El primer valle de la formación, marcando un mínimo en la tendencia bajista. El volumen de venta (ver barra) suele ser relativamente alto en esta fase.',
+                annotations: {
+                    box1: { type: 'box', xMin: 0, xMax: 2, yMin: 101, yMax: 105.5, backgroundColor: 'rgba(167, 139, 250, 0.35)', borderColor: 'rgba(167, 139, 250, 1)', borderWidth: 2 }
+                }
+            },
+            'head': {
+                title: 'Cabeza',
+                text: 'El precio cae a un nuevo mínimo, por debajo del hombro izquierdo. Crucialmente, el volumen en esta caída es menor, sugiriendo que la presión vendedora está disminuyendo.',
+                annotations: {
+                    box1: { type: 'box', xMin: 2, xMax: 4, yMin: 99.5, yMax: 104.5, backgroundColor: 'rgba(167, 139, 250, 0.35)', borderColor: 'rgba(167, 139, 250, 1)', borderWidth: 2 }
+                }
+            },
+            'r-shoulder': {
+                title: 'Hombro Derecho',
+                text: 'El precio rebota y forma un tercer valle, que es más alto que la cabeza. El volumen es típicTmente el más bajo aquí, mostrando el agotamiento total de los vendedores.',
+                annotations: {
+                    box1: { type: 'box', xMin: 4, xMax: 6, yMin: 101.5, yMax: 105.5, backgroundColor: 'rgba(167, 139, 250, 0.35)', borderColor: 'rgba(167, 139, 250, 1)', borderWidth: 2 }
+                }
+            },
+            'neckline': {
+                title: 'Línea de Cuello (Neckline)',
+                text: 'Una línea de resistencia que conecta los picos de los rebotes (en los índices 2 y 4). Esta es la barrera que los compradores deben superar.',
+                annotations: {
+                    neckline: { 
+                        type: 'line', xMin: 1, xMax: 8, yMin: 104, yMax: 104, borderColor: 'rgb(239, 68, 68)', borderWidth: 2,
+                        label: { content: 'Línea de Cuello', enabled: true, position: 'start', backgroundColor: 'rgba(239, 68, 68, 0.7)', color: 'white', font: { size: 10 }, yAdjust: -10 }
+                    }
+                }
+            },
+            'breakout': {
+                title: 'La Ruptura y el Volumen',
+                text: 'La ruptura ocurre cuando el precio se mueve decisivamente por encima de la línea de cuello, acompañado de un aumento significativo en el volumen (ver barra alta). Esto señala el fin de la tendencia bajista.',
+                annotations: {
+                    // Faded neckline for context
+                    neckline: { type: 'line', xMin: 1, xMax: 8, yMin: 104, yMax: 104, borderColor: 'rgba(239, 68, 68, 0.3)', borderWidth: 2 },
+                    breakoutArrow: { type: 'arrow', xMin: 8.5, xMax: 10, yMin: 105, yMax: 107.5, end: 'end', borderColor: '#a78bfa', borderWidth: 3 },
+                    volumeSpike: { type: 'box', xMin: 9.5, xMax: 10.5, yMin: 0, yMax: 250, scaleID: 'y1', backgroundColor: 'rgba(167, 139, 250, 0.4)' }
+                }
+            }
+        };
+
+        const anatomyButtons = document.getElementById('anatomy-buttons');
+        const anatomyDescriptionEl = document.getElementById('anatomy-description');
+        
+        anatomyButtons.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' && !e.target.classList.contains('active')) {
+                const component = e.target.dataset.component;
+                
+                // Toggle active button
+                anatomyButtons.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+
+                // Update description with transition
+                const desc = anatomyDescriptions[component];
+                anatomyDescriptionEl.classList.add('fade-out');
+
+                setTimeout(() => {
+                    anatomyDescriptionEl.innerHTML = `<h3 class="font-bold text-white mb-2">${desc.title}</h3><p class="text-gray-300 text-sm">${desc.text}</p>`;
+                    anatomyDescriptionEl.classList.remove('fade-out');
+                }, 300); // Must match CSS transition duration
+
+                // Update chart annotations
+                anatomyChart.options.plugins.annotation.annotations = desc.annotations;
+                anatomyChart.update();
+            }
+        });
+
+        // --- Section 4: Simulator ---
+        const simulatorCtx = document.getElementById('simulatorChart').getContext('2d');
+        let simulatorChart;
+        let simState = {};
+
+        const initialSimData = {
+            labels: [1, 2, 3, 4, 5, 6, 7],
+            // Data: LS@idx 1(56), Head@idx 3(52), RS@idx 5(55). Neckline@idx 2(58.5) & 4(58.5)
+            price: [60, 56, 58.5, 52, 58.5, 55, 59],
+            volume: [100, 80, 90, 60, 70, 50, 40]
+        };
+        const NECKLINE_Y = 58.5; // Horizontal line at the highest peak
+        const HEAD_Y = 52;
+        const RS_Y = 55;
+        const BREAKOUT_X = 7;
+
+        function createSimulatorChart() {
+            if (simulatorChart) {
+                simulatorChart.destroy();
+            }
+            simulatorChart = new Chart(simulatorCtx, {
+                type: 'line',
+                data: {
+                    labels: [...initialSimData.labels],
+                    datasets: [
+                        {
+                            label: 'Precio',
+                            data: [...initialSimData.price],
+                            borderColor: '#60a5fa',
+                            tension: 0.1,
+                            yAxisID: 'y',
+                        },
+                        {
+                            label: 'Volumen',
+                            data: [...initialSimData.volume],
+                            type: 'bar',
+                            backgroundColor: '#4b5563',
+                            yAxisID: 'y1',
+                        }
+                    ]
+                },
+                options: {
+                    ...chartDefaultOptions,
+                    scales: {
+                        x: { grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9ca3af', display: false } },
+                        y: { position: 'left', grid: { color: 'rgba(255, 255, 255, 0.1)' }, ticks: { color: '#9ca3af' }, min: 50, max: 66 },
+                        y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, ticks: { display: false } }
+                    },
+                    plugins: {
+                        ...chartDefaultOptions.plugins,
+                        annotation: {
+                            annotations: {
+                                // Horizontal neckline. Adjusted xMin from 1 to 0 to start at the very first data point (index 0).
+                                neckline: { type: 'line', xMin: 0, xMax: 7, yMin: NECKLINE_Y, yMax: NECKLINE_Y, borderColor: 'rgb(239, 68, 68)', borderWidth: 2 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        const simSteps = document.getElementById('sim-steps');
+        const step2 = document.getElementById('step-2');
+        const step3 = document.getElementById('step-3');
+        const step4 = document.getElementById('step-4');
+        const step5 = document.getElementById('step-5');
+
+        function resetSimulation() {
+            simState = {
+                breakout: false,
+                stoploss: false,
+                target: false
+            };
+            createSimulatorChart();
+            step2.classList.add('opacity-50');
+            step3.classList.add('opacity-50');
+            step4.classList.add('opacity-50');
+            step5.classList.add('opacity-50');
+            document.getElementById('simulate-breakout').disabled = false;
+            document.getElementById('show-stoploss').disabled = true;
+            document.getElementById('calculate-target').disabled = true;
+        }
+
+        document.getElementById('simulate-breakout').addEventListener('click', () => {
+            if (simState.breakout) return;
+            simState.breakout = true;
+            
+            simulatorChart.data.labels.push(8, 9, 10);
+            const breakoutPrice = 61;
+            simulatorChart.data.datasets[0].data.push(breakoutPrice, 59.5, 62); // Price data
+            simulatorChart.data.datasets[1].data.push(150, 130, 160); // Volume data
+            
+            simulatorChart.options.plugins.annotation.annotations.entry = {
+                type: 'point',
+                xValue: BREAKOUT_X, // Corresponds to label 8
+                yValue: breakoutPrice,
+                backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                borderColor: 'white',
+                borderWidth: 2,
+                radius: 6,
+                label: { content: 'Entrada', enabled: true, position: 'start', yAdjust: -15, backgroundColor: 'rgba(0,0,0,0)', color: 'white' }
+            };
+
+            simulatorChart.update();
+            
+            step2.classList.remove('opacity-50');
+            step3.classList.remove('opacity-50');
+            step4.classList.remove('opacity-50');
+            document.getElementById('simulate-breakout').disabled = true;
+            document.getElementById('show-stoploss').disabled = false;
+        });
+
+        document.getElementById('show-stoploss').addEventListener('click', () => {
+             if (!simState.breakout || simState.stoploss) return;
+             simState.stoploss = true;
+             
+             simulatorChart.options.plugins.annotation.annotations.stoploss = {
+                type: 'line',
+                xMin: 5, // Start from near the right shoulder
+                xMax: 10, // Extend into the future
+                yMin: RS_Y,
+                yMax: RS_Y,
+                borderColor: 'rgb(239, 68, 68)',
+                borderWidth: 2,
+                borderDash: [6, 6],
+                label: { content: 'Stop-Loss', enabled: true, position: 'start', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(239, 68, 68)' }
+             };
+             simulatorChart.update();
+             
+             step5.classList.remove('opacity-50');
+             document.getElementById('show-stoploss').disabled = true;
+             document.getElementById('calculate-target').disabled = false;
+        });
+
+        document.getElementById('calculate-target').addEventListener('click', () => {
+            if (!simState.stoploss || simState.target) return;
+            simState.target = true;
+
+            // Horizontal Neckline Calculation
+            const baseHeight = NECKLINE_Y - HEAD_Y; // 58.5 - 52 = 6.5
+            const breakoutPointY = NECKLINE_Y;
+            const targetPrice = breakoutPointY + baseHeight; // 58.5 + 6.5 = 65
+
+            simulatorChart.options.plugins.annotation.annotations.height = {
+                type: 'line', xMin: 3, xMax: 3, yMin: HEAD_Y, yMax: NECKLINE_Y, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
+            };
+            simulatorChart.options.plugins.annotation.annotations.projection = {
+                type: 'line', xMin: BREAKOUT_X, xMax: BREAKOUT_X, yMin: breakoutPointY, yMax: targetPrice, borderColor: '#a78bfa', borderDash: [6, 6], borderWidth: 2
+            };
+            simulatorChart.options.plugins.annotation.annotations.target = {
+                type: 'line',
+                xMin: BREAKOUT_X,
+                xMax: 10,
+                yMin: targetPrice,
+                yMax: targetPrice,
+                borderColor: 'rgb(34, 197, 94)',
+                borderWidth: 2,
+                borderDash: [6, 6],
+                label: { content: 'Take-Profit', enabled: true, position: 'end', backgroundColor: 'rgba(0,0,0,0)', color: 'rgb(34, 197, 94)' }
+            };
+            simulatorChart.update();
+            document.getElementById('calculate-target').disabled = true;
+        });
+
+        document.getElementById('reset-simulation').addEventListener('click', resetSimulation);
+        
+        // Initial setup
+        window.onload = () => {
+            resetSimulation();
+        };
+
+    </script>
+</body>
+</html>
 
 <!-- Contenido de Taza con Asa -->
 <div id="cup-handle-study-content" class="hidden">
