@@ -710,7 +710,6 @@ Volver al Inicio
 <div id="reversal-buttons" class="flex flex-wrap gap-2 mb-4">
 <button class="btn" data-component="double-top">Doble Techo</button>
 <button class="btn" data-component="double-bottom">Doble Suelo</button>
-<button class="btn" data-component="inverse-hs">H-C-H Invertido</button>
 </div>
 <div id="reversal-description" class="description-el p-4 bg-gray-800 rounded-lg min-h-[150px] border border-gray-700">
 <p class="text-gray-300">Selecciona un patrón de reversión para ver su descripción aquí.</p>
@@ -743,28 +742,6 @@ Volver al Inicio
 </div>
 </div>
 </div>
-</div>
-  <div class="card">
-    <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de H-C-H Invertido: Banco de Chile</h2>
-    <p class="mb-6 text-gray-400">
-        El Hombro Cabeza Hombro Invertido es una de las figuras de cambio de tendencia más fiables. A diferencia de los dobles suelos, aquí los vendedores hacen un último intento desesperado (la cabeza) antes de perder el control definitivamente.
-    </p>
-    <div class="space-y-6 mb-8">
-        <div>
-            <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
-            <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/CHILE%20HCHI.png?raw=true" alt="Gráfico real de HCHi en Chile" class="rounded-md w-full h-full object-contain">
-            </div>
-        </div>
-    </div>
-    <div>
-        <h3 class="text-xl font-semibold mb-3 text-indigo-400">Análisis Técnico:</h3>
-        <ul class="space-y-2 text-gray-300 list-disc pl-5">
-            <li><strong>Estructura:</strong> Consta de tres valles. El central (cabeza) es el más profundo, flanqueado por dos valles menos profundos (hombros) de altura similar.</li>
-            <li><strong>Línea de Cuello (Neckline):</strong> Es la resistencia dinámica que une los máximos intermedios. Actúa como el "techo" del patrón.</li>
-            <li><strong>La Confirmación:</strong> El patrón solo se activa cuando el precio rompe la línea de cuello al alza, idealmente con un aumento fuerte de volumen.</li>
-        </ul>
-    </div>
 </div>
 <!-- Nuevo simulador de trading para Patrones de Reversión -->
 <div class="card">
@@ -802,7 +779,6 @@ Volver al Inicio
 </div>
 </div>
 </div>
-
 
 <!-- Contenido de Taza con Asa -->
 <div id="cup-handle-study-content" class="hidden">
@@ -1335,69 +1311,30 @@ const reversalData = {
 labels: Array.from({ length: 30 }, (_, i) => i + 1),
 priceDoubleTop: [100, 105, 108, 105, 110, 107, 109, 106, 104, 98, 95, 92, 89, 86, 83, 80, 77, 74, 71, 68],
 priceDoubleBottom: [80, 75, 72, 75, 71, 74, 70, 73, 76, 80, 83, 86, 89, 92, 95, 98, 101, 104, 107, 110]
-priceInverseHS: [
-        110, 106, 103, 100, 102, 105, 106, 102, 98, 94, 92, 94, 98, 102, 106, 
-        105, 102, 100, 101, 104, 107, 110, 114, 118, 120, 122, 124, 126, 128, 130
-    ]
 };
 const reversalDescriptions = {
-    'double-top': {
-        title: 'Patrón de Doble Techo',
-        text: 'El Doble Techo es un patrón de reversión bajista. Se caracteriza por dos máximos casi idénticos. La ruptura del "cuello" confirma la caída.',
-        annotations: {
-            peak1: { type: 'point', xValue: 2, yValue: 108, backgroundColor: 'rgb(239, 68, 68)', radius: 6, borderColor: 'white', borderWidth: 2 },
-            peak2: { type: 'point', xValue: 6, yValue: 109, backgroundColor: 'rgb(239, 68, 68)', radius: 6, borderColor: 'white', borderWidth: 2 },
-            neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 104, yMax: 104, borderColor: '#60a5fa', borderWidth: 2 }
-        },
-        data: reversalData.priceDoubleTop
-    },
-    'double-bottom': {
-        title: 'Patrón de Doble Suelo',
-        text: 'El Doble Suelo es un patrón de reversión alcista. Se caracteriza por dos mínimos casi idénticos. La ruptura del "cuello" confirma la subida.',
-        annotations: {
-            trough1: { type: 'point', xValue: 2, yValue: 72, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2 },
-            trough2: { type: 'point', xValue: 6, yValue: 70, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2 },
-            neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 }
-        },
-        data: reversalData.priceDoubleBottom
-    },
-    'inverse-hs': {
-        title: 'Hombro Cabeza Hombro Invertido',
-        text: 'Patrón alcista de alta fiabilidad. Observa cómo el valle central (Cabeza) es más profundo que los laterales (Hombros). La línea amarilla marca la resistencia clave (Cuello) en 106.',
-        annotations: {
-            // Hombro Izquierdo (ajustado al índice 3 del array, valor 100)
-            lShoulder: { 
-                type: 'point', xValue: 3, yValue: 100, 
-                backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2,
-                label: { content: 'Hombro Izq.', enabled: true, yAdjust: 20, font: {size: 11} } 
-            },
-            // Cabeza (ajustada al índice 10 del array, valor 92)
-            head: { 
-                type: 'point', xValue: 10, yValue: 92, 
-                backgroundColor: 'rgb(34, 197, 94)', radius: 8, borderColor: 'white', borderWidth: 2,
-                label: { content: 'Cabeza', enabled: true, yAdjust: 20, font: {size: 12, weight: 'bold'} } 
-            },
-            // Hombro Derecho (ajustado al índice 17 del array, valor 100)
-            rShoulder: { 
-                type: 'point', xValue: 17, yValue: 100, 
-                backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2,
-                label: { content: 'Hombro Der.', enabled: true, yAdjust: 20, font: {size: 11} } 
-            },
-            // Línea de Cuello (Neckline) en nivel 106
-            neckline: { 
-                type: 'line', xMin: 0, xMax: 22, yMin: 106, yMax: 106, 
-                borderColor: '#FCD34D', borderWidth: 3, borderDash: [6, 6],
-                label: { content: 'Línea de Cuello (Resistencia)', enabled: true, position: 'end', color: 'black', backgroundColor: '#FCD34D', font: {size: 10} } 
-            },
-            // Flecha de Ruptura
-            breakout: { 
-                type: 'point', xValue: 21, yValue: 108, 
-                backgroundColor: '#a78bfa', radius: 5, borderColor: 'white', borderWidth: 1 
-            }
-        },
-        data: reversalData.priceInverseHS
-    }
+'double-top': {
+title: 'Patrón de Doble Techo',
+text: 'El Doble Techo es un patrón de reversión bajista que se forma después de una tendencia alcista. Se caracteriza por dos máximos casi idénticos separados por un mínimo. La ruptura por debajo del nivel de "cuello" (el mínimo intermedio) confirma la reversión.',
+annotations: {
+peak1: { type: 'point', xValue: 4, yValue: 110, backgroundColor: 'rgb(239, 68, 68)', radius: 6, borderColor: 'white', borderWidth: 2 },
+peak2: { type: 'point', xValue: 7, yValue: 109, backgroundColor: 'rgb(239, 68, 68)', radius: 6, borderColor: 'white', borderWidth: 2 },
+neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 104, yMax: 104, borderColor: '#60a5fa', borderWidth: 2 }
+},
+data: reversalData.priceDoubleTop
+},
+'double-bottom': {
+title: 'Patrón de Doble Suelo',
+text: 'El Doble Suelo es un patrón de reversión alcista que se forma después de una tendencia bajista. Se caracteriza por dos mínimos casi idénticos separados por un máximo. La ruptura por encima del nivel de "cuello" (el máximo intermedio) confirma la reversión.',
+annotations: {
+trough1: { type: 'point', xValue: 4, yValue: 71, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2 },
+trough2: { type: 'point', xValue: 7, yValue: 70, backgroundColor: 'rgb(34, 197, 94)', radius: 6, borderColor: 'white', borderWidth: 2 },
+neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 }
+},
+data: reversalData.priceDoubleBottom
+}
 };
+
 const channelSimulatorData = {
 labels: Array.from({ length: 25 }, (_, i) => i + 1),
 priceUp: [100, 102, 101, 104, 103, 106, 105, 108, 107, 110, 109, 112, 111, 114, 113, 116, 115, 118, 117, 120, 119, 122, 121, 124, 123],
