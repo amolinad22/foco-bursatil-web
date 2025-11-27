@@ -710,7 +710,6 @@ Volver al Inicio
 <div id="reversal-buttons" class="flex flex-wrap gap-2 mb-4">
 <button class="btn" data-component="double-top">Doble Techo</button>
 <button class="btn" data-component="double-bottom">Doble Suelo</button>
-<button class="btn" data-component="inverse-hs">H-C-H Invertido</button>  
 </div>
 <div id="reversal-description" class="description-el p-4 bg-gray-800 rounded-lg min-h-[150px] border border-gray-700">
 <p class="text-gray-300">Selecciona un patrón de reversión para ver su descripción aquí.</p>
@@ -744,26 +743,6 @@ Volver al Inicio
 </div>
 </div>
 </div>
-<div class="card">
-    <h2 class="text-2xl font-bold mb-4 text-white">Ejemplo de H-C-H Invertido: Banco de Chile</h2>
-    <p class="mb-6 text-gray-400">El HCH Invertido es una figura de cambio de tendencia muy fiable. A diferencia del doble suelo, aquí los vendedores hacen un último intento (la cabeza) antes de perder el control.</p>
-    <div class="space-y-6 mb-8">
-        <div>
-             <h3 class="text-lg font-semibold mb-2 text-gray-300">Gráfico real</h3>
-             <div class="bg-gray-800 rounded-lg border border-gray-700 p-2 flex items-center justify-center">
-                 <img src="https://github.com/amolinad22/foco-bursatil-web/blob/main/CHILE%20HCHI.png?raw=true" alt="Gráfico real de HCHi en Chile" class="rounded-md w-full h-full object-contain">
-             </div>
-        </div>
-    </div>
-    <div>
-        <h3 class="text-xl font-semibold mb-3 text-indigo-400">Análisis Técnico:</h3>
-        <ul class="space-y-2 text-gray-300 list-disc pl-5">
-            <li><strong>Cabeza Profunda:</strong> El mínimo central es más bajo que los hombros.</li>
-            <li><strong>Cuello (Neckline):</strong> La resistencia que une los máximos. Su ruptura confirma la compra.</li>
-            <li><strong>Simetría:</strong> Los hombros suelen tener una altura y duración similar.</li>
-        </ul>
-    </div>
-</div>  
 <!-- Nuevo simulador de trading para Patrones de Reversión -->
 <div class="card">
 <h2 class="text-2xl font-bold mb-4 text-white">Simulador de Trading: Patrones de Reversión</h2>
@@ -1331,8 +1310,7 @@ price: [90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 130, 125, 120, 115, 110,
 const reversalData = {
 labels: Array.from({ length: 30 }, (_, i) => i + 1),
 priceDoubleTop: [100, 105, 108, 105, 110, 107, 109, 106, 104, 98, 95, 92, 89, 86, 83, 80, 77, 74, 71, 68],
-priceDoubleBottom: [80, 75, 72, 75, 71, 74, 70, 73, 76, 80, 83, 86, 89, 92, 95, 98, 101, 104, 107, 110],
-priceInverseHS: [110, 106, 103, 100, 102, 105, 106, 102, 98, 94, 92, 94, 98, 102, 106, 105, 102, 100, 101, 104, 107, 110, 114, 118, 120, 122, 124, 126, 128, 130]  
+priceDoubleBottom: [80, 75, 72, 75, 71, 74, 70, 73, 76, 80, 83, 86, 89, 92, 95, 98, 101, 104, 107, 110]
 };
 const reversalDescriptions = {
 'double-top': {
@@ -1354,18 +1332,7 @@ trough2: { type: 'point', xValue: 7, yValue: 70, backgroundColor: 'rgb(34, 197, 
 neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 }
 },
 data: reversalData.priceDoubleBottom
-},
-'inverse-hs': {
-        title: 'Hombro Cabeza Hombro Invertido',
-        text: 'Patrón alcista muy fiable. Observa los tres valles: la Cabeza (centro) es más profunda que los Hombros. La línea amarilla es la resistencia clave.',
-        annotations: {
-            lShoulder: { type: 'point', xValue: 3, yValue: 100, backgroundColor: 'rgb(34, 197, 94)', radius: 6, label: { content: 'HI', enabled: true, yAdjust: 15 } },
-            head: { type: 'point', xValue: 10, yValue: 92, backgroundColor: 'rgb(34, 197, 94)', radius: 8, label: { content: 'Cabeza', enabled: true, yAdjust: 15 } },
-            rShoulder: { type: 'point', xValue: 17, yValue: 100, backgroundColor: 'rgb(34, 197, 94)', radius: 6, label: { content: 'HD', enabled: true, yAdjust: 15 } },
-            neckline: { type: 'line', xMin: 0, xMax: 22, yMin: 106, yMax: 106, borderColor: '#FCD34D', borderWidth: 2, borderDash: [5, 5], label: { content: 'Cuello', enabled: true, position: 'end', color: '#FCD34D'} }
-        },
-        data: reversalData.priceInverseHS
-    }
+}
 };
 
 const channelSimulatorData = {
@@ -1378,7 +1345,6 @@ const initialReversalSimData = {
 labels: Array.from({ length: 11 }, (_, i) => i + 1),
 priceDoubleTop: [90, 95, 100, 97, 101, 98, 100.5, 96, 95, 96, 95.5],
 priceDoubleBottom: [110, 105, 100, 103, 99, 102, 99.5, 104, 105, 104, 104.5]
-priceInverseHS: [60, 56, 58.5, 52, 58.5, 55, 59, 58, 58.2, 58.1, 58.3]
 };
 
 
