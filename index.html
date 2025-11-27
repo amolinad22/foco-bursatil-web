@@ -1354,7 +1354,18 @@ trough2: { type: 'point', xValue: 7, yValue: 70, backgroundColor: 'rgb(34, 197, 
 neckline: { type: 'line', xMin: 0, xMax: 9, yMin: 76, yMax: 76, borderColor: '#60a5fa', borderWidth: 2 }
 },
 data: reversalData.priceDoubleBottom
-}
+},
+'inverse-hs': {
+        title: 'Hombro Cabeza Hombro Invertido',
+        text: 'Patrón alcista muy fiable. Observa los tres valles: la Cabeza (centro) es más profunda que los Hombros. La línea amarilla es la resistencia clave.',
+        annotations: {
+            lShoulder: { type: 'point', xValue: 3, yValue: 100, backgroundColor: 'rgb(34, 197, 94)', radius: 6, label: { content: 'HI', enabled: true, yAdjust: 15 } },
+            head: { type: 'point', xValue: 10, yValue: 92, backgroundColor: 'rgb(34, 197, 94)', radius: 8, label: { content: 'Cabeza', enabled: true, yAdjust: 15 } },
+            rShoulder: { type: 'point', xValue: 17, yValue: 100, backgroundColor: 'rgb(34, 197, 94)', radius: 6, label: { content: 'HD', enabled: true, yAdjust: 15 } },
+            neckline: { type: 'line', xMin: 0, xMax: 22, yMin: 106, yMax: 106, borderColor: '#FCD34D', borderWidth: 2, borderDash: [5, 5], label: { content: 'Cuello', enabled: true, position: 'end', color: '#FCD34D'} }
+        },
+        data: reversalData.priceInverseHS
+    }
 };
 
 const channelSimulatorData = {
