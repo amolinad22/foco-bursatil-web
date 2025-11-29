@@ -776,9 +776,27 @@ Volver al Inicio
 <div class="md:col-span-2">
 <div id="reversal-sim-steps" class="space-y-4">
 <div id="reversal-step-1" class="p-3 bg-gray-800 rounded-lg border border-gray-700">
-<p><strong>Paso 1: Detectar el Patrón</strong></p>
-<p class="text-sm text-gray-400">El precio ha formado un posible doble techo. Identifica el "cuello" (neckline).</p>
-<button id="toggle-reversal-type" class="btn w-full text-sm mt-2">Alternar a Doble Suelo</button>
+    <div class="mb-3 border-b border-gray-700 pb-2">
+        <p class="text-xs text-gray-500 uppercase tracking-wider mb-2">Selecciona el Patrón:</p>
+        
+        <div class="flex flex-col gap-2" id="sim-selector-buttons">
+            <button data-type="top" class="btn-sim-select w-full text-xs py-2 px-3 rounded border border-gray-600 bg-gray-700 hover:bg-gray-600 transition-colors text-left flex items-center justify-between active-sim-type">
+                <span>📉 Doble Techo</span>
+                <span class="indicator text-blue-400">●</span>
+            </button>
+            <button data-type="bottom" class="btn-sim-select w-full text-xs py-2 px-3 rounded border border-gray-600 bg-gray-700 hover:bg-gray-600 transition-colors text-left flex items-center justify-between">
+                <span>📈 Doble Suelo</span>
+                <span class="indicator hidden">●</span>
+            </button>
+            <button data-type="inverse-hs" class="btn-sim-select w-full text-xs py-2 px-3 rounded border border-gray-600 bg-gray-700 hover:bg-gray-600 transition-colors text-left flex items-center justify-between">
+                <span>🚀 H-C-H Invertido</span>
+                <span class="indicator hidden">●</span>
+            </button>
+        </div>
+    </div>
+
+    <p><strong>Paso 1: Identificación</strong></p>
+    <p id="sim-description-text" class="text-sm text-gray-400 mb-1">El precio ha formado dos máximos iguales. Identifica el soporte.</p>
 </div>
 <div id="reversal-step-2" class="p-3 bg-gray-800 rounded-lg border border-gray-700">
 <p><strong>Paso 2: Esperar la Ruptura</strong></p>
