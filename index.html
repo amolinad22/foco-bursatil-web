@@ -2067,17 +2067,20 @@ reset();
 
 function setupReversalSimulator() {
     createReversalSimulatorChart();
+    
+    // Referencias DOM
     const steps = Array.from({length: 4}, (_, i) => document.getElementById(`reversal-step-${i + 1}`));
-    const step1Text = document.querySelector('#reversal-step-1 p.text-sm');
+    const descriptionText = document.getElementById('sim-description-text');
+    const selectorButtons = document.querySelectorAll('.btn-sim-select');
     
     const buttons = {
-        toggle: document.getElementById('toggle-reversal-type'),
         breakout: document.getElementById('simulate-reversal-breakout'),
         stoploss: document.getElementById('show-reversal-stoploss'),
         target: document.getElementById('calculate-reversal-target'),
         reset: document.getElementById('reset-reversal-simulation'),
     };
 
+    // Función para actualizar la interfaz (Opacidad de pasos)
     const updateUI = () => {
         steps[1].classList.toggle('opacity-50', reversalSimState.breakout);
         steps[2].classList.toggle('opacity-50', !reversalSimState.breakout);
@@ -2086,61 +2089,83 @@ function setupReversalSimulator() {
         buttons.breakout.disabled = reversalSimState.breakout;
         buttons.stoploss.disabled = !reversalSimState.breakout || reversalSimState.stoploss;
         buttons.target.disabled = !reversalSimState.stoploss || reversalSimState.target;
+        
+        // Deshabilitar selectores si ya empezó la simulación
+        selectorButtons.forEach(btn => {
+            btn.disabled = reversalSimState.breakout;
+            if(reversalSimState.breakout) btn.classList.add('opacity-50', 'cursor-not-allowed');
+            else btn.classList.remove('opacity-50', 'cursor-not-allowed');
+        });
     };
 
-    const reset = () => {
-        reversalSimState = { type: 'top', breakout: false, stoploss: false, target: false };
-        createReversalSimulatorChart();
-        reversalSimulatorChartInstance.data.datasets[0].data = [...initialReversalSimData.priceDoubleTop];
-        reversalSimulatorChartInstance.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 96, yMax: 96, borderColor: '#60a5fa' } };
-        reversalSimulatorChartInstance.options.scales.y.min = 85; 
-        reversalSimulatorChartInstance.options.scales.y.max = 115;
-        reversalSimulatorChartInstance.update();
-        buttons.toggle.textContent = 'Alternar a Doble Suelo';
-        if(step1Text) step1Text.textContent = 'El precio ha formado un posible doble techo. Identifica el "cuello".';
+    // Función para cambiar visualmente el botón activo
+    const setActiveButton = (type) => {
+        selectorButtons.forEach(btn => {
+            const isSelected = btn.dataset.type === type;
+            const indicator = btn.querySelector('.indicator');
+            
+            if (isSelected) {
+                btn.classList.remove('bg-gray-700', 'border-gray-600');
+                btn.classList.add('bg-blue-900', 'border-blue-500', 'ring-1', 'ring-blue-500');
+                indicator.classList.remove('hidden');
+            } else {
+                btn.classList.add('bg-gray-700', 'border-gray-600');
+                btn.classList.remove('bg-blue-900', 'border-blue-500', 'ring-1', 'ring-blue-500');
+                indicator.classList.add('hidden');
+            }
+        });
+    };
+
+    // Función principal para cargar un patrón
+    const loadPattern = (type) => {
+        reversalSimState = { type: type, breakout: false, stoploss: false, target: false };
+        const chart = reversalSimulatorChartInstance;
+
+        // Reset visual del gráfico
+        setActiveButton(type);
+        
+        if (type === 'top') {
+            descriptionText.textContent = 'El precio ha formado dos máximos iguales. Identifica el soporte.';
+            chart.data.datasets[0].data = [...initialReversalSimData.priceDoubleTop];
+            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 96, yMax: 96, borderColor: '#60a5fa' } };
+            chart.options.scales.y.min = 85; chart.options.scales.y.max = 115;
+        
+        } else if (type === 'bottom') {
+            descriptionText.textContent = 'El precio ha formado dos mínimos iguales. Identifica la resistencia.';
+            chart.data.datasets[0].data = [...initialReversalSimData.priceDoubleBottom];
+            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 104, yMax: 104, borderColor: '#60a5fa' } };
+            chart.options.scales.y.min = 90; chart.options.scales.y.max = 120;
+        
+        } else { // inverse-hs
+            descriptionText.textContent = 'Cabeza más profunda que los hombros. Identifica la línea de cuello.';
+            chart.data.datasets[0].data = [...initialReversalSimData.priceInverseHS];
+            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 59, yMax: 59, borderColor: '#FCD34D' } };
+            chart.options.scales.y.min = 45; chart.options.scales.y.max = 75;
+        }
+
+        // Limpiar datos antiguos de la simulación
+        chart.data.labels = Array.from({ length: 11 }, (_, i) => i + 1); // Reset labels
+        chart.update();
         updateUI();
+    };
+
+    // Event Listeners para los botones de selección
+    selectorButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (reversalSimState.breakout) return; // Bloqueado si ya simularon
+            const type = e.currentTarget.dataset.type;
+            loadPattern(type);
+        });
+    });
+
+    const reset = () => {
+        loadPattern('top'); // Cargar Doble Techo por defecto
     };
 
     buttons.reset.addEventListener('click', reset);
 
-    // 1. LÓGICA DEL BOTÓN ALTERNAR
-    buttons.toggle.addEventListener('click', () => {
-        if (reversalSimState.breakout) return;
-        const chart = reversalSimulatorChartInstance;
+    // --- LÓGICA DE SIMULACIÓN (Igual que antes, adaptada) ---
 
-        if (reversalSimState.type === 'top') {
-            // A Doble Suelo
-            reversalSimState.type = 'bottom';
-            buttons.toggle.textContent = 'Alternar a H-C-H Invertido';
-            if(step1Text) step1Text.textContent = 'El precio ha formado un posible doble suelo.';
-            chart.data.datasets[0].data = [...initialReversalSimData.priceDoubleBottom];
-            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 104, yMax: 104, borderColor: '#60a5fa' } };
-            chart.options.scales.y.min = 90; chart.options.scales.y.max = 120;
-
-        } else if (reversalSimState.type === 'bottom') {
-            // A HCH Invertido (AJUSTADO)
-            reversalSimState.type = 'inverse-hs';
-            buttons.toggle.textContent = 'Alternar a Doble Techo';
-            if(step1Text) step1Text.textContent = 'HCH Invertido claro: Cabeza profunda y hombros más altos.';
-            chart.data.datasets[0].data = [...initialReversalSimData.priceInverseHS];
-            // Neckline ajustada a los picos en 59
-            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 59, yMax: 59, borderColor: '#FCD34D' } }; // <-- AJUSTE
-            // Escala ampliada para ver la nueva cabeza profunda (min 45)
-            chart.options.scales.y.min = 45; chart.options.scales.y.max = 75; // <-- AJUSTE
-
-        } else {
-            // A Doble Techo
-            reversalSimState.type = 'top';
-            buttons.toggle.textContent = 'Alternar a Doble Suelo';
-            if(step1Text) step1Text.textContent = 'El precio ha formado un posible doble techo.';
-            chart.data.datasets[0].data = [...initialReversalSimData.priceDoubleTop];
-            chart.options.plugins.annotation.annotations = { neckline: { type: 'line', yMin: 96, yMax: 96, borderColor: '#60a5fa' } };
-            chart.options.scales.y.min = 85; chart.options.scales.y.max = 115;
-        }
-        chart.update();
-    });
-
-    // 2. LÓGICA DE RUPTURA (BREAKOUT)
     buttons.breakout.addEventListener('click', () => {
         if (reversalSimState.breakout) return;
         reversalSimState.breakout = true;
@@ -2153,59 +2178,69 @@ function setupReversalSimulator() {
              chart.data.labels.push(12, 13); chart.data.datasets[0].data.push(106, 108);
              chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 11, yValue: 106, backgroundColor: 'green', radius: 6 };
         } else {
-             // Ruptura HCHi (AJUSTADO: rompe la nueva neckline de 59)
-             chart.data.labels.push(12, 13); 
-             chart.data.datasets[0].data.push(61, 63); // <-- AJUSTE: Precios de ruptura más altos
-             chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 11, yValue: 61, backgroundColor: 'green', radius: 6 }; // <-- AJUSTE
+             chart.data.labels.push(12, 13); chart.data.datasets[0].data.push(61, 63);
+             chart.options.plugins.annotation.annotations.entry = { type: 'point', xValue: 11, yValue: 61, backgroundColor: 'green', radius: 6 };
         }
         chart.update();
         updateUI();
     });
 
-    // 3. LÓGICA DE STOP-LOSS
     buttons.stoploss.addEventListener('click', () => {
         if (!reversalSimState.breakout || reversalSimState.stoploss) return;
         reversalSimState.stoploss = true;
         const chart = reversalSimulatorChartInstance;
         
-        if (reversalSimState.type === 'top') {
-            chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 101.5, yMax: 101.5, borderColor: 'orange', borderDash: [6,6] };
-        } else if (reversalSimState.type === 'bottom') {
-            chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 98.5, yMax: 98.5, borderColor: 'orange', borderDash: [6,6] };
-        } else {
-            // Stop HCHi (AJUSTADO: debajo del hombro derecho que está en 55)
-            chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 54, yMax: 54, borderColor: 'orange', borderDash: [6,6] }; // <-- AJUSTE a 54
-        }
+        if (reversalSimState.type === 'top') chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 101.5, yMax: 101.5, borderColor: 'orange', borderDash: [6,6] };
+        else if (reversalSimState.type === 'bottom') chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 98.5, yMax: 98.5, borderColor: 'orange', borderDash: [6,6] };
+        else chart.options.plugins.annotation.annotations.stoploss = { type: 'line', yMin: 54, yMax: 54, borderColor: 'orange', borderDash: [6,6] };
+        
         chart.update();
         updateUI();
     });
 
-    // 4. LÓGICA DE OBJETIVO (TARGET)
     buttons.target.addEventListener('click', () => {
         if (!reversalSimState.stoploss || reversalSimState.target) return;
         reversalSimState.target = true;
         const chart = reversalSimulatorChartInstance;
-        let targetPrice;
-        
-        if (reversalSimState.type === 'top') targetPrice = 91;
-        else if (reversalSimState.type === 'bottom') targetPrice = 109;
-        else {
-            // Target HCHi (AJUSTADO: Neckline 59 - Cabeza 48 = Altura 11. Target = 59 + 11 = 70)
-            targetPrice = 70; // <-- AJUSTE: Nuevo objetivo más alto
+        const annotations = chart.options.plugins.annotation.annotations;
+
+        let targetPrice, neckline, extremePoint, measureX;
+
+        if (reversalSimState.type === 'top') {
+            neckline = 96; extremePoint = 101; measureX = 4; targetPrice = 91;
+        } else if (reversalSimState.type === 'bottom') {
+            neckline = 104; extremePoint = 99; measureX = 4; targetPrice = 109;
+        } else {
+            neckline = 59; extremePoint = 48; measureX = 3; targetPrice = 70;
         }
 
-        chart.options.plugins.annotation.annotations.target = { 
-            type: 'line', yMin: targetPrice, yMax: targetPrice, 
-            borderColor: 'rgb(34, 197, 94)', borderWidth: 2, borderDash: [6, 6],
-            label: { content: 'Take Profit', enabled: true, position: 'end', backgroundColor: 'green' }
+        annotations.heightMeasure = {
+            type: 'line', xMin: measureX, xMax: measureX, yMin: Math.min(neckline, extremePoint), yMax: Math.max(neckline, extremePoint),
+            borderColor: '#a78bfa', borderWidth: 2, borderDash: [6, 6],
+            label: { content: 'Altura', enabled: true, position: 'center', backgroundColor: 'rgba(167, 139, 250, 0.8)', font: {size: 10}, rotation: 90 }
         };
+
+        annotations.heightProjection = {
+            type: 'line', xMin: 11, xMax: 11, yMin: neckline, yMax: targetPrice,
+            borderColor: '#a78bfa', borderWidth: 2, borderDash: [6, 6],
+            arrowHeads: { end: { display: true, fill: true, size: 6 } }
+        };
+
+        annotations.target = { 
+            type: 'line', yMin: targetPrice, yMax: targetPrice, borderColor: 'rgb(34, 197, 94)', borderWidth: 3, 
+            label: { content: 'Objetivo', enabled: true, position: 'end', backgroundColor: 'green' } 
+        };
+        
+        if (reversalSimState.type === 'inverse-hs') chart.options.scales.y.max = 72;
+        else if (reversalSimState.type === 'top') chart.options.scales.y.min = 88;
+
         chart.update();
         updateUI();
     });
 
+    // Iniciar
     reset();
-}    
-
+}
 function setupCupHandleSimulator() {
 createCupHandleSimulatorChart();
 const steps = Array.from({length: 5}, (_, i) => document.getElementById(`cup-handle-step-${i + 1}`));
