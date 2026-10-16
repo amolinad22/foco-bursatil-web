@@ -6,8 +6,8 @@
 <title>Foco Bursátil - Herramientas Financieras</title>
 
 <!-- SEO Meta Tags -->
-<meta name="description" content="Foco Bursátil: Herramientas de análisis financiero para el mercado chileno y global. Gráficos, mapas de calor, noticias y educación para traders e inversionistas.">
-<meta name="keywords" content="foco bursatil, analisis tecnico, bolsa de santiago, ipsa, acciones chilenas, trading, inversion, finanzas, mercado financiero">
+<meta name="description" content="Foco Bursátil: Herramientas educativas. Gráficos, mapas de calor, noticias y educación bursátil.">
+<meta name="keywords" content="foco bursatil, analisis técnico, bolsa de santiago, ipsa, acciones chilenas, inversión, finanzas, mercado financiero">
 
 <!-- Open Graph / Facebook / WhatsApp Meta Tags -->
 <meta property="og:title" content="Foco Bursátil - Herramientas Financieras">
@@ -18,8 +18,8 @@
 
 <!-- Twitter Meta Tags -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Foco Bursátil - Herramientas Financieras">
-<meta name="twitter:description" content="Herramientas de análisis financiero para el mercado chileno y global. Gráficos, mapas de calor, noticias y educación para traders.">
+<meta name="twitter:title" content="Foco Bursátil - Herramientas Educativas">
+<meta name="twitter:description" content="Herramientas Educativas. Gráficos, mapas de calor, noticias y educación para traders.">
 <meta name="twitter:image" content="https://raw.githubusercontent.com/amolinad22/foco-bursatil-web/main/logo%20redondo%202.png">
 
 <!-- Favicon -->
@@ -291,6 +291,7 @@ margin-top: 1rem;
 </div>
 <p class="text-gray-400">
 Sé el primero en recibir las últimas guías de estudio.
+</p>
 </div>
 <!-- Columna del formulario -->
 <div>
@@ -391,7 +392,7 @@ Volver al Inicio
 <div class="text-gray-300">
 <div class="text-center mb-12">
 <h1 class="text-4xl md:text-5xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-500">Zona de Trading</h1>
-<p class="text-lg text-gray-400 max-w-3xl mx-auto">Explora guías interactivas para entender y operar los patrones de consolidación y niveles de retroceso más comunes.</p>
+<p class="text-lg text-gray-400 max-w-3xl mx-auto">Explora guías interactivas para entender los patrones de consolidación y niveles de retroceso más comunes.</p>
 </div>
 
 <!-- Subnavegación de Educación -->
@@ -1075,6 +1076,53 @@ Volver al Inicio
 </div>
 </div>
 </template>
+
+<template id="template-contacto-page">
+<div class="text-center mb-12"><h1 class="text-4xl font-bold text-white">Contacto</h1><p class="mt-2 text-lg text-gray-400">¿Tienes alguna pregunta o sugerencia? ¡Escríbeme!</p></div>
+<div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+<div>
+<h2 class="text-3xl font-bold text-white mb-4">Nuestra Misión</h2>
+<p class="text-gray-400 mb-6">En Foco Bursátil, nuestra misión es ofrecer información educativa y herramientas prácticas para el análisis técnico.</p>
+</div>
+<div class="bg-[#161B22] border border-gray-700 rounded-xl p-8">
+<form action="https://formsubmit.co/contacto@focobursatil.cl" method="POST">
+<input type="hidden" name="_subject" value="Nuevo mensaje desde Foco Bursátil!">
+<input type="hidden" name="_next" value="https://www.focobursatil.cl/?form=success#gracias">
+<input type="hidden" name="_captcha" value="false">
+<div class="space-y-6">
+<div><label for="name" class="block text-sm font-medium text-gray-300">Nombre</label><div class="mt-1"><input type="text" name="name" id="name" autocomplete="name" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
+<div><label for="email" class="block text-sm font-medium text-gray-300">Email</label><div class="mt-1"><input id="email" name="email" type="email" autocomplete="email" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></div></div>
+<div><label for="message" class="block text-sm font-medium text-gray-300">Mensaje</label><div class="mt-1"><textarea id="message" name="message" rows="4" class="block w-full bg-gray-800 border-gray-600 rounded-md py-3 px-4 text-white focus:ring-blue-500 focus:border-blue-500" required></textarea></div></div>
+<div><button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-300">Enviar Mensaje</button></div>
+</div>
+</form>
+</div>
+</div>
+</template>
+
+<template id="template-gracias-page">
+<div class="text-center py-20">
+<svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-16 w-16 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+</svg>
+<h1 class="mt-4 text-4xl font-bold text-white">¡Mensaje Enviado!</h1>
+<p class="mt-2 text-lg text-gray-400">Gracias por contactarme. Te respondo a la brevedad.</p>
+<div class="mt-8">
+<button id="back-to-home-from-thanks" class="btn btn-primary">Volver al Inicio</button>
+</div>
+</div>
+</template>
+
+<!-- Modal para mensajes de Alerta -->
+<div id="alert-modal" class="modal">
+<div class="modal-content">
+<h3 id="modal-title" class="text-xl font-semibold text-white mb-2"></h3>
+<p id="modal-message" class="text-gray-300 mb-4"></p>
+<div class="modal-buttons">
+<button id="modal-ok-btn" class="btn btn-primary">OK</button>
+</div>
+</div>
+</div>
 
 <!-- Pie de página -->
 <footer class="bg-gray-900 border-t border-gray-700 mt-16">
